@@ -1,0 +1,78 @@
+<html>
+<head>
+<script type="text/javascript">
+
+function showAll()
+{
+str=document.forms["tstest"]["project"].value;
+alert (str);
+
+
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","master.php?q="+str,true);
+xmlhttp.send();
+}
+
+function trim(s)
+{
+	return rtrim(ltrim(s));
+}
+
+function ltrim(s)
+{
+	var l=0;
+	while(l < s.length && s[l] == ' ')
+	{	l++; }
+	return s.substring(l, s.length);
+}
+
+function rtrim(s)
+{
+	var r=s.length -1;
+	while(r > 0 && s[r] == ' ')
+	{	r-=1;	}
+	return s.substring(0, r+1);
+}
+</script>
+</head>
+<body>
+<h1>NC Report. Here You May Respond For Each NC Individually</h1>
+
+<script language="JavaScript" src="datetimepicker.js">
+</script>
+<form name="tstest">
+<div id="ResHint"><b></b></div>
+<br>
+<TABLE>
+
+<TR>
+<TD>Project Name</TD>
+<TD><input type=text maxlength=15 size=15 name="projectname" id="projectname"></TD>
+
+</TR>
+
+</TABLE>
+<br>
+<br>
+<input type="button" value="Main Menu" onclick="document.location = 'index.php';">
+<input type="button" value="Save Values" onclick="showAll()">
+</form>
+<br />
+<div id="txtHint"><b>Previous ActionItems will appear here.</b></div>
+
+</body>
+</html> 

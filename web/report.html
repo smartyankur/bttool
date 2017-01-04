@@ -1,0 +1,53 @@
+<html>
+<body>
+<h1>Compliance Report Tool</h1>
+<h2>Reports</h2>
+<?PHP
+$user=getenv("username");
+$con = mysql_connect("localhost","root","");
+
+    if (!$con)
+      {
+        die('Could not connect: ' . mysql_error());
+      }
+
+	mysql_select_db("audit") or die(mysql_error());
+    $query = "select name from login where username='$user';";
+    
+	$retval = mysql_query( $query, $con );
+    $count = mysql_num_rows($retval);
+	
+	if($count==0)
+		{
+			die('Data Not Found');
+		}
+
+    
+    while($row = mysql_fetch_assoc($retval)) 
+    { 
+     echo "Hi ".$row[name]."Welcome To Audit Tracking Tool"; 
+    } 
+ 
+?>
+
+<form name="tstest">
+<TABLE border=1>
+<TR>
+	<TD>NC Aging projectwise</TD>
+	<TD><a href="nca.html">NC Aging</a></TD>
+</TR>
+<TR>
+	<TD>Open Action Items projectwise</TD>
+	<TD><a href="poai.html">Open Action Items Projectwise</a></TD>
+</TR>
+<TR>
+	<TD>NC density FL</TD>
+	<TD><a href="nca.html">NC Density Groupwise</a></TD>
+</TR>
+<TR>
+	<TD>Go to Main Menu</TD>
+	<TD><a href="index.html">Return to main menu</a></TD>
+</TR>
+</form>
+</body>
+</html> 

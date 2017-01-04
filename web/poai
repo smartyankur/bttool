@@ -1,0 +1,23 @@
+<html>
+<body>
+<h1>Open Action Item Per Project</h1>
+<script language="JavaScript" src="ts_picker.js">
+</script>
+<form name="tstest" action="submit.php" method="post">
+
+<TABLE>
+<TR>
+	<TD>Project Name</TD>
+	<TD><select name="project" size="1">
+<option value=" Pepsico ">Pepsico</option>
+<option value=" Insigni ">Insigni</option>
+<option value=" Reliance ">Reliance</option>
+<option value=" HSBC ">HSBC</option>
+</select></TD>
+</TR>
+</TABLE>
+<input type="submit" />
+<input type="button" value="Main Menu" onclick="document.location = 'index.html';">
+</form>
+</body>
+</html> 

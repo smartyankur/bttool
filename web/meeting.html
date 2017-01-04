@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+ <script language="JavaScript" src="datetimepicker.js">
+ </script>
+ </head>
+
+  <body>
+  <script type="text/javascript">
+function put()
+ {
+    alert("hi");
+	  
+	  //var container = document.getElementById("agenda");
+	  //var str=document.getElementById('agenda').value;
+	  //var pqr=document.getElementById("participant").value;
+	  //var abc=document.forms["tstest"]["agenda"].value;
+	  //var def=document.forms["tstest"]["action"].value;
+      //var ghi=document.forms["tstest"]["owner"].value;
+      //var jkl=document.forms["tstest"]["TDate"].value;
+
+   	  alert(abc);
+	  //alert(pqr);
+	  //alert(abc);
+	  //alert(def);
+	  //alert(ghi);
+	  //alert(jkl);
+	  
+   }
+
+function Common()
+ {
+    //var container = document.getElementById("agenda");
+      var str=document.forms["tstest"]["agen"].value;
+	  var pqr=document.forms["tstest"]["part"].value;
+	  var abc=document.forms["tstest"]["CDate"].value;
+
+   	document.getElementById("agenda").innerHTML=str;
+	document.getElementById("participant").innerHTML=pqr;
+    document.getElementById("meetingdate").innerHTML=abc;
+
+   }
+</script>
+<form name="tstest">
+  <b>Agenda:</b><div id="agenda" name="agenda">Agenda Will Appear Here</div>
+  <br>
+  <b>Participant:</b><div id="participant" name="participant">Participant names will appear here.</div>
+  <br>
+  <b>Meeting Date:</b><div id="meetingdate" name="meetingdate">Meeting Date will appear here.</div>
+  <br>
+  <table>
+  <TR>
+	<TD>Type Of Meeting</TD>
+	<TD><select name="type" size="1">
+<option value="internal">Internal</option>
+<option value="External">External</option>
+<option value="Audit">Internal Audit Meeting</option>
+</select></TD>
+</TR>
+  <tr>
+  <td>Here Put Agenda Details</td><td><input type=text maxlength=40 size=80 name="agen" id="agen"></td>
+  </tr>
+  <tr>
+  <td>Here Put Participant Details</td><td><input type=text maxlength=40 size=80 name="part" id="part"></td>
+  </tr>
+  <tr>
+  <td>Here Put The Meeting Date</td>
+  <TD><input type="Text" id="CDate" value="" maxlength="20" size="9" name="CDate" readonly="readonly">
+  <a href="javascript:NewCal('CDate','ddmmmyyyy')"><img src="cal.gif" width="16" height="16" border="0" alt="Pick a date"></a></TD>
+  </tr>
+  </table>
+  <input type="button" value="Show The Data For Meeting At The Top" onclick="Common()">
+  <br>
+  <div id="agenda">
+  <table>
+  <tr>
+  <td>  
+  <b>Put Action Item</b></td>
+  <td><input type=text maxlength=40 size=40 name="action" id="action"></td>
+  </tr>
+  <tr>
+  <td>  
+  <b>Action Item Owner</b></td>
+  <td><input type=text maxlength=40 size=40 name="owner" id="owner"></td>
+  </tr>
+  <tr>
+  <td><b>Here Put The Target Date</b></td>
+  <TD><input type="Text" id="TDate" value="" maxlength="20" size="9" name="TDate" readonly="readonly">
+  <a href="javascript:NewCal('TDate','ddmmmyyyy')"><img src="cal.gif" width="16" height="16" border="0" alt="Pick a date"></a></TD>
+  </tr>
+  </table>
+  </div>
+  <input type="button" value="Put The Data For Meeting" onclick="put()">
+  <br>
+  </form>
+  </body>
+</html>

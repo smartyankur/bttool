@@ -1,0 +1,67 @@
+<html>
+<head>
+<script type="text/javascript">
+function validateForm()
+{
+var x=document.forms["tstest"]["finding"].value;
+if (x==null || x=="")
+  {
+  alert("Feedback must be filled");
+  document.forms["tstest"]["finding"].focus();
+  return false;
+  }
+}
+</script>
+</head>
+<body>
+<h1>Audit Tracking Tool</h1>
+<script language="JavaScript" src="datetimepicker.js">
+</script>
+<form name="tstest" action="submit.php" onsubmit="return validateForm()" method="post">
+
+<TABLE>
+<TR>
+	<TD>Project Name</TD>
+	<td>
+    </td>
+</TR>
+<TR>
+	<TD>Process Area</TD>
+	<TD><select name="process" size="1">
+<option value="REQM">REQM</option>
+<option value="REQD">REQD</option>
+<option value="TS">TS</option>
+<option value="PI">PI</option>
+<option value="VER">VER</option>
+<option value="VAL">VAL</option>
+</select></TD>
+</TR>
+<TR>
+	<TD>Type of NC</TD>
+	<TD><select name="nctype" size="1">
+<option value="New">New</option>
+<option value="Following">Followon</option>
+</select></TD>
+</TR>
+
+<TR>
+<TD>Audit Finding</TD>
+<TD><textarea name="finding" rows="6" cols="30" maxlength=222>Non Conformance Here</textarea></TD>
+</TR>
+<TR>
+<TD>Discussion Date</TD>
+<TD><input type="Text" id="DDate" value="" maxlength="20" size="9" name="DDate">
+<a href="javascript:NewCal('DDate','ddmmmyyyy')"><img src="cal.gif" width="16" height="16" border="0" alt="Pick a date"></a></TD>
+</TR>
+<TR>
+<TD>Target Date</TD>
+<TD><input type="Text" id="TDate" value="" maxlength="20" size="9" name="TDate">
+<a href="javascript:NewCal('TDate','ddmmmyyyy')"><img src="cal.gif" width="16" height="16" border="0" alt="Pick a date"></a></TD>
+</TR>
+</TABLE>
+<table border="1">
+<input type="submit" />
+<input type="button" value="Main Menu" onclick="document.location = 'index.html';">
+</form>
+</body>
+</html> 

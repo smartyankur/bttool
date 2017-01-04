@@ -1,0 +1,57 @@
+<html>
+<body>
+<h1>Audit Tracking Tool</h1>
+<script language="JavaScript" src="ts_picker.js">
+</script>
+<form name="tstest" action="submit.php" method="post">
+
+<TABLE>
+<TR>
+	<TD>Project Name</TD>
+	<TD><select name="project" size="1">
+<option value=" Pepsico ">Pepsico</option>
+<option value=" Insigni ">Insigni</option>
+<option value=" Reliance ">Reliance</option>
+<option value=" HSBC ">HSBC</option>
+</select></TD>
+</TR>
+<TR>
+	<TD>Process Area</TD>
+	<TD><select name="process" size="1">
+<option value=" REQM ">REQM</option>
+<option value=" REQD ">REQD</option>
+<option value=" TS ">TS</option>
+<option value=" PI ">PI</option>
+<option value=" VER ">VER</option>
+<option value=" VAL ">VAL</option>
+</select></TD>
+</TR>
+<TR>
+	<TD>Type of NC</TD>
+	<TD><select name="nctype" size="1">
+<option value=" New ">New</option>
+<option value=" Following ">Followon</option>
+</select></TD>
+</TR>
+
+<TR>
+<TD>Audit Finding</TD>
+<TD><textarea name="finding" rows="6" cols="30">Non Conformance Here</textarea></TD>
+</TR>
+<TR>
+<TD>Discussion Date</TD>
+<TD><input type="Text" name="DDate" value="">
+<a href="javascript:show_calendar('document.tstest.DDate', document.tstest.DDate.value);"><img src="cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a></TD>
+</TR>
+<TR>
+<TD>Target Date</TD>
+<TD><input type="Text" name="TDate" value="">
+<a href="javascript:show_calendar('document.tstest.TDate', document.tstest.TDate.value);"><img src="cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a></TD>
+</TR>
+</TABLE>
+<table border="1">
+<input type="submit" />
+<input type="button" value="Main Menu" onclick="document.location = 'index.html';">
+</form>
+</body>
+</html> 

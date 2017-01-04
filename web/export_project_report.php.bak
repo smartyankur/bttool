@@ -1,0 +1,153 @@
+<?php
+
+include_once("lib/utility.class.php");
+
+include("config.php");
+
+if(isset($_GET["pro_id"])) {
+	$pro_id = $_GET["pro_id"];
+} else {
+	die('select project name');
+}
+
+$sql = "SELECT project_name, version, phase_closed, out_sourced, id, course_level, reject_course FROM tbl_functional_review where project_id = '".$pro_id."'";  
+
+
+ 
+$result = mysql_query($sql);
+$count = mysql_num_rows($result);
+
+if($count==0){
+  die('Data Not Found');
+}
+$str = "<table cellpadding='5' cellspacing='0' border='1'>
+	<tr>
+	  <th>CHD NO.</th>
+	  <th>Phase</th>
+	  <th>Status</th>
+	  <th>Outsourced</th>
+	  <th>Total Bugs Logged</th>
+	  <th>Total Closed</th>
+	  <th>OAI</th>
+	  <th>Deffered</th>
+	  <th># of QC rejection</th>
+	  <th>L1 (Media closed)</th>
+	  <th>L2 (Media closed)</th>
+	  <th>L3 (Media closed)</th>
+	  <th>L1 (ID closed)</th>
+	  <th>L2 (ID closed)</th>
+	  <th>L3 (ID closed)</th>
+	  <th>L1 (Prog closed)</th>
+	  <th>L2 (Prog closed)</th>
+	  <th>L3 (Prog closed)</th>
+	</tr>
+	";
+	
+	while($row = mysql_fetch_array($result))
+	{
+	  $tmp = array();
+	  $tmp['oai'] = 0;
+	  $tmp['hold'] = 0;
+	  $tmp['mclosed'] = 0;
+	  $tmp['fclosed'] = 0;
+	  $tmp['eclosed'] = 0;
+	  $tmp['bug_closed'] = 0;
+	  $total_bug = 0;
+	  $total_closed = 0;
+	  $project_name = $row['project_name'];
+	  $sql2 = "select count(bugstatus) as bug_status_count, bugstatus, bcat from qcuploadinfo where chd_id = '".$row['id']."' group by bugstatus";
+		try {
+			$stmt1 = mysql_query($sql2);
+		} catch (Exception $ex) {
+			echo($ex->getMessage());
+		}
+	    
+	    while($val = mysql_fetch_array($stmt1)) {
+			
+			if($val['bugstatus'] == "ok as is") {
+			    $tmp['oai'] = $tmp['oai'] + $val['bug_status_count'];	
+			} 
+			if($val['bugstatus'] == "hold") {
+				$tmp['hold'] = $tmp['hold'] + $val['bug_status_count'];	
+			}
+		    if($val['bcat'] == "media" && $val['bugstatus'] == "closed") {
+				$tmp['mclosed'] = $tmp['mclosed'] + $val['bug_status_count'];	
+			}
+			if($val['bcat'] == "functionality" && $val['bugstatus'] == "closed") {
+				$tmp['fclosed'] = $tmp['fclosed'] + $val['bug_status_count'];	
+			}
+			if($val['bcat'] == "editorial" && $val['bugstatus'] == "closed") {
+				$tmp['eclosed'] = $tmp['eclosed'] + $val['bug_status_count'];	
+			}
+			if($val['bugstatus'] == "closed") {
+				$tmp['bug_closed'] = $tmp['bug_closed'] + $val['bug_status_count'];
+			}
+			$tmp['total_bug'] = $tmp['total_bug'] + $val['bug_status_count'];
+		}	
+	  $str .= "<tr>";
+	  $str .= "<td>".$row['id']."</td>";
+	  $str .= "<td>".$row['version']."</td>";
+	  if($row['phase_closed']) 
+		  $str .= "<td>Closed</td>";
+	  else
+		  $str .= "<td>Open</td>";
+	  if($row['out_sourced']) 
+		  $str .= "<td>Yes</td>";
+	  else
+		  $str .= "<td>No</td>";
+	  $str .= "<td>".(int) $tmp['total_bug']."</td>";
+	  $str .= "<td>".(int) $tmp['bug_closed']."</td>";
+	  $str .= "<td>".(int) $tmp['oai']."</td>";
+	  $str .= "<td>".(int)$tmp['hold']."</td>";
+      if($row['reject_course']) 
+		  $str .= "<td>Yes</td>";
+	  else
+		  $str .= "<td>No</td>";
+	  if($row['course_level'] == "L1") {
+		  $str .= "<td>".(int)$tmp['mclosed']."</td>";
+		  $str .= "<td>N/A</td>";
+		  $str .= "<td>N/A</td>";
+		  $str .= "<td>".(int)$tmp['fclosed']."</td>";
+		  $str .= "<td>N/A</td>";
+		  $str .= "<td>N/A</td>";
+		  $str .= "<td>".(int)$tmp['eclosed']."</td>";
+		  $str .= "<td>N/A</td>";
+		  $str .= "<td>N/A</td>";
+	  }
+	  if($row['course_level'] == "L2") {
+		  
+		  $str .= "<td>N/A</td>";
+		  $str .= "<td>".(int)$tmp['mclosed']."</td>";
+		  $str .= "<td>N/A</td>";
+		  
+		  $str .= "<td>N/A</td>";
+		  $str .= "<td>".(int)$tmp['fclosed']."</td>";
+		  $str .= "<td>N/A</td>";
+		  
+		  $str .= "<td>N/A</td>";
+		  $str .= "<td>".(int)$tmp['eclosed']."</td>";
+		  $str .= "<td>N/A</td>";
+	  }
+	  if($row['course_level'] == "L3") {
+		  
+		  $str .= "<td>N/A</td>";
+		  $str .= "<td>N/A</td>";
+		  $str .= "<td>".(int)$tmp['mclosed']."</td>";
+		  
+		  $str .= "<td>N/A</td>";
+		  $str .= "<td>N/A</td>";
+		  $str .= "<td>".(int)$tmp['fclosed']."</td>";
+		  
+		  $str .= "<td>N/A</td>";
+		  $str .= "<td>N/A</td>";
+		  $str .= "<td>".(int)$tmp['eclosed']."</td>";
+	  }
+	  
+	}
+$str .= "</table>";
+$obj_utility = new Utility();
+if(isset($_GET["pro_id"]) && $_GET["pro_id"] != 'null') {
+	$obj_utility->force_download($str, 'xls', str_replace(" ","_", $project_name)."_project_report");
+}
+mysql_close($con);
+?> 

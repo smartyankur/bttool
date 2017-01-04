@@ -1,0 +1,64 @@
+<?php
+
+$project = $_POST['project'];
+$process = $_POST['process'];
+$nctype = $_POST['nctype'];
+$finding = $_POST['finding'];
+$ddate = $_POST['DDate'];
+$ddatecut=substr($ddate,0,9);
+$dtime = strtotime($ddatecut);
+$dtimemyformat = date( 'Y-m-d', $dtime );
+//$dtime=strtotime($ddate)
+$tdate = $_POST['TDate'];
+//$ttime=strtotime($tdate)
+$tdatecut = substr($tdate,0,9);
+$ttime=strtotime($tdatecut);
+$ttimemyformat = date( 'Y-m-d', $ttime );
+//echo $project;
+echo "<br>";
+//echo $process;
+echo "<br>";
+//echo $nctype;
+echo "<br>";
+//echo $finding;
+echo "<br>";
+//echo $dtimemyformat;
+echo "<br>";
+//echo $ttimemyformat;
+$con = mysql_connect("localhost","root","");
+if (!$con)
+  {
+  die('Could not connect: ' . mysql_error());
+  }
+mysql_select_db("audit") or die(mysql_error());
+
+
+mysql_query("INSERT INTO actionitem(projectname,processarea,nctype,finding,discussiondate,targetdate,status) values('$project','$process','$nctype','$finding','$dtimemyformat','$ttimemyformat','open')") or die (mysql_error());
+
+
+$query = 'select max(actionid) from actionitem';
+$retval = mysql_query( $query, $con );
+if(! $retval )
+{
+  die('Could not get data: ' . mysql_error());
+}
+
+while($row = mysql_fetch_array($retval))
+{
+    echo "Action ID :{$row['max(actionid)']}";
+} 
+//echo "Fetched data successfully\n";
+
+//$result = mysql_query("SELECT max(actionid) FROM actionitem");
+//$row = mysql_fetch_array($result);
+//echo "<br>";
+//echo "<br>";
+//echo $row['actionid'];
+
+//while($row = mysql_fetch_array($result))
+  //{
+  //echo $row['max(actionid)'];
+  //echo "<br />";
+  //}
+//mysql_close($con);
+?>

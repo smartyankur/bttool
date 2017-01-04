@@ -1,0 +1,59 @@
+.s11 {
+	font-family: Tahoma;
+	font-size: 14px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	color: #ffffff;
+	text-indent: 20px;
+	vertical-align: 0%;
+	padding-top: -2px;
+}
+
+.t1 {
+	font-family: Tahoma;
+	font-size: 13px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	color: #000000;
+	text-indent: 10px;
+}
+.table_text {
+	font-family: Tahoma;
+	font-size: 12px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	color: #000000;
+	text-indent: 10px;
+	vertical-align: middle;
+}
+.table_align {
+	font-family: Tahoma;
+	font-size: 13px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	color: #000000;
+	text-indent: 10px;
+	vertical-align: text-top;
+	padding: 40px;
+}
+.button
+{
+background-color: #F7941C;
+border-bottom:#F7941C;
+border-left: #F7941C;
+border-right:#F7941C;
+border-top: #F7941C;
+color: black;
+font-family: Tahoma
+box-shadow:2px 2px 0 0 #014D06,;
+border-radius: 10px;
+border: 1px outset #b37d00 ;
+}
