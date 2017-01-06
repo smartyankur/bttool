@@ -6,13 +6,7 @@ $currentdate= date("Y-m-d");
 
 //echo "status:".$p."    "."actionid".$q."   "."sepg comment".$r."    ".$currentdate;
 
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit", $con);
+include('config.php');
 $q = mysql_real_escape_string($q);
 $r = mysql_real_escape_string($r);
 

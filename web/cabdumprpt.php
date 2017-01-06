@@ -13,14 +13,7 @@ $tdate=date( 'Y-m-d', $tdate );
 
 if($fdate>$tdate) {echo "Choose proper dates"; exit();}
 
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit", $con);
-//echo "Hi    :".$q;
+include("config.php");
 if($q!="ALL")
 {
 $sql="SELECT * FROM cabbooking where date BETWEEN '$fdate' and '$tdate' AND dept='$q'";

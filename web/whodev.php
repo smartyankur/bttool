@@ -1,12 +1,5 @@
 <?php
-    $con = mysql_connect("localhost","root","password");
-    
-    if (!$con)
-      {
-        die('Could not connect: ' . mysql_error());
-      }
-
-	mysql_select_db("audit") or die(mysql_error());
+    include('config.php');
 
     $query = "select dev1,dev2,dev3,dev4,dev5,dev6,dev7,dev8,projectname from projectmaster order by projectname ASC";
     

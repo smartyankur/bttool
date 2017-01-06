@@ -4,11 +4,7 @@ include_once("lib/utility.class.php");
 
 $q=$_GET["q"];
 $upload_path = './qcfiles/';
-$con = mysql_connect("localhost","root","password");
-if (!$con){
-  die('Could not connect: ' . mysql_error());
-}
-mysql_select_db("audit", $con);
+include('config.php');
 
 $mode=isset($_REQUEST['mode']) && !empty($_REQUEST['mode']) ? $_REQUEST['mode'] : '';
 $filter_name = isset($_REQUEST['filter_name']) ? $_REQUEST['filter_name'] : '';

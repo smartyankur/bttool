@@ -2,13 +2,7 @@
 $q=$_GET["q"];
 $currentdate= date("Y-m-d");
 
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit", $con);
+include('config.php');
 //echo "Hi    :".$q;
 
 $sql="select * from actionitem where status='open' and targetdate<'$currentdate' and projectname= '$q';";

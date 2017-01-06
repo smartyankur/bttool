@@ -9,13 +9,7 @@ $q = date( 'Y-m-d', $q );
 //echo "Action ID :".$p;
 
 
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit", $con);
+include('config.php');
 
 $query = "UPDATE actionitem SET targetdate='$q' where actionid='$p'";
 //echo $query;

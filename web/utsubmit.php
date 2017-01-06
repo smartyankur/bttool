@@ -6,13 +6,7 @@ $hour = $_POST['hour'];
 //echo "<br>";
 $SD = date('Y-m-d',strtotime($_POST['DDate']));
 
-$con = mysql_connect("localhost","root","password");
-echo "</br>";
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-mysql_select_db("audit") or die(mysql_error());
+include('config.php');
 
 //$query = "INSERT INTO blogs_table(blogger_name, comment, date) VALUES ('".$logged_in_user . "', '".$inputfromform  . "', " ." now() )";
 

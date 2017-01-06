@@ -9,14 +9,7 @@ $x=mysql_real_escape_string(trim($_GET["x"]));
 
 $currentdate= date("Y-m-d");
 
-$con = mysql_connect("localhost","root","password");
-
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit", $con);
+include('config.php');
 
 
 $t=strtotime($t);

@@ -10,13 +10,7 @@ $id=$_GET["id"];
 $date=strtotime($MDate);
 $date = date( 'Y-m-d', $date );
 
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit", $con);
+include('config.php');
 //$q = mysql_real_escape_string($q);
 //$r = mysql_real_escape_string($r);
 

@@ -29,15 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	$errorMessage = "Please enter Reviewer Name";
   } else {
 
-	  $con = mysql_connect("localhost","root","password");
-	
-	  if (!$con)
-	    {
-	        die('Could not connect: '. mysql_error());
-	    }
-	
-   	mysql_select_db("audit") or die(mysql_error());
-    	$uname = mysql_real_escape_string(trim($_POST['username']));
+	include('config.php');
+    $uname = mysql_real_escape_string(trim($_POST['username']));
 	$uname = htmlspecialchars($uname);
 	$reviewer = mysql_real_escape_string(trim($_POST['reviewer']));
 	$str=sha1($uname);

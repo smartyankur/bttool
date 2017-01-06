@@ -8,13 +8,7 @@ $v=$_GET["v"];
 $w=$_GET["w"];
 $x=$_GET["x"];
 
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit", $con);
+include('config.php');
 
 $SDate=strtotime($q);
 $SDate = date( 'Y-m-d H:i:s', $SDate );

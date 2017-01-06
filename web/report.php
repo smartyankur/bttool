@@ -3,14 +3,7 @@
 <h1>Audit Tracking Tool</h1>
 <?PHP
 $user=getenv("username");
-$con = mysql_connect("localhost","root","password");
-
-    if (!$con)
-      {
-        die('Could not connect: ' . mysql_error());
-      }
-
-	mysql_select_db("audit") or die(mysql_error());
+include('config.php');
     $query = "select name from login where username='$user';";
     
 	$retval = mysql_query( $query, $con );

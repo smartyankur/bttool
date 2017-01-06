@@ -23,15 +23,9 @@ background:url('qcr.jpg') no-repeat;
 <?php
 error_reporting(0);
 include("class.phpmailer.php");
-$con = mysql_connect("localhost","root","password");
+include('config.php');
 $user=$_SESSION['login'];
 
-if (!$con)
- {
-  die('Could not connect: ' . mysql_error());
- }
-
-mysql_select_db("audit") or die(mysql_error());
 
 $user = $_POST['loggeduser'];
 //echo "loggeduser :".$loggeduser;

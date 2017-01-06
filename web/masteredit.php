@@ -2,12 +2,7 @@
 <body>
 <?php
 
-$con = mysql_connect("localhost","root","password");
-
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
+include('config.php');
 
 $pin=trim($_POST["pin"]);
 $projectname=mysql_real_escape_string(trim($_POST["projectname"]));
@@ -61,7 +56,6 @@ echo $accountname."<br>";
 echo $sepghead."<br>";
 echo $sepglead."<br>";
 */
-mysql_select_db("audit") or die(mysql_error());
 
 $query="UPDATE projectmaster SET pin='$pin',dateofissue='$issuedate',projectstartdate='$startdate',projectenddate='$enddate',projectcost='$cost',estimatedeffort='$effort',projectmanager='$projectmanager',accountmanager='$accountmanager',clientspoc='$clientspoc',practice='$practice',remarks='$remarks',accountname='$accountname',buhead='$buhead',practicehead='$practicehead',sepghead='$sepghead',sepglead='$sepglead',commercialdetailDealType='$CDT',commercialdetailRate='$CRate',commercialdetailPaymentTerm='$CPT',currency='$currency' where projectname='$projectname'";
 

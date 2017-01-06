@@ -25,12 +25,7 @@ echo "<br>";
 //echo $dtimemyformat;
 echo "<br>";
 //echo $ttimemyformat;
-$con = mysql_connect("localhost","root","");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-mysql_select_db("audit") or die(mysql_error());
+include('config.php');
 
 
 mysql_query("INSERT INTO actionitem(projectname,processarea,nctype,finding,discussiondate,targetdate,status) values('$project','$process','$nctype','$finding','$dtimemyformat','$ttimemyformat','open')") or die (mysql_error());

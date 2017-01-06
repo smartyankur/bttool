@@ -25,14 +25,9 @@ if (x=="Select")
 <body>
 <?php
     error_reporting(0);
-	$con = mysql_connect("localhost","root","password");
     $user=mysql_real_escape_string($_REQUEST['user']);
     
-    if (!$con)
-      {
-        die('Could not connect: ' . mysql_error());
-      }
-    mysql_select_db("audit") or die(mysql_error());
+	include('config.php');
 
 	
 	if ($_SERVER['REQUEST_METHOD'] == 'POST')

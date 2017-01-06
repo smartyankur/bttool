@@ -1,15 +1,9 @@
 <html>
 <head>
 <?php	
-	$con = mysql_connect("localhost","root","password");
     $user=mysql_real_escape_string($_REQUEST['user']);
 
-    if (!$con)
-      {
-        die('Could not connect: ' . mysql_error());
-      }
-
-	mysql_select_db("audit") or die(mysql_error());
+    include('config.php');
 
     $query = "select username from adminlogin where uniqueid='$user'";
     
@@ -31,16 +25,7 @@
 	?>
 </head>
 <body>
-<?php
-$con = mysql_connect("localhost","root","password");
 
-    if (!$con)
-      {
-        die('Could not connect: ' . mysql_error());
-      }
-
-	mysql_select_db("audit") or die(mysql_error());
-?>
 <h1>PIN Maintenance</h1>
 <script type="text/javascript">
 function verify()

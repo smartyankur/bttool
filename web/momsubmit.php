@@ -1,11 +1,6 @@
 <?php
 
-$con = mysql_connect("localhost","root","password");
-
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
+include('config.php');
 
 $agenda = mysql_real_escape_string($_REQUEST["agenda"]);
 $participants = mysql_real_escape_string($_REQUEST["participants"]);
@@ -37,8 +32,6 @@ echo "<br>";
 echo $owner;
 echo "<br>";
 echo $impact;
-
-mysql_select_db("audit") or die(mysql_error());
 
 $query="INSERT INTO mommaster(projectname,agenda,participants,actionitem,meetingdate,targetdate,impact,owner) values('".$project."','".$agenda."','".$participants."','".$actionitem."','".$mtimemyformat."','".$ttimemyformat."','".$impact."','".$owner."')";
 

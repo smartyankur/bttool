@@ -6,15 +6,9 @@
 	header ("Location:index.php");
     }
 	
-	$con = mysql_connect("localhost","root","password");
     $user=$_SESSION['login'];
 
-    if (!$con)
-    {
-        die('Could not connect: ' . mysql_error());
-    }
-
-	mysql_select_db("audit") or die(mysql_error());
+    include('config.php');
 
     $query = "select username,email from login where uniqueid='$user'";
     

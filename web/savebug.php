@@ -10,13 +10,7 @@ $issuedate=date("Y-m-d");
 
 //echo "project:".$q."    "."phase :".$r."reviewer :".$s."module :".$t."topic :".$u."page :".$v."desc :".$w;
 
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit", $con);
+include('config.php');
 
 
 if(mysql_num_rows(mysql_query("SELECT * FROM bugreport where projectname='".$q."' and phase='".$r."' and module='".$t."' and topic='".$u."' and pagenumber='".$v."' and descr='".$w."'")))

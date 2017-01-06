@@ -5,17 +5,8 @@
 	if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
 	header ("Location:index.php");
     }
-	
-	$con = mysql_connect("localhost","root","password");
-    $user=$_SESSION['login'];
-
-    if (!$con)
-    {
-        die('Could not connect: ' . mysql_error());
-    }
-
-	mysql_select_db("audit") or die(mysql_error());
-
+	$user=$_SESSION['login'];
+	include('config.php');
     $query = "select username from login where uniqueid='$user'";
     
 	$retval = mysql_query( $query, $con );
@@ -339,14 +330,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	<TD>Billed To</TD>
 	<td>
     <?php
-	$con = mysql_connect("localhost","root","password");
-
-    if (!$con)
-      {
-        die('Could not connect: ' . mysql_error());
-      }
-
-	mysql_select_db("audit") or die(mysql_error());
+	
     $query = "select distinct billedto from cabbooking";
     
 	$retval = mysql_query( $query, $con );

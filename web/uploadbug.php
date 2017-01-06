@@ -1,11 +1,6 @@
 <body background="bg.gif">
 <?php
-   $con = mysql_connect("localhost","root","password");
-   if (!$con)
-   {
-   die('Could not connect: ' . mysql_error());
-   }
-   mysql_select_db("audit", $con);
+   include('config.php');
 
    // Configuration - Your Options
    $allowed_filetypes = array('.doc','.docx','.xls','.xlsx'); // These will be the types of file that will pass the validation.

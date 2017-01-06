@@ -1,12 +1,6 @@
 <?php
 //error_reporting(0);
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit", $con);
+include("config.php");
 
 include("class.phpmailer.php");
 

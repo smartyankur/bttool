@@ -1,19 +1,11 @@
 
 <body>
 <?php
-
-$con = mysql_connect("localhost","root","password");
-
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
+include('config.php');
 
 $systemuser=sha1(mysql_real_escape_string(trim($_POST["sysuser"])));
 $name=mysql_real_escape_string(trim($_POST["personname"]));
 $pwd=mysql_real_escape_string(trim($_POST["sysuser"]));
-
-mysql_select_db("audit") or die(mysql_error());
 
 $cquery = "select * from adminlogin where uniqueid='".$systemuser. "' or username='".$name. "'";
 //echo $cquery;

@@ -7,13 +7,7 @@ $x = date( 'Y-m-d', $w );
 $d=$_GET["d"];
 $mydate = date('Y-m-d h:i:s', time());
 
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit", $con);
+include('config.php');
 $b = mysql_real_escape_string($b);
 
 //echo "project :".$a."finding :".$b."targetdate :".$x."user :".$d;

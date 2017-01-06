@@ -9,13 +9,7 @@ $fmtwo = $_POST['fmtwo'];
 $fmthree = $_POST['fmthree'];
 $fmfour = $_POST['fmfour'];
 
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-    die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit") or die(mysql_error());
+include('config.php');
 
 $cquery="update projectmaster set projectmanager='".$lead."',fmone='".$fmone."',fmtwo='".$fmtwo."',fmthree='".$fmthree."',fmfour='".$fmfour."' where projectname='".$project."'";
 //echo $cquery;

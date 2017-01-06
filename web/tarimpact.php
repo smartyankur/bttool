@@ -8,13 +8,7 @@ $r = date( 'Y-m-d', $r );
 //echo "Q :".$q;
 //echo "R :".$r;
 
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit", $con);
+include('config.php');
 
 $query = "UPDATE actionitem SET targetdate='$r' where actionid='$p'";
 //echo $query;

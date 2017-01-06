@@ -1,13 +1,7 @@
 <?php
 //$q=$_GET["q"];
 
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit", $con);
+include('config.php');
 $sql="SELECT * FROM projection";
 //echo $sql;
 $result = mysql_query($sql);

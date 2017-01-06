@@ -1,15 +1,10 @@
 <?php
 
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
+include('config.php');
 
 $q=$_GET["q"];
 $r=mysql_real_escape_string($_GET["r"]);
 
-mysql_select_db("audit", $con);
 //echo "Hi    :".$q;
 //"SELECT * FROM `table_name` WHERE `description` LIKE '%$search%'"; 
 $sql="SELECT * FROM mommaster WHERE projectname = '".$q."' and (actionitem LIKE '%$r%' or agenda LIKE '%$r%')";

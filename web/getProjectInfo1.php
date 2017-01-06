@@ -5,13 +5,7 @@ include_once("lib/utility.class.php");
 $q=$_GET["q"];
 $mode = (isset($_REQUEST["mode"]) && $_REQUEST["mode"]) ? $_REQUEST["mode"] : "" ;
 
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit", $con);
+include('config.php');
 
 
 if($mode == "developers") {

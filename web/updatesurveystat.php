@@ -1,12 +1,5 @@
 <?php
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit", $con);
-
+include('config.php');
 $a=mysql_real_escape_string($_GET["a"]); //logged
 $b=mysql_real_escape_string($_GET["b"]); //dept
 $c=mysql_real_escape_string($_GET["c"]); //func

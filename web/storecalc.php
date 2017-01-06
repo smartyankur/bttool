@@ -1,12 +1,5 @@
 <?php
-    $con = mysql_connect("localhost","root","password");
-    
-    if (!$con)
-      {
-        die('Could not connect: ' . mysql_error());
-      }
-
-	mysql_select_db("audit") or die(mysql_error());
+    include('config.php');
 
     $query = "select SUM(quantity),item from admintran where date between '2012-09-01' AND '2012-09-30' and action='Issue' group by item";
     //echo $query;

@@ -1099,6 +1099,7 @@ function submitresponse_devcomment(str)
 	<option value="High" <?php if($severity == "High") echo "selected"?>>High</option>
 	<option value="Low" <?php if($severity == "Low") echo "selected"?>>Low</option>
 	<option value="Medium" <?php if($severity == "Medium") echo "selected"?>>Medium</option>
+	<option value="Suggestion" <?php if($severity == "Suggestion") echo "selected"?>>Suggestion</option>
 </select>
 </TD>
 </TR>

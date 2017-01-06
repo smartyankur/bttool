@@ -1,10 +1,5 @@
 <?php
-$con = mysql_connect("localhost","root","password");
-
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
+include('config.php');
 
 $actionitem = $_POST['actionitem'];
 $owner = $_POST['owner'];
@@ -48,7 +43,6 @@ echo "Project :".$project."<br>";
 echo "Discussion Point :".$discussionpoint."<br>";
 
 echo "<br>";
-mysql_select_db("audit") or die(mysql_error());
 
 $query = "INSERT INTO mommaster(projectname,agenda,participants,actionitem,meetingdate,targetdate,owner,discussionpoint,loggeduser,risk,status,type) VALUES ('".$project."', '".$agenda."', '".$participant."','".$actionitem."','".$meetingdate."','".$TDate."','".$owner."','".$discussionpoint."','".$loggeduser."','".$risk."','".$status."','".$type."')";
 $result=mysql_query($query) or die (mysql_error());

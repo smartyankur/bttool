@@ -7,13 +7,7 @@ $v=$_GET["v"];
 
 echo "Meeting Title :".$v;
 
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit", $con);
+include('config.php');
 //echo "Hi    :".$q;
 
 if($s=="all")

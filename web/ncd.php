@@ -11,14 +11,7 @@ $currentdate= date("Y-m-d");
 
 //echo "date=".date("Y-m-d");
 
-$con = mysql_connect("localhost","root","password");
-
-if (!$con)
-  {
-   die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit") or die(mysql_error());
+include('config.php');
 
 $query = "select count(*) from actionitem where status='open' and targetdate<'$currentdate' and projectname= '$project';";
 //echo $query;

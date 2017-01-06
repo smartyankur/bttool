@@ -25,7 +25,6 @@ $pro=$_REQUEST['pro'];
 //$phs=$_REQUEST['phs'];
 $pro_id = $_REQUEST['pro_id'];
 //$course = explode("-", $_REQUEST['chd']);
-include("config.php");
 $pro=mysql_real_escape_string($pro);
 /* @saurav changed query to fetch data using project_id */
 $query="select projectmanager,fmone,fmtwo,fmthree,fmfour,dev1,dev2,dev3,dev4,dev5,dev6,dev7,dev8,dev9,dev10,dev11,dev12 from projectmaster where pindatabaseid='$pro_id'";

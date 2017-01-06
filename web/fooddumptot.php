@@ -14,13 +14,7 @@ $tdate=date( 'Y-m-d', $tdate );
 
 if($fdate>$tdate) {echo "Choose proper dates"; exit();}
 
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit", $con);
+include('config.php');
 //echo "Hi    :".$q;
 
 

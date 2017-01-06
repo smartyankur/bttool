@@ -4,15 +4,9 @@
 <body background="bg.gif">
 <?php	
     error_reporting(0);
-    $con = mysql_connect("localhost","root","password");
     $user=$_SESSION['login'];
 
-    if (!$con)
-      {
-        die('Could not connect: ' . mysql_error());
-      }
-
-	mysql_select_db("audit") or die(mysql_error());
+   include('config.php');
 	
    $allowed_filetypes = array('.doc','.docx','.xls','.xlsx','.jpeg','.jpg','.JPG','.JPEG','.png','.PNG','.bmp','.BMP','.gif','.GIF'); // These will be the types of file that will pass the validation.
    $max_filesize = 1048576; // Maximum filesize in BYTES (currently 1MB).

@@ -1,13 +1,7 @@
 <?php
 //$q=$_GET["q"];
 error_reporting(0);
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit", $con);
+include('config.php');
 //echo "Hi    :".$q;
 
 $sql="SELECT * FROM food";

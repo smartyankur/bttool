@@ -1,13 +1,7 @@
 <?php
 $q=date('Y-m-d',strtotime($_GET["q"]));
 $r=$_GET["r"]; //fm
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit", $con);
+include('config.php');
 //echo "Hi    :".$q;
 
 $sql="SELECT sum(hours) FROM utilization WHERE date = '".$q."' and fm='$r' and project !='FREE' and project != 'LEAVE'";

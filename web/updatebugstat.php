@@ -5,13 +5,7 @@ $s=$_GET["s"];
 
 //echo "bugid:".$q."    "."status".$r;
 
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit", $con);
+include('config.php');
 $q = mysql_real_escape_string($q);
 $r = mysql_real_escape_string($r);
 $mydate = date('Y-m-d h:i:s', time());

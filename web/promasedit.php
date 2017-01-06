@@ -2,15 +2,9 @@
 <h1>Project Master Maintenance</h1>
 <head>
 <?php	
-	$con = mysql_connect("localhost","root","password");
     $user=mysql_real_escape_string($_REQUEST['user']);
 
-    if (!$con)
-      {
-        die('Could not connect: ' . mysql_error());
-      }
-
-	mysql_select_db("audit") or die(mysql_error());
+    include('config.php');
 
     $query = "select username from adminlogin where uniqueid='$user'";
     

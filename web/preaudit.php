@@ -2,13 +2,7 @@
 $q=$_GET["q"];
 $auditee=$_GET["r"];
 
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit", $con);
+include('config.php');
 //echo "Hi    :".$q;
 
 $sql="SELECT * FROM preactionitem WHERE status='open' and projectname = '".$q."'";

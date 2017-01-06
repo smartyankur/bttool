@@ -1,14 +1,7 @@
 <?php
     error_reporting(0);
     $proj=$_GET['q'];
-    $con = mysql_connect("localhost","root","password");
-
-    if (!$con)
-      {
-        die('Could not connect: ' . mysql_error());
-      }
-
-	mysql_select_db("audit") or die(mysql_error());
+    include('config.php');
     //echo $proj;
 	
 	$query = "select projectmanager from projectmaster where projectname='$proj'";

@@ -13,13 +13,7 @@ $tdate=date( 'Y-m-d', $tdate );
 
 if($fdate>$tdate) {echo "Choose proper dates"; exit();}
 
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-   die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit") or die(mysql_error());
+include('config.php');
 $pro=mysql_real_escape_string($pro);
 
 $query="select sum(cost) from cabbooking where date BETWEEN '$fdate' and '$tdate' AND billedto='$billedto'";

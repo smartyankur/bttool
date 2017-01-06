@@ -4,13 +4,7 @@ $r=$_GET["r"];
 $mode = isset($_REQUEST['mode'])? $_REQUEST['mode']: "display";
 
 $upload_path = './files/';
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit", $con);
+include('config.php');
 //echo "Hi    :".$q;
 
 $sql="SELECT * FROM uploadinfo WHERE project = '".$q."'";

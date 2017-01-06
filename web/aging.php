@@ -1,18 +1,11 @@
 <body>
 <h1>Compliance Master Report</h1>
 <?php
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit", $con);
+include('config.php');
 
 function td($q)
 {
  $sql="select count(actionid) from actionitem where projectname= '$q'";
- //echo $sql;
  $result = mysql_query($sql);
  $count= mysql_num_rows($result); 
  if($count==0)

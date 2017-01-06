@@ -1,15 +1,10 @@
 <?php
 
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
+include('config.php');
 
 //$q=$_GET["q"];
 $r=mysql_real_escape_string($_GET["q"]);
 
-mysql_select_db("audit", $con);
 //echo "Hi    :".$q;
 //"SELECT * FROM `table_name` WHERE `description` LIKE '%$search%'"; 
 $sql="SELECT * FROM cabbooking WHERE user LIKE '%$r%' or billedto LIKE '%$r%' or project LIKE '%$r%' or billedto LIKE '%$r%' or frompl LIKE '%$r%' or topl LIKE '%$r%'";

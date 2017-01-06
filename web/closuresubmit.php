@@ -9,14 +9,9 @@ $ctime = strtotime($closuredate);
 $ctimemyformat = date( 'Y-m-d', $ctime );
 
 
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
+include('config.php');
 
 $feedback = mysql_real_escape_string($_REQUEST["feedback"]);
-mysql_select_db("audit") or die(mysql_error());
 
 $cquery="select * from actionitem where actionid='$actionid'";
 $cresult=mysql_query($cquery) or die (mysql_error());

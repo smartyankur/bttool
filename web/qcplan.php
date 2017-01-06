@@ -36,14 +36,7 @@ border: 1px outset #b37d00 ;
 $id = $_REQUEST['id'];
 $mid = $_REQUEST['mid'];
 
-$con = mysql_connect("localhost","root","password");
-
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit") or die(mysql_error());
+include('config.php');
 
 $cquery="select * from accept where masterid='$mid' and indx='$id'";
 $cresult=mysql_query($cquery) or die (mysql_error());

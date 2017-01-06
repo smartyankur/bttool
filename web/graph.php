@@ -2,15 +2,9 @@
 error_reporting(0);
 include("phpgraphlib.php");
 
-$con = mysql_connect("localhost","root","password");
 $user=$_SESSION['login'];
 
-if (!$con)
-{
-  die('Could not connect: ' . mysql_error());
-}
-
-mysql_select_db("audit") or die(mysql_error());
+include('config.php');
 
 $query = "select qc,SUM(effort) from qcplan where status='open' group by qc ASC";
 $retval = mysql_query( $query, $con );

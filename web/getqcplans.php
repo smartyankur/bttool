@@ -3,13 +3,7 @@ error_reporting(0);
 $q=$_GET["q"]; //project
 $r=$_GET["r"];
 
-$con = mysql_connect("localhost","root","password");
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db("audit", $con);
+include('config.php');
 
 $sql="SELECT * FROM qcplan WHERE project = '".$q."'";
 $result = mysql_query($sql);
