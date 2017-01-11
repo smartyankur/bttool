@@ -74,3 +74,6 @@ ALTER TABLE `tbl_functional_review` CHANGE `developers` `developers_id` TEXT CHA
 ALTER TABLE `tbl_functional_review` CHANGE `developers_id` `developers_id` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL;
 ALTER TABLE `tbl_functional_review` ADD `developers_media` TEXT NULL AFTER `developers_id`, ADD `developers_tech` TEXT NULL AFTER `developers_media`;
 
+------------------------------------------------------11/1/2017---------------------------------------------------------------------------------------------
+ALTER TABLE `tbl_functional_review` ADD `slidecount` INT(6) NOT NULL AFTER `pagecount`;
+

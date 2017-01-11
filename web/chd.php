@@ -24,18 +24,20 @@ if($count==0){
 
 while($row = mysql_fetch_assoc($retval)){ 
   echo "<br>";
-  echo "<br>"; 
+  echo "<br>";
   echo "<h4>"."Hi ".$row['username']." ! Welcome to Course Handover Document"."</h4>";
   $username = $row['username'];
-  $email    = $row['email'];    
-} 	
-
+  $email    = $row['email'];  
+} ?>	
+<input class="button" value="Show Twenty Recent CHDs" onclick="location.href='chdList.php';" type="button">&nbsp;&nbsp;
+<input class="button" value="Show CHD Guidelines" onclick="location.href='CHD_Guidelines_and_Release_Notes.xlsx';" type="button">
+<?php
 if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
   $project        = urldecode($_POST["project"]);
   $project_id     = $_POST["pro_id"];
   $pm             = $_POST["pm"];
   $courseTitle    = mysql_real_escape_string($_POST["courseTitle"]);
-  $SDate          = $_POST["SDate"];
+  $SDate          = date('d-M-Y');//$_POST["SDate"];
   $courseLevel    = $_POST["courseLevel"];
   $fmid           = $_POST["fmid"];
   $fmmedia        = $_POST["fmmedia"];
@@ -45,7 +47,8 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
   $devstech           = implode(",", $_POST["devstech"]);  
   $version        = $_POST["version"];
   $pagecount      = $_POST["pagecount"];
-  $iterationRound = $_POST["iterationRound"];
+  $slidecount      = $_POST["slidecount"];
+  //$iterationRound = $_POST["iterationRound"];
   $learningHours  = $_POST["learningHours"];
   $coursesize     = $_POST["coursesize"];
   $testingScope   = $_POST["testingScope"];
@@ -104,7 +107,7 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
 
 ///////////////////////////////////////////////////////////////////////////////////
   if( empty($errorMessage) ){
-  $insertFunctionalReview = "INSERT INTO tbl_functional_review(project_id, project_name,project_manager,course_title,start_date,course_level,functional_manager_id,functional_manager_media,functional_manager_tech,developers_id,developers_media,developers_tech,version,pagecount, iterationRound,learning_hours,testing_scope,partial_testing,conf_reviews,course_path,sb_path,editsheet,dt_path,test_plan_path,test_checklists,reviewer,comments,support_file1,support_file2,support_file3,support_file4, testenvironment,coursesize,chdreleasedate) values('".$project_id."','".$project."','".$pm."','".$courseTitle."','".$SDate."','".$courseLevel."','".$fmid."','".$fmmedia."','".$fmtech."','".$devsid."','".$devsmed."','".$devstech."', '".$version."','".$pagecount."','".$iterationRound."','".$learningHours."','".$testingScope."','".$partialTesting."','".$confReviews."','".$path."','".$sbpath."','".$editsheet."','".$dtpath."','".$tppath."','".$chk."','".$reviewer."','".$comments."','".$fstr1."','".$fstr2."','".$fstr3."','".$fstr4."', '".$testenvironment."','".$coursesize."','".$chd_submit_date."')";
+  $insertFunctionalReview = "INSERT INTO tbl_functional_review(project_id, project_name,project_manager,course_title,start_date,course_level,functional_manager_id,functional_manager_media,functional_manager_tech,developers_id,developers_media,developers_tech,version,pagecount,slidecount,learning_hours,testing_scope,partial_testing,conf_reviews,course_path,sb_path,editsheet,dt_path,test_plan_path,test_checklists,reviewer,comments,support_file1,support_file2,support_file3,support_file4, testenvironment,coursesize,chdreleasedate) values('".$project_id."','".$project."','".$pm."','".$courseTitle."','".$SDate."','".$courseLevel."','".$fmid."','".$fmmedia."','".$fmtech."','".$devsid."','".$devsmed."','".$devstech."', '".$version."','".$pagecount."','".$slidecount."','".$learningHours."','".$testingScope."','".$partialTesting."','".$confReviews."','".$path."','".$sbpath."','".$editsheet."','".$dtpath."','".$tppath."','".$chk."','".$reviewer."','".$comments."','".$fstr1."','".$fstr2."','".$fstr3."','".$fstr4."', '".$testenvironment."','".$coursesize."','".$chd_submit_date."')";
   
   if(mysql_query($insertFunctionalReview)){
     $FReviewNo = mysql_insert_id();
@@ -115,7 +118,7 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
   	$str .= '<h4>Dear QA Team,</h4>';
   	$str .= '<h5>Please find below the CHD details :-</h5>';
   	$str .= '<table border=1 class="table_text">';
-  	$str .= '<tr><th>S. No.</th><th>Project Name</th><th>Project Manager</th><th>Course Title</th><th>Start Date</th><th>Course Level</th><th>Functional Manager[ID]</th><th>Developers[ID]</th><th>Functional Manager[Med]</th><th>Developers[Med]</th><th>Functional Manager[Tech]</th><th>Developers[Tech]</th><th>Version</th><th>No of HTML/Flash Pages</th><th>Learning Hours</th><th>Course Memory Size in MB</th><th>Scope for testing</th><th>Partial Testing</th><th>Confirmation On Reviews</th><th>Course Path [SVN]</th><th>SB Path [SVN]</th><th>Edit Sheet</th><th>Development Tracker Path [SVN]</th><th>Test Plan Path [SVN]</th><th>Test Case/Checklists [SVN]</th><th>Reviewer</th><th>Comments</th><th>Test Environment</th><th>Attach supporting documents</th></tr>';
+  	$str .= '<tr><th>S. No.</th><th>Project Name</th><th>Project Manager</th><th>Course Title</th><th>Start Date</th><th>Course Level</th><th>Functional Manager[ID]</th><th>Developers[ID]</th><th>Functional Manager[Med]</th><th>Developers[Med]</th><th>Functional Manager[Tech]</th><th>Developers[Tech]</th><th>Version</th><th>No of HTML/Flash Pages</th><th>No. of slides in PPT</th><th>Learning Hours</th><th>Course Memory Size in MB</th><th>Scope for testing</th><th>Partial Testing</th><th>Confirmation On Reviews</th><th>Course Path [SVN]</th><th>SB Path [SVN]</th><th>Edit Sheet</th><th>Development Tracker Path [SVN]</th><th>Test Plan Path [SVN]</th><th>Test Case/Checklists [SVN]</th><th>Reviewer</th><th>Comments</th><th>Test Environment</th><th>Attach supporting documents</th></tr>';
   	$str .= '<tr>';
   	$str .= "<td>".$FReviewNo."</td>";
     $str .= "<td>".$project."</td>";
@@ -131,6 +134,7 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
     $str .= "<td>".$devstech."</td>"; 
 	$str .= "<td>".$version."</td>";
     $str .= "<td>".$pagecount."</td>";
+    $str .= "<td>".$slidecount."</td>";
     $str .= "<td>".$learningHours."</td>";
     $str .= "<td>".$coursesize."</td>";
     $str .= "<td>".$testingScope."</td>";
@@ -266,8 +270,8 @@ function test(){
   var courseTitle = trim(document.getElementById('courseTitle').value);
   if(courseTitle==""){alert("Please enter course title!"); return false;}; 
   
-  var SDate = trim(document.getElementById('SDate').value);
-  if(SDate==""){alert("Please enter start date!"); return false;};
+  //var SDate = trim(document.getElementById('SDate').value);
+  //if(SDate==""){alert("Please enter start date!"); return false;};
   
   
   var radios = document.getElementsByName("courseLevel");
@@ -306,9 +310,12 @@ function test(){
   var pagecount = trim(document.getElementById('pagecount').value);
   if(pagecount==""){alert("Please enter the number of HTML/flash pages!"); return false;}
   else if(isNaN(pagecount)){alert("Please enter the number of HTML/flash pages!"); return false;};
-
-  var iterationRound = trim(document.getElementById('iterationRound').value);
-  if(iterationRound==""){alert("Please select the Iteration Round #!"); return false;};
+  
+  var slidecount = trim(document.getElementById('slidecount').value);
+  if(slidecount==""){alert("Please enter the number of slide in PPT"); return false;}
+  else if(isNaN(slidecount)){alert("Please enter the number of slide in PPT!"); return false;};
+  //var iterationRound = trim(document.getElementById('iterationRound').value);
+  //if(iterationRound==""){alert("Please select the Iteration Round #!"); return false;};
 
   var learningHours = trim(document.getElementById('learningHours').value);
   if(learningHours==""){alert("Please enter the learning hours!"); return false;}
@@ -548,6 +555,7 @@ if( !empty($message) ){
   $devs           = $_REQUEST["devs"];
   $version        = $_REQUEST["version"];
   $pagecount      = $_REQUEST["pagecount"];
+  $slidecount     = $_REQUEST["slidecount"];
   $iterationRound = $_REQUEST["iterationRound"];
   $learningHours  = $_REQUEST["learningHours"];
   $coursesize     = $_REQUEST["coursesize"]; 
@@ -629,11 +637,11 @@ if(!empty($numrowsProject)){
   <TD><input type="text" name="courseTitle" id="courseTitle" maxlength="100" size="45" value="<?php echo $courseTitle; ?>"></TD>
 </TR>
 
-<TR>
+<!--<TR>
   <TD>Start Date <font color='red'>*</font></TD>
   <TD><input type="text" name="SDate" id="SDate" value="<?php echo $SDate; ?>" maxlength="20" size="19" readonly="readonly">
   <a href="javascript:NewCal('SDate','ddmmmyyyy')"><img src="cal.gif" width="16" height="16" border="0" alt="Pick a date"></a></TD>
-</TR>
+</TR>-->
 
 <TR>
     <TD>Course Level <font color='red'>*</font></TD>
@@ -814,6 +822,11 @@ if(!empty($numrowsDEV)){
   <TD><input type="text" name="pagecount" id="pagecount" maxlength="5" size="5" value="<?php echo $pagecount; ?>"></TD>
 </TR>
 <TR>
+  <TD>No. of slides in PPT <font color='red'>*</font></TD>
+  <TD><input type="text" name="slidecount" id="slidecount" maxlength="5" size="5" value="<?php echo $slidecount; ?>"></TD>
+</TR>
+
+<!--<TR>
   <TD>Iteration round # <font color='red'>*</font></TD>
   <TD>
 	<select name="iterationRound" id="iterationRound">
@@ -827,7 +840,7 @@ if(!empty($numrowsDEV)){
 		<option value="R7">R7</option>
 	</select>
   </TD>
-</TR>
+</TR>-->
 
 <TR>
   <TD><label for="type">Learning Hours</label> <font color='red'>*</font></TD>
@@ -911,7 +924,7 @@ if(!empty($numrowsDEV)){
 </TR>
 
 <TR>
-  <TD>Test Plan Path [SVN] <font color='red'>*</font></TD>
+  <TD>Updated PSD path [SVN] <font color='red'>*</font></TD>
   <TD><input type="text" name="tppath" id="tppath" maxlength="400" size="45" value="<?php echo $tppath; ?>"></TD>
 </TR>
 

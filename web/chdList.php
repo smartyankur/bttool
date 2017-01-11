@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Manage Course Handover Documents</title>
+<title>LATEST 20 CHDS SUBMITTED ON BT TOOL</title>
 <?php
 error_reporting(0);
 session_start();
@@ -30,6 +30,7 @@ while($row = mysql_fetch_assoc($retval)){
 }
 
 ?>
+<h5>LATEST 20 CHDS SUBMITTED ON BT TOOL</h5>
 <style>
 div.ex{
   height:350px;
@@ -71,89 +72,11 @@ body{
 	vertical-align: middle;
 }
 </style>
-<script src="js/jquery.js"></script>
-<script type="text/javascript">
-function submitchdresponse(str){
 
-stt  = 'chd' + str;
-var ptr = document.getElementById(stt).value;
-
-if(ptr=="select"){
-  alert ("The status must be selected");
-  return false;
-}
-
-if(window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
-  xmlhttp=new XMLHttpRequest();
-}else{// code for IE6, IE5
-  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-}
-
-xmlhttp.onreadystatechange=function(){
-  if(xmlhttp.readyState==4 && xmlhttp.status==200){
-    document.getElementById("ResHint").innerHTML=xmlhttp.responseText;
-  }
-}
-
-xmlhttp.open("GET", "chdstatus.php?q="+str+ "&r=" + ptr, true);
-xmlhttp.send();
-
-}
-function automailer(chd_id){
-	mywindow=window.open ("chdAutoMailer.php?chd_id="+chd_id,'AutoMailer','width=600,height=600,scrollbars=1');
-	if (window.focus) {mywindow.focus()}
-}
-
-function rejectCourse(id) {
-	var rejected = 0;
-	if($('#reject-'+id).is(":checked")) {
-		rejected = 1;
-	}
-
-	$.post('common-status-update.php',{id:id, key:'rejectCourse', value:rejected}, function(){
-		if(rejected) {
-			alert('course rejected successfully');
-		} else {
-			alert('course un-rejected successfully');
-		}
-			
-	});
-}
-function phaseClosed(id) {
-	var closed = 0;
-	if($('#closed-'+id).is(":checked")) {
-		closed = 1;
-	}
-
-	$.post('common-status-update.php',{id:id, key:'phaseClosed', value:closed}, function(){
-		if(closed) {
-			alert('phase closed successfully');
-		} else {
-			alert('phase un-closed successfully');
-		}
-			
-	});
-}
-function outSourced(id) {
-	var is_outsourced = 0;
-	if($('#outsourced-'+id).is(":checked")) {
-		is_outsourced = 1;
-	}
-
-	$.post('common-status-update.php',{id:id, key:'outSourced', value:is_outsourced}, function(){
-		if(is_outsourced) {
-			alert('phase set as outsourced');
-		} else {
-			alert('phase unset as outsourced');
-		}
-			
-	});
-}
-</script>
 </head>
 
 <body background="bg.gif">
-<table width="80%" border="0" cellspacing="0" cellpadding="0" border="0">
+<table width="90%" border="0" cellspacing="0" cellpadding="0" border="0">
 <tr>
   <td>
   <?php 
@@ -170,20 +93,14 @@ function outSourced(id) {
 </tr>
 </table>
 <br />
-<table width="80%" border="1" cellspacing="0" cellpadding="0" bordercolor="orangered" class="table_text">
-<div id="ResHint"></div>
+<table width="90%" border="1" cellspacing="0" cellpadding="0" bordercolor="orangered" class="table_text">
 <tr>
-  <th>S. No.</th>
   <th>CHD No.</th>
   <th>CHD Submit Date</th> 
   <th>Project Name</th>
   <th>Project Manager</th>  
   <th>Course Title</th>
-  <!--<th>Start Date</th>-->
   <th>Course Level</th>
-  <th>Course Rejected</th>
-  <th>Phase Closed</th>
-  <th>Outsourced</th>
   <th>Functional Manager[ID]</th>
   <th>Developers[ID]</th>
   <th>Functional Manager[Med]</th>
@@ -204,39 +121,23 @@ function outSourced(id) {
   <th>Updated PSD path [SVN]</th>
   <th>Test Case/Checklists [SVN]</th>
   <th>Reviewer</th>  
-  <th>QC/s</th>
-  <th>Remarks</th>
-  <?php if($userrole == 'QC'){ ?>
-  <th>Status</th>
-  <th>Change Status</th>
-  <th>Assignment</th>
-  <?php } ?>    
-  <th>Comments</th>
   <th>Attach supporting documents</th>
 </tr>
 <?php
 $i = 1;
-$rownumbers = 26;
-if( isset($_REQUEST['project']) && !empty($_REQUEST['project']) && ($_REQUEST['project'] != "Select") ){
-  $selectFuncRvw="SELECT * FROM tbl_functional_review WHERE project_id = '".$_REQUEST['pro_id']."' ORDER BY id DESC";                                   
+$rownumbers = 27;
+  $selectFuncRvw="SELECT * FROM tbl_functional_review ORDER BY id DESC LIMIT 20";                                   
   $queryFuncRvw = mysql_query($selectFuncRvw);
   $numrowsFuncRvw = mysql_num_rows($queryFuncRvw);
   if( !empty($numrowsFuncRvw) ){  
     while($fetchFuncRvw = mysql_fetch_array($queryFuncRvw)){    
       echo "<tr>";
-        echo "<td>".$i."</td>";
 		echo "<td>".$fetchFuncRvw['id']."</td>"; 
-		echo "<td>".date('d-m-Y', strtotime($fetchFuncRvw['start_date']))."<br/><input class='button' type='button' value='Submit CHD' onclick='automailer($fetchFuncRvw[id])'/></td>"; 		
+		echo "<td><div align=center style="."width:100;height:100;overflow:auto>".date('d-m-Y', strtotime($fetchFuncRvw['start_date']))."</div></td>"; 		
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['project_name']."</div>"."</td>";
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['project_manager']."</div>"."</td>";  
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['course_title']."</div>"."</td>";
-        //echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['start_date']."</div>"."</td>";
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['course_level']."</div>"."</td>";
-		?>
-        <td><div align='center' style="width:40;height:100;overflow:auto"><input type='checkbox' name='reject_course' onclick="rejectCourse(<?php echo $fetchFuncRvw['id'] ?>)" id="reject-<?php echo $fetchFuncRvw['id'] ?>" <?php echo ($fetchFuncRvw['reject_course']) ? "checked" : '' ?>></div></td>
-		<td><div align='center' style="width:40;height:100;overflow:auto"><input type='checkbox' name='phase_closed' onclick="phaseClosed(<?php echo $fetchFuncRvw['id'] ?>)" id="closed-<?php echo $fetchFuncRvw['id'] ?>" <?php echo ($fetchFuncRvw['phase_closed']) ? "checked" : '' ?>></div></td>
-		<td><div align='center' style="width:40;height:100;overflow:auto"><input type='checkbox' name='out_sourced' onclick="outSourced(<?php echo $fetchFuncRvw['id'] ?>)" id="outsourced-<?php echo $fetchFuncRvw['id'] ?>" <?php echo ($fetchFuncRvw['out_sourced']) ? "checked" : '' ?>></div></td>
-		<?php 
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['functional_manager_id']."</div>"."</td>";
 		echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['developers_id']."</div>"."</td>";
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['functional_manager_media']."</div>"."</td>";
@@ -257,30 +158,6 @@ if( isset($_REQUEST['project']) && !empty($_REQUEST['project']) && ($_REQUEST['p
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['test_plan_path']."</div>"."</td>";
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['test_checklists']."</div>"."</td>";
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['reviewer']."</div>"."</td>";
-        echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['assignqc']."</div>"."</td>";
-        echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['qccomment']."</div>"."</td>";
-      
-        if($userrole == 'QC'){
-          $rownumbers = 29;
-          $haystack = explode(",", $fetchFuncRvw['assignqc']);  
-          if( in_array($username, $haystack) ){               
-?>
-        <TD>
-          <select id="<?php echo "chd".$fetchFuncRvw['id']; ?>" size="1">
-            <option value="select" selected>Select</option>
-            <option value="accepted" <?php if($fetchFuncRvw['status'] == 'accepted')echo " selected"; ?>>Accepted</option>
-            <option value="rejected" <?php if($fetchFuncRvw['status'] == 'rejected')echo " selected"; ?>>Rejected</option>
-          </select>          
-        </TD>
-        <TD><input type="button" class="button" value="Change" onclick="submitchdresponse(<?php echo $fetchFuncRvw['id'] ?>)"></TD>
-<?php     }else{ ?>        
-        <TD align='center'>Not allowed</TD>
-        <TD align='center'>Not allowed</TD>
-<?php     } ?>
-        <TD><input type="button" name="qcassignment" class="button" value="QC Assignment" onclick="location.href='chdchangestatus.php?chdid=<?php echo $fetchFuncRvw['id']; ?>&pname=<?php echo urlencode($fetchFuncRvw['project_name']); ?>';"></TD>
-<?php 
-        }  
-        echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['comments']."</div>"."</td>";
         echo "<td><div align='left' style='width:150;height:100;overflow:auto;'>
         ".((!empty($fetchFuncRvw['support_file1']))?'<a href="support/'.$fetchFuncRvw['support_file1'].'">'.$fetchFuncRvw['support_file1'].'</a><br />':'')."
         ".((!empty($fetchFuncRvw['support_file2']))?'<a href="support/'.$fetchFuncRvw['support_file2'].'">'.$fetchFuncRvw['support_file2'].'</a><br />':'')."
@@ -295,18 +172,11 @@ if( isset($_REQUEST['project']) && !empty($_REQUEST['project']) && ($_REQUEST['p
       echo "<td colspan='".$rownumbers."' align='center'>No record found.</td>";    
     echo "</tr>";  
   }
-}else{
-  echo "<tr>";
-    echo "<td colspan='".$rownumbers."' align='center'>No record found.</td>";    
-  echo "</tr>";
-}
+
 mysql_close($con);
 ?>
 </table>
-
 <br />
-<input type="button" name="goback" class="button" value="Go Back" onclick="location.href='chd.php';">
 <input type="button" name="gotologout" class="button" value="Log Out" onclick="location.href='logout.php';">
 </body>
 </html>
- 
