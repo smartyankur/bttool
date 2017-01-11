@@ -121,11 +121,13 @@ body{
   <th>Updated PSD path [SVN]</th>
   <th>Test Case/Checklists [SVN]</th>
   <th>Reviewer</th>  
+  <th>Comments</th>  
+  <th>Test Environment</th>  
   <th>Attach supporting documents</th>
 </tr>
 <?php
 $i = 1;
-$rownumbers = 27;
+$rownumbers = 29;
   $selectFuncRvw="SELECT * FROM tbl_functional_review ORDER BY id DESC LIMIT 20";                                   
   $queryFuncRvw = mysql_query($selectFuncRvw);
   $numrowsFuncRvw = mysql_num_rows($queryFuncRvw);
@@ -158,6 +160,8 @@ $rownumbers = 27;
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['test_plan_path']."</div>"."</td>";
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['test_checklists']."</div>"."</td>";
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['reviewer']."</div>"."</td>";
+        echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['comments']."</div>"."</td>";
+        echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['testenvironment']."</div>"."</td>";
         echo "<td><div align='left' style='width:150;height:100;overflow:auto;'>
         ".((!empty($fetchFuncRvw['support_file1']))?'<a href="support/'.$fetchFuncRvw['support_file1'].'">'.$fetchFuncRvw['support_file1'].'</a><br />':'')."
         ".((!empty($fetchFuncRvw['support_file2']))?'<a href="support/'.$fetchFuncRvw['support_file2'].'">'.$fetchFuncRvw['support_file2'].'</a><br />':'')."
