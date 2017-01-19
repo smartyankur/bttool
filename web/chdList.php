@@ -96,7 +96,7 @@ body{
 <table width="90%" border="1" cellspacing="0" cellpadding="0" bordercolor="orangered" class="table_text">
 <tr>
   <th>CHD No.</th>
-  <th>CHD Submit Date</th> 
+  <!--<th>CHD Submit Date</th>-->
   <th>Project Name</th>
   <th>Project Manager</th>  
   <th>Course Title</th>
@@ -135,7 +135,7 @@ $rownumbers = 29;
     while($fetchFuncRvw = mysql_fetch_array($queryFuncRvw)){    
       echo "<tr>";
 		echo "<td>".$fetchFuncRvw['id']."</td>"; 
-		echo "<td><div align=center style="."width:100;height:100;overflow:auto>".date('d-m-Y', strtotime($fetchFuncRvw['start_date']))."</div></td>"; 		
+		//echo "<td><div align=center style="."width:100;height:100;overflow:auto>".date('d-m-Y', strtotime($fetchFuncRvw['start_date']))."</div></td>"; 		
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['project_name']."</div>"."</td>";
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['project_manager']."</div>"."</td>";  
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['course_title']."</div>"."</td>";

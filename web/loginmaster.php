@@ -113,10 +113,17 @@ if (role=="select")
 <option value="BD">BD</option>
 <option value="DM">DM</option>
 <option value="PM">PM</option>
+<option value="ID FM">ID FM</option>
+<option value="ID">ID</option>
+<option value="Media FM">Media FM</option>
+<option value="Media">Media</option>
+<option value="Tech FM">Tech FM</option>
+<option value="Tech">Tech</option>
 <option value="FM">FM</option>
 <option value="IQ">IQ</option>
 <option value="HR">HR</option>
 <option value="FIN">FIN</option>
+<option value="QC FM">QC FM</option>
 <option value="QC">QC</option>
 <option value="PH">PH</option>
 <option value="DEV">DEV</option>
