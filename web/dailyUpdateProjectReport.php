@@ -7,7 +7,7 @@ class DailyUpdateProjectReport {
 	
 	function prepareData($con) {
 		
-		$cur_date_timestamp = strtotime(date('Y-m-d'));
+		echo $cur_date_timestamp = strtotime(date('Y-m-d', strtotime("-1 Days")));
 		$sub_sql = "select project_id from tbl_functional_review where UNIX_TIMESTAMP(statusupdate) >= '".$cur_date_timestamp."' group by project_id UNION select project_id from qcuploadinfo where UNIX_TIMESTAMP(whenchangedstatus) >= '".$cur_date_timestamp."' group by project_id";
 		try {
 			$retval = mysql_query($sub_sql, $con);
@@ -58,7 +58,7 @@ class DailyUpdateProjectReport {
 				
 				foreach($val1 as $key => $val) {
 					$version = $val['version'];
-					if(!$val['phase_closed']) {
+					if($val['phase_closed']) {
 						$final[$key1][$version]['phase_status'] = 0;
 					} else {
 						$final[$key1][$version]['phase_status'] = 1;
@@ -147,7 +147,6 @@ class DailyUpdateProjectReport {
 					}
 				}
 			}
-			//echo '<pre>'; print_r($final); die;
 			echo json_encode($final);
 			return json_encode($final);
 		} catch(Exception $e) {
@@ -158,13 +157,12 @@ class DailyUpdateProjectReport {
 
 $obj = new DailyUpdateProjectReport();
 $res = $obj->prepareData($con);
-
 if( is_array($res) && array_key_exists('errorMessage', $res)) {
 	echo "No Record Found";
     return;
 }
 	
-$url = "http://192.168.2.203/Efficianttestv1/api/BTToolIntegration/syncbt";
+$url = "http://61.12.24.68/Efficianttestv1/api/BTToolIntegration/syncbt";
 
 $ch = curl_init( $url );
 # Setup request to send json via POST.
