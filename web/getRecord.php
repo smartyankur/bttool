@@ -2,7 +2,7 @@
 /*
  * @author Saurav Gupta
  */
-require_once("configure.php");
+require_once("/pagination/configure.php");
 $q=$_GET["q"];
 $project_id = $_GET['id'];
 $chd = explode("-", $_GET['chd_id']);
@@ -12,7 +12,7 @@ if (!(isset($_GET['pagenum']))) {
 } else {
 	$pagenum = intval($_GET['pagenum']); 		
 }
-
+echo '<pre>'; print_r($_GET); die;
 $filter_name = isset($_REQUEST['filter_name']) ? $_REQUEST['filter_name'] : '';
 $filter_value = isset($_REQUEST[str_replace('filter_','',$filter_name)."1"]) ? $_REQUEST[str_replace('filter_','',$filter_name)."1"] : '';
 //Number of results displayed per page 	by default its 10.

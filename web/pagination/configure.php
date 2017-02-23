@@ -30,6 +30,7 @@ $dboptions = array(
 //connect with the server
 try {
     $DB = new PDO(DB_DRIVER . ':host=' . DB_HOST . ';dbname=' . DB_DATABASE, DB_USER, DB_PASSWORD, $dboptions);
+
 } catch (Exception $ex) {
     echo($ex->getMessage());
     die;

@@ -29,7 +29,9 @@
 		echo "<h4>"."Hi ".$row['username']." ! Welcome to QC bug logging Tool"."</h4>";
 		$username=$row['username'];
 	} 	
-
+	if(isset($_GET['message']) && $_GET['message'] != '') {
+		echo "<h5 style='color:green'>".$_GET['message']."</h5>";
+	}
 	if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
 		// Configuration - Your Options
@@ -209,7 +211,7 @@ function displayRecords(numRecords, pageNum) {
 			if(fvalue != '') {
 				$.ajax({
 					type: "GET",
-					url: "pagination/getrecords.php",
+					url: "pagination/getRecord.php",
 					data: "show=" + numRecords + "&pagenum=" + pageNum+"&q="+str+"&id="+pro_id+"&filter_name="+$('#filter_name').val()+"&"+fname+"="+fvalue+"&bscat="+bscatval+"&chd_id="+chd,
 					cache: false,
 					beforeSend: function() {
@@ -232,7 +234,7 @@ function displayRecords(numRecords, pageNum) {
 	} else {
 		$.ajax({
 			type: "GET",
-			url: "pagination/getrecords.php",
+			url: "pagination/getRecord.php",
 			data: "show=" + numRecords + "&pagenum=" + pageNum+"&q="+str+"&id="+pro_id+"&chd_id="+chd,
 			cache: false,
 			beforeSend: function() {
