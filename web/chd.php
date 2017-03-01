@@ -88,7 +88,7 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
       if(filesize($_FILES["supportfile$x"]['tmp_name']) > $max_filesize)
       $errorMessage .= "The file '${filename.$x}' you attempted to upload is too large.<br>";
        
-      //Check if we can upload to the specified path, if not DIE and inform the user.
+      //Check if we can upload to the specified path, if not DIE and inform the user
       if(!is_writable($upload_path))
       $errorMessage .= "You cannot upload to the specified directory. Please CHMOD it to 777.";
        

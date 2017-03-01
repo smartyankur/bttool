@@ -494,7 +494,7 @@ function getinfo(){
 <td>Reviewee</td>
 <td>
     <?php
-	$query = "select DISTINCT username from login where role='DEV' AND dept='Content' order by username";
+	$query = "select DISTINCT username from login where role REGEXP 'ID|Media|Tech' AND dept='Content' order by username";
     $retval = mysql_query( $query, $con );
     $count = mysql_num_rows($retval);
 	

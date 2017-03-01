@@ -206,7 +206,7 @@ if($role=="QC" || $role=="QC FM" || $role=="IQ")
 }
 ?>
 <?php
-if(strpos($role, "Tech") !== false || strpos($role, "Media") !== false || strpos($role, "ID") !== false || $role == 'DEV' || $role == "IQ")
+if($role == 'DEV' || $role == "IQ")
 {
  if($dept=="Content")
  {

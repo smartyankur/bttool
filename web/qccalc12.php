@@ -113,21 +113,21 @@ body{
 	  $tot = $okcount + $okhold + $oksug;
 	  
 	  
-	  $count_by_cat="select bcat, count(*) from qcuploadinfo where project_id='$proj_id' AND bugstatus='closed' group by 'bcat'";
+	  $count_by_cat="select function, count(*) from qcuploadinfo where project_id='$proj_id' AND bugstatus='closed' group by 'function'";
       $retcat=mysql_query( $count_by_cat, $con );  
       
       while($bug_row_cat = mysql_fetch_assoc($retcat))  { 
-		if($bug_row_cat['bcat'] == "media")
+		if(strtolower($bug_row_cat['function']) == "media")
 			$totmed = $bug_row_cat['count(*)'];
-		else if($bug_row_cat['bcat'] == "editorial")
+		else if(strtolower($bug_row_cat['function']) == "editorial")
 			$toted = $bug_row_cat['count(*)'];
-		else if ($bug_row_cat['bcat'] == "functionality")
+		else if (strtolower($bug_row_cat['function']) == "functionality")
 			$totfn = $bug_row_cat['count(*)'];
-		else if ($bug_row_cat['bcat'] == "audio")
+		else if (strtolower($bug_row_cat['function']) == "audio")
 			$totau = $bug_row_cat['count(*)'];
-		else if ($bug_row_cat['bcat'] == "simulation")
+		else if (strtolower($bug_row_cat['function']) == "simulation")
 			$totsim = $bug_row_cat['count(*)'];
-		else if ($bug_row_cat['bcat'] == "suggesstion")
+		else if (strtolower($bug_row_cat['function']) == "suggesstion")
 			$totsug = $bug_row_cat['count(*)'];
 	  }
 	  
