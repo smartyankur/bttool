@@ -99,7 +99,7 @@ $lower_limit = ($pagenum - 1) * $page_limit;
 	</div>
 </div>
 
-<table width='50%' border='1' cellspacing='0' cellpadding='0'>
+<table width='100%' border='1' cellspacing='0' cellpadding='0'>
 
 <tr><th>ID</th><!--<th>Project</th>--><th>Phase</th><th>Reviewee</th><th>Cat</th><th>SubCat</th><th>Bug</th><th>Image</th><th>Reviewer</th><th>Status</th><th>Last Comment</th><th>Select Status</th><th>Comment</th><th>Click-Change</th><th>Change Reviewee</th><th>Creation Date</th></tr>
 <?php
@@ -107,17 +107,17 @@ if($cnt > 0) {
 foreach($results as $row)
   {
   echo "<tr>";
-  echo "<td>"."<div align=center style="."width:50;height:100;overflow:auto>".$row['id']."</div>"."</td>";
+  echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$row['id']."</div>"."</td>";
   //echo "<td>"."<div align=center style="."width:150;height:100;overflow:auto>".$row['project']."</div>"."</td>";
-  echo "<td>"."<div align=center style="."width:50;height:100;overflow:auto>".$row['phase']."</div>"."</td>";
+  echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$row['phase']."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$row['reviewee']."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$row['cat']."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$row['subcat']."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:200;height:100;overflow:auto>".$row['desc1']."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:300;height:100;overflow:auto>".$row['grab']."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:150;height:100;overflow:auto>".$row['reviewer']."</div>"."</td>";
-  echo "<td>"."<div align=center style="."width:75;height:100;overflow:auto>".$row['status']."</div>"."</td>";
-  echo "<td>"."<div align=center style="."width:75;height:100;overflow:auto>".$row['comment']."</div>"."</td>";
+  echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$row['status']."</div>"."</td>";
+  echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$row['comment']."</div>"."</td>";
   ?>
   <TD><select id="<?php echo $row['id'];?>" size="1">
   <option value="select" selected>Select</option>
@@ -135,7 +135,7 @@ foreach($results as $row)
   echo "</tr>";
 } 
 } else {
-	echo "<tr><td colspan='10'> No record Found</td></tr>";
+	echo "<tr><td colspan='15' align='center'> No record Found</td></tr>";
 }
 
 ?> 

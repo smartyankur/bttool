@@ -206,7 +206,7 @@ if($role=="QC" || $role=="QC FM" || $role=="IQ")
 }
 ?>
 <?php
-if($role == 'DEV' || $role == "IQ")
+if($role == 'DEV' || $role == "IQ" || $role == "Tech" || $role == "Media" || $role == "ID" || $role == "ID, Media" || $role == "ID, Tech" || $role == "Tech, Media" || $role == "Tech, ID" || $role == "Media, ID" || $role == "Media, Tech")
 {
  if($dept=="Content")
  {
@@ -217,9 +217,9 @@ if($role == 'DEV' || $role == "IQ")
 <TR>
 	<TD><a href="devcomment.php">For Dev Team -Log Response to Bugs from QC.</a></TD>
 </TR>
-<TR>
+<!--<TR>
 	<TD><a href="qcopenbugs.php">For Dev Team -Check open or hold Bugs.</a></TD>
-</TR>
+</TR>-->
 <TR>
 	<TD bgcolor="F7941C">Link for Functional Review findings.</TD>	
 </TR>
