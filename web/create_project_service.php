@@ -13,7 +13,7 @@ class createProject {
 			} else if(empty($req->client)) {
 				return $message['msg'] = 'Client Name required';
 			}
-			$insertProject = "INSERT INTO projectmaster(`pin`, `projectname`, `clientspoc`) values('".$req->pin."', '".$req->project."', '".$req->client."')";
+			$insertProject = "INSERT INTO projectmaster(`pin`, `projectname`, `clientspoc`) values('".$req->pin."', '".$req->client." ".$req->project." ".$req->pin."', '".$req->client."')";
 			
 			if(mysql_query($insertProject)){
 				return $message['msg'] = "project created successfully";
