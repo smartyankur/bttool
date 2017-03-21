@@ -216,7 +216,7 @@ foreach($results as $row)
   echo "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['qccomment'])."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['qcresponding'])."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['qcrespdate'])."</div>"."</td>";
-  echo "<td><textarea id=".$row['id']." rows="."4"." maxlength="."160"." cols="."30"."></textarea>";
+  echo "<td><textarea id=".$row['id']." rows="."4"." cols="."30"."></textarea>";
   echo "	<select id="."round".$row['id'].">
 		  <option size=30 selected>Select</option>
 		  <option value='R2'>R2</option>

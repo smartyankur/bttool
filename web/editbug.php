@@ -61,7 +61,7 @@ if($filename<>"")
    {
     $msg='Your file '.$filename.' upload was successful for project :'.$a.' and phase :'.$f.',You can view the file <a href="' . $upload_path . $str . '" title="Your File">here</a>'; // It worked.
     echo "</br>";
-	$query="update  qcuploadinfo set module='$g',topic='$h',browser='$j',function='$funct',bcat='$l',bscat='$l1',bdr='$m',asignee='$n',qc='$o',screen='$p',filepath='$str',filename='$filename',uploaddate='$mydate',severity='$q' where id='$d'";
+	$query="update qcuploadinfo set module='$g',topic='$h',browser='$j',function='$funct',bcat='$l',bscat='$l1',bdr='$m',asignee='$n',qc='$o',screen='$p',filepath='$str',filename='$filename',uploaddate='$mydate',severity='$q' where id='$d'";
 	//echo $query;
     if (mysql_query($query))
        {
@@ -79,7 +79,7 @@ else //filename is blank means the user has not uploaded any file.
 {
 //$date = date('m/d/Y h:i:s a', time());
 	$mydate = date('Y-m-d h:i:s', time());     
-    $query="update qcuploadinfo set module='$g',topic='$h',browser='$j',function='$funct',bcat='$l',bscat='$bscat',bdr='$m',asignee='$n',qc='$o',screen='$p',whenchangedstatus='$mydate',severity='$q' where id='$d'";
+    $query="update qcuploadinfo set module='$g',topic='$h',browser='$j',function='$funct',bcat='$l',bscat='$l1',bdr='$m',asignee='$n',qc='$o',screen='$p',whenchangedstatus='$mydate',severity='$q' where id='$d'";
 	//echo $query;
     if (mysql_query($query))
        {

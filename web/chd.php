@@ -32,6 +32,7 @@ while($row = mysql_fetch_assoc($retval)){
 <input class="button" value="Show Twenty Recent CHDs" onclick="location.href='chdList.php';" type="button">&nbsp;&nbsp;
 <input class="button" value="Show CHD Guidelines" onclick="location.href='CHD_Guidelines_and_Release_Notes.xlsx';" type="button">
 <?php
+$post_data = array();
 if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
   $project        = urldecode($_POST["project"]);
   $project_id     = $_POST["pro_id"];
@@ -64,7 +65,7 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
   $comments       = mysql_real_escape_string($_POST["comments"]);
   $testenvironment = mysql_real_escape_string($_POST["testenvironment"]);
   $chd_submit_date = date('d-m-Y'); 
-
+  
 ///////////////////////////////////////////////////////////////////////////////////
 
 
@@ -99,8 +100,10 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
           $successMessage .= 'Your file '.$filename.' has been uploaded successfully. You can view the uploaded file <a href="' . $upload_path . $fstr . '" title="Your File">here</a>';
         }
       }else{
-        header ("Location: chd.php?errorMessage=".urlencode($errorMessage));
-        exit;
+		$_POST['errorMessage'] = $errorMessage;
+		//print_r($post_data); die;
+        //header ("Location: chd.php?errorMessage=".urlencode($errorMessage));
+        //exit;
       }
     }
   }	
@@ -208,10 +211,9 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
     header("Location: chd.php?project=".urlencode($project)."&successMessage=".urlencode($successMessage));
   }else{
     $errorMessage = "Record has not been created for project '".$project . "'";
-    header("Location: chd.php?project=".urlencode($project)."&errorMessage=".urlencode($errorMessage));
+	$_POST['errorMessage'] = $errorMessage;
+    //header("Location: chd.php?project=".urlencode($project)."&errorMessage=".urlencode($errorMessage));
   }	
-  }else{
-    header("Location: chd.php?errorMessage=".urlencode($errorMessage));
   }
 }
 ?>
@@ -524,8 +526,8 @@ $color   = "";
 if( isset($_REQUEST["successMessage"]) && !empty($_REQUEST["successMessage"]) ){
   $message = $_REQUEST["successMessage"];  
   $color   = "green";    
-}elseif( isset($_REQUEST["errorMessage"]) && !empty($_REQUEST["errorMessage"]) ){
-  $message = $_REQUEST["errorMessage"];  
+}elseif( isset($_POST["errorMessage"]) && !empty($_POST["errorMessage"]) ){
+  $message = $_POST["errorMessage"];  
   $color   = "red";  
 }
 
@@ -552,7 +554,9 @@ if( !empty($message) ){
   $fmid           = $_REQUEST["fmid"];
   $fmmedia        = $_REQUEST["fmmedia"];
   $fmtech         = $_REQUEST["fmtech"];
-  $devs           = $_REQUEST["devs"];
+  $devsid         = $_REQUEST["devsid"];
+  $devstech       = $_REQUEST["devstech"];
+  $devsmed         = $_REQUEST["devsmed"];
   $version        = $_REQUEST["version"];
   $pagecount      = $_REQUEST["pagecount"];
   $slidecount     = $_REQUEST["slidecount"];
@@ -569,7 +573,7 @@ if( !empty($message) ){
   $tppath         = $_REQUEST["tppath"];
   $chk            = $_REQUEST["chk"];
   $comments       = $_REQUEST["comments"];  
-  $testenvironment       = $_REQUEST["testenvironment"];  
+  $testenvironment = $_REQUEST["testenvironment"];  
   $function       = $_REQUEST["function"];  
 ?>  
 <form name="tstest" id="tstest" method="post" action="" onsubmit="return test()" enctype="multipart/form-data">
@@ -593,7 +597,7 @@ if(!empty($numrowsProject)){
   while($fetchProject = mysql_fetch_array($queryProject)){
     if(strlen($fetchProject['projectname'])<>0){
 ?>
-    <option value="<?php echo urlencode($fetchProject['projectname']); ?>" <?php if($project==$fetchProject['projectname'])echo "selected"; ?> ref="<?php echo $fetchProject['pindatabaseid']; ?>"><?php echo $fetchProject['projectname']; ?></option> 
+    <option value="<?php echo urlencode($fetchProject['projectname']); ?>" <?php if(urldecode($project)==$fetchProject['projectname'])echo "selected"; ?> ref="<?php echo $fetchProject['pindatabaseid']; ?>"><?php echo $fetchProject['projectname']; ?></option> 
 <?php 
     }
   } 
@@ -646,9 +650,9 @@ if(!empty($numrowsProject)){
 <TR>
     <TD>Course Level <font color='red'>*</font></TD>
     <TD>
-      <label for="L1"><input class="radio_style" id="L1" name="courseLevel" type="radio" value="L1">L1</label>
-      <label for="L2"><input class="radio_style" id="L2" name="courseLevel" type="radio" value="L2">L2</label>
-      <label for="L3"><input class="radio_style" id="L3" name="courseLevel" type="radio" value="L3">L3</label>
+      <label for="L1"><input class="radio_style" id="L1" name="courseLevel" type="radio" value="L1" <?php echo $courseLevel == "L1" ? "checked" : "" ?>>L1</label>
+      <label for="L2"><input class="radio_style" id="L2" name="courseLevel" type="radio" value="L2" <?php echo $courseLevel == "L2" ? "checked" : "" ?>>L2</label>
+      <label for="L3"><input class="radio_style" id="L3" name="courseLevel" type="radio" value="L3" <?php echo $courseLevel == "L3" ? "checked" : "" ?>>L3</label>
     </TD>
 </TR>
 
@@ -809,11 +813,11 @@ if(!empty($numrowsDEV)){
 <TR>
   <TD><label for="type">Version</label> <font color='red'>*</font></TD>
   <TD>
-    <label for="proto"><input class="radio_style" id="proto" name="version" type="radio" value="proto">Proto</label>
-    <label for="POC"><input class="radio_style" id="POC" name="version" type="radio" value="POC">POC</label>
-    <label for="alpha"><input class="radio_style" id="alpha" name="version" type="radio" value="alpha">Alpha</label>
-    <label for="beta"><input class="radio_style" id="beta" name="version" type="radio" value="beta">Beta</label>
-    <label for="gold"><input class="radio_style" id="gold" name="version" type="radio" value="gold">Gold</label>
+    <label for="proto"><input class="radio_style" id="proto" name="version" type="radio" value="proto" <?php echo $version == "proto" ? "checked" : "" ?>>Proto</label>
+    <label for="POC"><input class="radio_style" id="POC" name="version" type="radio" value="POC" <?php echo $version == "POC" ? "checked" : "" ?>>POC</label>
+    <label for="alpha"><input class="radio_style" id="alpha" name="version" type="radio" value="alpha" <?php echo $version == "alpha" ? "checked" : "" ?>>Alpha</label>
+    <label for="beta"><input class="radio_style" id="beta" name="version" type="radio" value="beta" <?php echo $version == "beta" ? "checked" : "" ?>>Beta</label>
+    <label for="gold"><input class="radio_style" id="gold" name="version" type="radio" value="gold" <?php echo $version == "gold" ? "checked" : "" ?>>Gold</label>
   </TD>
 </TR>
 
@@ -854,7 +858,7 @@ if(!empty($numrowsDEV)){
 
 <TR>
   <TD><label for="type">Course Memory Size in MB</label> <font color='red'>*</font></TD>
-  <TD><input type="text" name="coursesize" id="coursesize" maxlength="5" size="5" value="<?php echo $learningHours; ?>">
+  <TD><input type="text" name="coursesize" id="coursesize" maxlength="5" size="5" value="<?php echo $coursesize; ?>">
     <!--<label for="pointfive"><input class="radio_style" id="pointfive" name="learningHours" type="radio" value="pointfive">0.5</label>
     <label for="one"><input class="radio_style" id="one" name="learningHours" type="radio" value="one">1</label>
     <label for="oneandhalf"><input class="radio_style" id="oneandhalf" name="learningHours" type="radio" value="oneandhalf">1.5</label>
@@ -878,28 +882,28 @@ if(!empty($numrowsDEV)){
 <TR>
   <TD><label for="type">Partial Testing</label> <font color='red'>*</font></TD>
   <TD id="check1">
-    <label for="audioreview"><input type="checkbox" name="partialTesting[]" id="audioreview" value="Audio review">Audio review</label>
-    <label for="contentmapping"><input type="checkbox" name="partialTesting[]" id="contentmapping" value="Content mapping">Content mapping</label>
-    <label for="functionality"><input type="checkbox" name="partialTesting[]" id="functionality" value="Functionality">Functionality</label>
-    <label for="transcriptmapping"><input type="checkbox" name="partialTesting[]" id="transcriptmapping" value="Transcript mapping">Transcript mapping</label>
-    <label for="internaledit"><input type="checkbox" name="partialTesting[]" id="internaledit" value="Internal edit">Internal edit</label>
-    <label for="clienteditalpha"><input type="checkbox" name="partialTesting[]" id="clienteditalpha" value="Clientedit alpha">Clientedit alpha</label>
-    <label for="clienteditbeta"><input type="checkbox" name="partialTesting[]" id="clienteditbeta" value="Clientedit beta">Clientedit beta</label>
-    <label for="scormtesting"><input type="checkbox" name="partialTesting[]" id="scormtesting" value="Scorm testing">Scorm testing</label>
-    <label for="audiomapping"><input type="checkbox" name="partialTesting[]" id="audiomapping" value="Audio mapping">Audio mapping</label>
-    <label for="audiosynching"><input type="checkbox" name="partialTesting[]" id="audiosynching" value="Audio synching">Audio synching</label>
+    <label for="audioreview"><input type="checkbox" name="partialTesting[]" id="audioreview" value="Audio review" <?php if(in_array("Audio review", $partialTesting))echo " checked"; ?>>Audio review</label>
+    <label for="contentmapping"><input type="checkbox" name="partialTesting[]" id="contentmapping" value="Content mapping" <?php if(in_array("Content mapping", $partialTesting))echo " checked"; ?>>Content mapping</label>
+    <label for="functionality"><input type="checkbox" name="partialTesting[]" id="functionality" value="Functionality" <?php if(in_array("Functionality", $partialTesting))echo " checked"; ?>>Functionality</label>
+    <label for="transcriptmapping"><input type="checkbox" name="partialTesting[]" id="transcriptmapping" value="Transcript mapping" <?php if(in_array("Transcript mapping", $partialTesting))echo " checked"; ?>>Transcript mapping</label>
+    <label for="internaledit"><input type="checkbox" name="partialTesting[]" id="internaledit" value="Internal edit" <?php if(in_array("Internal edit", $partialTesting))echo " checked"; ?>>Internal edit</label>
+    <label for="clienteditalpha"><input type="checkbox" name="partialTesting[]" id="clienteditalpha" value="Clientedit alpha" <?php if(in_array("Clientedit alpha", $partialTesting))echo " checked"; ?>>Clientedit alpha</label>
+    <label for="clienteditbeta"><input type="checkbox" name="partialTesting[]" id="clienteditbeta" value="Clientedit beta" <?php if(in_array("Clientedit beta", $partialTesting))echo " checked"; ?>>Clientedit beta</label>
+    <label for="scormtesting"><input type="checkbox" name="partialTesting[]" id="scormtesting" value="Scorm testing" <?php if(in_array("Scorm testing", $partialTesting))echo " checked"; ?>>Scorm testing</label>
+    <label for="audiomapping"><input type="checkbox" name="partialTesting[]" id="audiomapping" value="Audio mapping" <?php if(in_array("Audio mapping", $partialTesting))echo " checked"; ?>>Audio mapping</label>
+    <label for="audiosynching"><input type="checkbox" name="partialTesting[]" id="audiosynching" value="Audio synching" <?php if(in_array("Audio synching", $partialTesting))echo " checked"; ?>>Audio synching</label>
   </TD>
 </TR>
 
 <TR>
   <TD><label for="confimation">Confirmation On Reviews</label> <font color='red'>*</font></TD>
   <TD>
-    <label for="idreview"><input type="checkbox" name="confReviews[]" id="idreview" value="ID review-Internal">ID review-Internal</label>
-    <label for="gdreview"><input type="checkbox" name="confReviews[]" id="gdreview" value="GD Review Sign Off Internal">GD Review Sign Off Internal</label>
-    <label for="progreview"><input type="checkbox" name="confReviews[]" id="progreview" value="Programing Review Sign Off Internal">Programing Review Sign Off Internal</label>
-    <label for="peerreview"><input type="checkbox" name="confReviews[]" id="peerreview" value="Peer review">Peer review</label>
-    <label for="functionalreview"><input type="checkbox" name="confReviews[]" id="functionalreview" value="Functional Review">Functional Review</label>
-    <label for="idsignoff"><input type="checkbox" name="confReviews[]" id="idsignoff" value="ID Sign Off">ID Sign Off</label>
+    <label for="idreview"><input type="checkbox" name="confReviews[]" id="idreview" value="ID review-Internal" <?php if(in_array("ID review-Internal", $confReviews))echo " checked"; ?>>ID review-Internal</label>
+    <label for="gdreview"><input type="checkbox" name="confReviews[]" id="gdreview" value="GD Review Sign Off Internal" <?php if(in_array("GD Review Sign Off Internal", $confReviews))echo " checked"; ?>>GD Review Sign Off Internal</label>
+    <label for="progreview"><input type="checkbox" name="confReviews[]" id="progreview" value="Programing Review Sign Off Internal" <?php if(in_array("Programing Review Sign Off Internal", $confReviews))echo " checked"; ?>>Programing Review Sign Off Internal</label>
+    <label for="peerreview"><input type="checkbox" name="confReviews[]" id="peerreview" value="Peer review" <?php if(in_array("Programing Review Sign Off Internal", $confReviews))echo " checked"; ?>>Peer review</label>
+    <label for="functionalreview"><input type="checkbox" name="confReviews[]" id="functionalreview" value="Functional Review" <?php if(in_array("Functional Review", $confReviews))echo " checked"; ?>>Functional Review</label>
+    <label for="idsignoff"><input type="checkbox" name="confReviews[]" id="idsignoff" value="ID Sign Off" <?php if(in_array("ID Sign Off", $confReviews))echo " checked"; ?>>ID Sign Off</label>
   </TD>
 </TR>
 

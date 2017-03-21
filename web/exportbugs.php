@@ -20,7 +20,7 @@ $end_date = isset($_REQUEST['end_date']) ? $_REQUEST['end_date'] : "";
 if($mode=="openbug" && !empty($q)) {
 	
 	if(!empty($filter_name) && in_array(str_replace('filter_','',$filter_name),array("bcat","severity","bugstatus","asignee","qc")) && !empty($filter_value) && $filter_value != 'select'){
-		$sql = "SELECT * FROM qcuploadinfo WHERE project_id = '".$pro_id."' AND ".str_replace('filter_','',$filter_name)." = '".$filter_value."'"; 
+		$sql = "SELECT *, fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE qc.project_id = '".$pro_id."' AND ".str_replace('filter_','',$filter_name)." = '".$filter_value."'"; 
 		if(isset($_GET['bscat']) && $_GET['bscat'] != '' && $_GET['bscat'] != 'select') {
 			$sql .= " AND bscat = '".$_GET['bscat']."'";
 		}
@@ -28,7 +28,7 @@ if($mode=="openbug" && !empty($q)) {
 			$sql.= " And chd_id = '".$chd[0]."'";
 		}
 	} else {
-		$sql = "SELECT * FROM qcuploadinfo WHERE project_id = '".$pro_id."'";
+		$sql = "SELECT *, fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE qc.project_id = '".$pro_id."'";
 		if(isset($chd) && !empty($chd)){
 			$sql.= " and chd_id = '".$chd[0]."'";
 		}
@@ -41,10 +41,10 @@ if($mode=="openbug" && !empty($q)) {
 } else if($mode == "devbug" && !empty($q)) {
 	$issuetype = isset($_GET['issuetype']) ? $_GET['issuetype'] : null;
 	if($issuetype && $issuetype != 'any') {
-		$sql = "SELECT * FROM qcuploadinfo WHERE project_id = '".$pro_id."' AND bugstatus = '".$issuetype."' AND chd_id = '".$chd[0]."'";
+		$sql = "SELECT *, fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE qc.project_id = '".$pro_id."' AND bugstatus = '".$issuetype."' AND chd_id = '".$chd[0]."'";
 	}
 	else {
-		$sql = "SELECT * FROM qcuploadinfo WHERE project_id = '".$pro_id."' AND chd_id = '".$chd[0]."'";
+		$sql = "SELECT *, fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE qc.project_id = '".$pro_id."' AND chd_id = '".$chd[0]."'";
 	}
 	$result = mysql_query($sql);
 	$count = mysql_num_rows($result);
@@ -65,9 +65,9 @@ if($mode=="openbug" && !empty($q)) {
 			$end_date = $end_date_ary[2]."-".$end_date_ary[1]."-".$end_date_ary[0];
 
 			if(!empty($q)) {
-				$sql="SELECT * FROM qcuploadinfo WHERE project='".$q."' AND uploaddate BETWEEN '".$start_date."' AND '".$end_date."'";
+				$sql="SELECT *, fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE qc.project='".$q."' AND uploaddate BETWEEN '".$start_date."' AND '".$end_date."'";
 			} else {
-				$sql="SELECT * FROM qcuploadinfo WHERE uploaddate BETWEEN '".$start_date."' AND '".$end_date."'";
+				$sql="SELECT *, fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE uploaddate BETWEEN '".$start_date."' AND '".$end_date."'";
 				$q = "AllProjects";//for download file naming
 			}
 
@@ -93,6 +93,7 @@ $str = "<table width='50%' border='1' cellspacing='0' cellpadding='0'>
   <th>ID</th>
   <th>Project</th>
   <th>CHD ID</th>
+  <th>Course Name</th>
   <th>Browser</th>
   <th>Module</th>
   <th>Topic</th>
@@ -141,6 +142,7 @@ while($row = mysql_fetch_array($result))
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['id'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['project'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['chd_id'])."</div>"."</td>";
+  $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['course_title'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['browser'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['module'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['topic'])."</div>"."</td>";

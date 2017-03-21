@@ -105,7 +105,7 @@ echo "<table cellpadding='0' cellspacing='0' border='1'>
 	  echo "<td>".$row['bugstatus']."</td>";
 	  echo "<td>"."<b>".$row['bcat']."</b>"."</td>";
 	  echo "<td>".'<a target="_blank" href="'.$upload_path.$row['filepath'].'" title="Your File">'.$row['filepath'].'</a>'."</td>";
-	  echo "<td><textarea id=".$row['id']." rows="."4"." maxlength="."160"." cols="."30"."></textarea>";
+	  echo "<td><textarea id=".$row['id']." rows="."4"." cols="."30"."></textarea>";
 	  echo " Change Status ";
 	  echo "<select id="."stat".$row['id'].">";
 	  ?>
