@@ -190,7 +190,7 @@ echo "<table cellpadding='5' cellspacing='0' border='1'>
 	  echo "<td>".$val['L2']['eclosed']."</td>";
 	  echo "<td>".$val['L3']['eclosed']."</td>";
 	  echo "<td>".$cumulative_total_bug."</td>";
-	  echo "<td>".number_format(($val['bug_closed']/$screen_count[$key]) * 60, 2)."</td>";
+	  echo "<td>".number_format(($val['bug_closed']/$screen_count[$key]) * 40, 2)."</td>";
 	  echo "</tr>";
 	  
 	}

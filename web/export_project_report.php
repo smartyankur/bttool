@@ -201,7 +201,7 @@ $str .= "<table cellpadding='5' cellspacing='0' border='1'>
 		$str .= "<td>".$val['L2']['eclosed']."</td>";
 		$str .= "<td>".$val['L3']['eclosed']."</td>";
 		$str .= "<td>".$cumulative_total_bug."</td>";
-		$str .= "<td>".number_format(($val['bug_closed']/$screen_count[$key]) * 60, 2)."</td>";
+		$str .= "<td>".number_format(($val['bug_closed']/$screen_count[$key]) * 40, 2)."</td>";
 		$str .= "</tr>";
 	  
 	}

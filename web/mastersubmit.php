@@ -5,7 +5,7 @@ error_reporting(0);
 include("config.php");
 
 $pin=trim($_POST["pin"]);
-$projectname=mysql_real_escape_string(trim($_POST["projectname"]));
+$projectname=mysql_real_escape_string(trim($_POST["clientspoc"]))." ".mysql_real_escape_string(trim($_POST["projectname"]))." ".trim($_POST["pin"]);
 $IDate=$_POST["IDate"];
 $SDate=$_POST["SDate"];
 $EDate=$_POST["EDate"];

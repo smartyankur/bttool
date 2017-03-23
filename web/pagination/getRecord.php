@@ -227,7 +227,7 @@ foreach($results as $row)
   echo "</tr>";
   }
 } else {
-	echo "<tr><td colspan='25' style='text-align:center;'>No Record Found</td></tr>";
+	echo "<tr><td colspan='26' style='text-align:center;'>No Record Found</td></tr>";
 }
   ?>
   </tbody>

@@ -479,7 +479,7 @@ if(bcat=="")
   }
 
 
-  if(!module.match(alphanumericExp))
+  /*if(!module.match(alphanumericExp))
   {
   alert("Module Name Should be Purely Alphanumeric");
   return false;
@@ -495,7 +495,7 @@ if(bcat=="")
   {
   alert("Topic Details Should be Purely Alphanumeric");
   return false;
-  }
+  }*/
 
  
   /*if(!bug.match(alphanumericExp))
@@ -912,17 +912,17 @@ function submitresponse_devcomment(str)
 
 <TR>
 <TD>Module Name</TD>
-<TD><input type=text maxlength=42 size=42 name="module" id="module" value="<?php echo $module;?>">-Please use only alphabets and numbers</TD>
+<TD><input type=text size=42 name="module" id="module" value="<?php echo $module;?>">-Please use only alphabets and numbers</TD>
 </TR>
 
 <TR>
 <TD>Topic Name</TD>
-<TD><input type=text maxlength=42 size=42 name="topic" id="topic" value="<?php echo $topic;?>">-Please use only alphabets and numbers</TD>
+<TD><input type=text size=42 name="topic" id="topic" value="<?php echo $topic;?>">-Please use only alphabets and numbers</TD>
 </TR>
 
 <TR>
 <TD>Screen Details</TD>
-<TD><input type=text maxlength=42 size=42 name="screen" id="screen" value="<?php echo $screen;?>">-Please use only alphabets and numbers</TD>
+<TD><input type=text size=42 name="screen" id="screen" value="<?php echo $screen;?>">-Please use only alphabets and numbers</TD>
 </TR>
 
 <TR>

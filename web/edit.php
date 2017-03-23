@@ -193,7 +193,7 @@ if(bcat=="")
   }
 
   
-  if(!module.match(alphaExp))
+  /*if(!module.match(alphaExp))
   {
   alert("Module Name Should be Purely Alphabetic");
   return false;
@@ -209,7 +209,7 @@ if(bcat=="")
   {
   alert("Please don't use special characters in description");
   return false;
-  }
+  }*/
 }
 
 
@@ -290,17 +290,17 @@ echo "Bug ID  ".$id;
 
 <TR>
 <TD>Module Name</TD>
-<TD><input type=text maxlength=42 size=42 name="module" id="module" value="<?php echo $module;?>"></TD>
+<TD><input type=text size=42 name="module" id="module" value="<?php echo $module;?>"></TD>
 </TR>
 
 <TR>
 <TD>Topic Name</TD>
-<TD><input type=text maxlength=42 size=42 name="topic" id="topic" value="<?php echo $topic;?>"></TD>
+<TD><input type=text size=42 name="topic" id="topic" value="<?php echo $topic;?>"></TD>
 </TR>
 
 <TR>
 <TD>Screen Details</TD>
-<TD><input type=text maxlength=42 size=42 name="screen" id="screen" value="<?php echo $screen;?>"></TD>
+<TD><input type=text size=42 name="screen" id="screen" value="<?php echo $screen;?>"></TD>
 </TR>
 
 <TR>
@@ -386,20 +386,15 @@ echo "Bug ID  ".$id;
 
 <TR>
 <TD>Bowser Used</TD>
+<?php
+	$query = "select browser from tbl_browsers order by browser";
+    $retval = mysql_query( $query, $con );
+?>
 <TD><select name="browser" size="1" id="browser">
-<option value="select" selected>Select</option>
-<option value="IE6" <?php if($browser=="IE6")echo " selected";?>>IE6</option>
-<option value="IE7" <?php if($browser=="IE7")echo " selected";?>>IE7</option>
-<option value="IE8" <?php if($browser=="IE8")echo " selected";?>>IE8</option>
-<option value="IE9" <?php if($browser=="IE9")echo " selected";?>>IE9</option>
-<option value="Chrome" <?php if($browser=="Chrome")echo " selected";?>>Chrome</option>
-<option value="FireFox" <?php if($browser=="FireFox")echo " selected";?>>Mozilla FireFox</option>
-<option value="Ipad2" <?php if($browser=="Ipad2")echo " selected";?>>Ipad2</option>
-<option value="Ipad3" <?php if($browser=="Ipad3")echo " selected";?>>Ipad3</option>
-<option value="Android Phone" <?php if($browser=="Android Phone")echo " selected";?>>Android Phone</option>
-<option value="Android Tablet" <?php if($browser=="Android Tablet")echo " selected";?>>Android Tablet</option>
-<option value="Safari" <?php if($browser=="Safari")echo " selected";?>>Safari</option>
-<option value="IPhone" <?php if($browser=="IPhone")echo " selected";?>>IPhone</option>
+<option value="select">Select</option>
+<?php while($row = mysql_fetch_assoc($retval)) { ?>
+	<option value="<?php echo $row['browser']?>" <?php if($browser == $row['browser']) echo "selected"; ?>><?php echo $row['browser']?></option>
+<?php } ?>	
 </select></TD>
 </TR>
 

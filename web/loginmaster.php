@@ -2,7 +2,6 @@
 <head>
 <?php	
 	$user=mysql_real_escape_string($_REQUEST['user']);
-    //echo $user;
 	include("config.php");
 
 	$query = "select username from adminlogin where uniqueid='$user'";
