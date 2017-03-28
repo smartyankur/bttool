@@ -24,6 +24,7 @@ while($row = mysql_fetch_assoc($retval)){
   $userrole = $row['role'];  
 }
 $chd_id=$_REQUEST['chd_id'];
+$status=isset($_REQUEST['status']) ? $_REQUEST['status'] : '';
 
 /* @saurav changed query to fetch data using project_id */
 $query="select id, project_name, project_manager, course_title, functional_manager_id, functional_manager_media, functional_manager_tech, developers_id,developers_media,developers_tech, reviewer, assignqc from tbl_functional_review where id = $chd_id";
@@ -41,8 +42,6 @@ while($row = mysql_fetch_assoc($result)) {
 	$pro     = $row['project_name'];
 	$chd_id  = $row['id'];
 	$title   = $row['course_title'];
-	$status  = $row['status'];
-	
 }
 if(count($devsid) > 0) {
 	$tmp_array = array();
@@ -128,7 +127,7 @@ function rtrim(s)
 
 <form name="tstest" action="./mailSend.php" onsubmit="return verify()" method="post" enctype="multipart/form-data">
 <table>
-<TR><h3><?php echo "CHD NUMBER- ".$chd_id." - ".$pro." - ".$title." - CHD Accepted"; ?></h3></TR>
+<TR><h3><?php echo "CHD NUMBER- ".$chd_id." - ".$pro." - ".$title." - CHD ".(empty($status) ? 'Accepted' : ucfirst($status)); ?></h3></TR>
 <TR>If PM/FM or their eMail informations are blank/incorrect, use "Change PM/FM Details" and "Create or Change email ID of PM/FM"</TR>
 <TR>
 <TD><?php if(trim($pm)<>"" || trim($pm)<>'NA') echo "TO :"?></TD>
@@ -172,7 +171,7 @@ if(count($tmp_array) > 0) {
 </TR>-->
 <TR>
 <TD>Subject :</TD>
-<TD><input type="text" size=66 name="subject" value="<?php echo "CHD NUMBER- ".$chd_id." - ".$pro." - ".$title." - CHD Accepted"; ?>"></TD>
+<TD><input type="text" size=66 name="subject" value="<?php echo "CHD NUMBER- ".$chd_id." - ".$pro." - ".$title." - CHD ".(empty($status) ? 'Accepted' : ucfirst($status)); ?>"></TD>
 </TR>
 </br>
 <TR>
@@ -180,7 +179,7 @@ if(count($tmp_array) > 0) {
 <!-- @saurav changed here for exception handeling --> 
 <TD>
 <textarea name="msg" id="msg" cols="50" rows="4">
-Hi,<br><br> The CHD has been accepted for the course <?php echo $title; ?>.<br><br>
+Hi,<br><br> The CHD has been <?php echo (empty($status) ? 'Accepted' : ucfirst($status)); ?> for the course <?php echo $title; ?>.<br><br>
 Bugs will be logged under the following project name: <?php echo $pro; ?> <br><br>
 Regards, <br>
 <?php echo $username; ?>
@@ -190,6 +189,7 @@ Regards, <br>
 </table>
 <input type="submit" value="Send Mail">
 <input type="hidden" name="project" value="<?php echo $pro; ?>">
-
+<input type="hidden" name="chd_id"  value="<?php echo $chd_id; ?>">
+<input type="hidden" name="status" value="<?php echo $status ?>">
 </form>
 </body>

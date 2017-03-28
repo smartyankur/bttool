@@ -257,7 +257,7 @@ function getData(){
     </TD>
 </TR>
 <TR>
-<TD>Script FM</TD>
+<TD>Tech FM</TD>
 <TD>
     <?php
 	/*$query = "select DISTINCT username from login order by username";

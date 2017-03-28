@@ -74,7 +74,7 @@ $final = array();
 foreach($tmp as $val) {
 	$version = $val['version'];
 	if(!$val['phase_closed']) {
-		$final[$version]['phase_status'] = 0;
+		$final[$version]['phase_closed'] = 0;
 	}
 	if(!$val['out_sourced']) {
 		$final[$version]['outsourced_false'] += 1;

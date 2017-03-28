@@ -21,7 +21,7 @@ class DailyUpdateProjectReport {
 				return $error;
 			}
 			$project_ids = implode(',', $rows);
-			$sql = "SELECT fr.version, fr.phase_closed, fr.out_sourced, fr.id, fr.course_level, fr.reject_course, fr.pagecount, pm.pin FROM tbl_functional_review fr join projectmaster pm on pm.pindatabaseid = fr.project_id WHERE project_id IN($project_ids)";
+			$sql = "SELECT fr.version, fr.phase_closed, fr.out_sourced, fr.id, fr.course_level, fr.reject_course, fr.pagecount, pm.pin, pm.clientspoc, pm.projectname FROM tbl_functional_review fr join projectmaster pm on pm.pindatabaseid = fr.project_id WHERE project_id IN($project_ids) and fr.status != 'rejected'";
 			$retval = mysql_query($sql, $con);
 			$results = mysql_num_rows($retval);
 			
@@ -55,13 +55,12 @@ class DailyUpdateProjectReport {
 			foreach($tmp as $key1 => $val1) {
 				$final[$key1]['screen_count'] = $val1['screen_count'];
 				unset($val1['screen_count']);
-				
 				foreach($val1 as $key => $val) {
 					$version = $val['version'];
 					if($val['phase_closed']) {
-						$final[$key1][$version]['phase_status'] = 0;
+						$final[$key1][$version]['phase_closed'] = 1;
 					} else {
-						$final[$key1][$version]['phase_status'] = 1;
+						$final[$key1][$version]['phase_closed'] = 0;
 					}
 					if(!$val['out_sourced']) {
 						$final[$key1][$version]['outsourced_false'] += 1;
@@ -73,7 +72,9 @@ class DailyUpdateProjectReport {
 					} else {
 						$final[$key1][$version]['course_selected'] += 1;
 					}
-					
+					$final[$key1][$version]['lh'] = $final[$key1]['screen_count'][$version]/40;
+					$final[$key1][$version]['client'] = $val1[0]['clientspoc'];				
+					$final[$key1][$version]['project'] = $val1[0]['projectname'];			
 					if(array_key_exists('bug_info', $val)) {
 						foreach($val['bug_info'] as $k => $v) {
 							if(!array_key_exists('bug_closed', $final[$key1][$version])) {
@@ -112,41 +113,66 @@ class DailyUpdateProjectReport {
 							if(!array_key_exists('fclosed', $final[$key1][$version]['L3'])) {
 								$final[$key1][$version]['L3']['fclosed'] = 0;
 							}
-							if($v['bugstatus'] == "closed" || $v['bugstatus'] == "fixed" || $v['bugstatus'] == "reopened") {
-								$final[$key1][$version]['bug_closed'] = $final[$key1][$version]['bug_closed'] + $v['bug_status_count'];
+							if(strtolower($v['severity']) != "suggestion") {
+								if(strtolower($v['bugstatus']) == "closed" || strtolower($v['bugstatus']) == "fixed" || strtolower($v['bugstatus']) == "reopened"){
+									$final[$key1][$version]['total_bug_closed'] = $final[$key1][$version]['total_bug_closed'] + $v['bug_status_count'];
+								}
+								if(strtolower($v['bugstatus']) == "ok as is") {
+									$final[$key1][$version]['oai'] = $final[$key1][$version]['oai'] + $v['bug_status_count'];	
+								} 
+								if(strtolower($v['bugstatus']) == "hold") {
+									$final[$key1][$version]['hold'] = $final[$key1][$version]['hold'] + $v['bug_status_count'];	
+								}
+								if(strtolower($v['function']) == "media") {
+									if($v['bugstatus'] == "closed" && strtolower($v['severity']) == 'low') {
+										$final[$key1][$version]['L1']['mclosed'] = $final[$key1][$version]['L1']['mclosed'] + $v['bug_status_count'];	
+									} if($v['bugstatus'] == "closed" && strtolower($v['severity']) == 'medium') {
+										$final[$key1][$version]['L2']['mclosed'] = $final[$key1][$version]['L2']['mclosed'] + $v['bug_status_count'];	
+									} if($v['bugstatus'] == "closed" && strtolower($v['severity']) == 'high'){
+										$final[$key1][$version]['L3']['mclosed'] = $final[$key1][$version]['L3']['mclosed'] + $v['bug_status_count'];
+									}
+									$final[$key1][$version]['total_media_bug'] = $final[$key1][$version]['total_media_bug'] + $v['bug_status_count'];
+								}
+								$final[$key1][$version]['total_media_bug_closed'] = $final[$key1][$version]['L1']['mclosed'] + $final[$key1][$version]['L2']['mclosed'] + $final[$key1][$version]['L3']['mclosed'];
+								$final[$key1][$version]['total_media_dd'] = $final[$key1][$version]['total_media_bug'] / $final[$key1][$version]['lh'];
+								
+								if(strtolower($v['function']) == "functionality") {
+									if( $v['bugstatus'] == "closed" && strtolower($v['severity']) == 'low') {
+										$final[$key1][$version]['L1']['fclosed'] = $final[$key1][$version]['L1']['fclosed'] + $v['bug_status_count'];	
+									} if($v['bugstatus'] == "closed" && strtolower($v['severity']) == 'medium') {
+										$final[$key1][$version]['L2']['fclosed'] = $final[$key1][$version]['L2']['fclosed'] + $v['bug_status_count'];	
+									} if($v['bugstatus'] == "closed" && strtolower($v['severity']) == 'high'){
+										$final[$key1][$version]['L3']['fclosed'] = $final[$key1][$version]['L3']['fclosed'] + $v['bug_status_count'];
+									}
+									$final[$key1][$version]['total_functional_bug'] = $final[$key1][$version]['total_functional_bug'] + $v['bug_status_count'];
+								}									
+								$final[$key1][$version]['total_functional_bug_closed'] = $final[$key1][$version]['L1']['fclosed'] + $final[$key1][$version]['L2']['fclosed'] + $final[$key1][$version]['L3']['fclosed'];
+								$final[$key1][$version]['total_functional_dd'] = $final[$key1][$version]['total_functional_bug'] / $final[$key1][$version]['lh'];
+								if(strtolower($v['function']) == "editorial") {	
+									if($v['bugstatus'] == "closed" && strtolower($v['severity']) == 'low') {
+										$final[$key1][$version]['L1']['eclosed'] = $final[$key1][$version]['L1']['eclosed'] + $v['bug_status_count'];	
+									}  if($v['bugstatus'] == "closed" && strtolower($v['severity']) == 'medium') {
+										$final[$key1][$version]['L2']['eclosed'] = $final[$key1][$version]['L2']['eclosed'] + $v['bug_status_count'];	
+									}  if($v['bugstatus'] == "closed" && strtolower($v['severity']) == 'high'){
+										$final[$key1][$version]['L3']['eclosed'] = $final[$key1][$version]['L3']['eclosed'] + $v['bug_status_count'];
+									}
+									$final[$key1][$version]['total_editorial_bug'] = $final[$key1][$version]['total_editorial_bug'] + $v['bug_status_count'];
+								}
+								$final[$key1][$version]['total_editorial_bug_closed'] = $final[$key1][$version]['L1']['eclosed'] + $final[$key1][$version]['L2']['eclosed'] + $final[$key1][$version]['L3']['eclosed'];
+								$final[$key1][$version]['total_editorial_dd'] = $final[$key1][$version]['total_editorial_bug'] / $final[$key1][$version]['lh'];
+								$final[$key1][$version]['total_bug'] = $final[$key1][$version]['total_bug'] + $v['bug_status_count'];
+								$final[$key1][$version]['bug_density'] = $final[$key1][$version]['total_bug_closed']/$final[$key1][$version]['lh'];
+							} else if(strtolower($v['severity']) == "suggestion") {
+								if(strtolower($v['bugstatus']) == "closed" || strtolower($v['bugstatus']) == "fixed" || strtolower($v['bugstatus']) == "reopened"){
+									$final[$key1][$version]['total_closed_suggestion_bug'] = $final[$key1][$version]['total_closed_suggestion_bug'] + $v['bug_status_count'];
+								}
 							}
-							if($v['bugstatus'] == "ok as is") {
-								$final[$key1][$version]['oai'] = $final[$key1][$version]['oai'] + $v['bug_status_count'];	
-							} 
-							if($v['bugstatus'] == "hold") {
-								$final[$key1][$version]['hold'] = $final[$key1][$version]['hold'] + $v['bug_status_count'];	
-							}
-							if(strtolower($v['function']) == "media" && $v['bugstatus'] == "closed" && $v['severity'] == 'Low') {
-								$final[$key1][$version]['L1']['mclosed'] = $final[$key1][$version]['L1']['mclosed'] + $v['bug_status_count'];	
-							} if(strtolower($v['function']) == "media" && $v['bugstatus'] == "closed" && $v['severity'] == 'Medium') {
-								$final[$key1][$version]['L2']['mclosed'] = $final[$key1][$version]['L2']['mclosed'] + $v['bug_status_count'];	
-							} if(strtolower($v['function']) == "media" && $v['bugstatus'] == "closed" && $v['severity'] == 'High'){
-								$final[$key1][$version]['L3']['mclosed'] = $final[$key1][$version]['L3']['mclosed'] + $v['bug_status_count'];
-							} 
-							if(strtolower($v['function']) == "functionality" && $v['bugstatus'] == "closed" && $v['severity'] == 'Low') {
-								$final[$key1][$version]['L1']['fclosed'] = $final[$key1][$version]['L1']['fclosed'] + $v['bug_status_count'];	
-							} if(strtolower($v['function']) == "functionality" && $v['bugstatus'] == "closed" && $v['severity'] == 'Medium') {
-								$final[$key1][$version]['L2']['fclosed'] = $final[$key1][$version]['L2']['fclosed'] + $v['bug_status_count'];	
-							} if(strtolower($v['function']) == "functionality" && $v['bugstatus'] == "closed" && $v['severity'] == 'High'){
-								$final[$key1][$version]['L3']['fclosed'] = $final[$key1][$version]['L3']['fclosed'] + $v['bug_status_count'];
-							} if(strtolower($v['function']) == "editorial" && $v['bugstatus'] == "closed" && $v['severity'] == 'Low') {
-								$final[$key1][$version]['L1']['eclosed'] = $final[$key1][$version]['L1']['eclosed'] + $v['bug_status_count'];	
-							}  if(strtolower($v['function']) == "editorial" && $v['bugstatus'] == "closed" && $v['severity'] == 'Medium') {
-								$final[$key1][$version]['L2']['eclosed'] = $final[$key1][$version]['L2']['eclosed'] + $v['bug_status_count'];	
-							}  if(strtolower($v['function']) == "editorial" && $v['bugstatus'] == "closed" && $v['severity'] == 'High'){
-								$final[$key1][$version]['L3']['eclosed'] = $final[$key1][$version]['L3']['eclosed'] + $v['bug_status_count'];
-							}
-							$final[$key1][$version]['total_bug'] = $final[$key1][$version]['total_bug'] + $v['bug_status_count'];
-							
 						}
+						
 					}
-				}
+				}	
 			}
+			//echo '<pre>'; print_r($final); die;
 			echo json_encode($final);
 			return json_encode($final);
 		} catch(Exception $e) {

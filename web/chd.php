@@ -110,12 +110,26 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
 
 ///////////////////////////////////////////////////////////////////////////////////
   if( empty($errorMessage) ){
-  $insertFunctionalReview = "INSERT INTO tbl_functional_review(project_id, project_name,project_manager,course_title,start_date,course_level,functional_manager_id,functional_manager_media,functional_manager_tech,developers_id,developers_media,developers_tech,version,pagecount,slidecount,learning_hours,testing_scope,partial_testing,conf_reviews,course_path,sb_path,editsheet,dt_path,test_plan_path,test_checklists,reviewer,comments,support_file1,support_file2,support_file3,support_file4, testenvironment,coursesize,chdreleasedate) values('".$project_id."','".$project."','".$pm."','".$courseTitle."','".$SDate."','".$courseLevel."','".$fmid."','".$fmmedia."','".$fmtech."','".$devsid."','".$devsmed."','".$devstech."', '".$version."','".$pagecount."','".$slidecount."','".$learningHours."','".$testingScope."','".$partialTesting."','".$confReviews."','".$path."','".$sbpath."','".$editsheet."','".$dtpath."','".$tppath."','".$chk."','".$reviewer."','".$comments."','".$fstr1."','".$fstr2."','".$fstr3."','".$fstr4."', '".$testenvironment."','".$coursesize."','".$chd_submit_date."')";
-  
-  if(mysql_query($insertFunctionalReview)){
-    $FReviewNo = mysql_insert_id();
-          		
-  	$str  = '<html><head><style type="text/css">body{background:url(\'qcr.jpg\') no-repeat;} .table_text{font-family:Calibri; font-size:12px; font-style:normal; line-height:normal; font-weight:normal; font-variant:normal; color:#000000; text-indent:10px; vertical-align:middle;}  
+	$FReviewNo = "";
+	if(empty($_POST['edit'])) {
+		$insertFunctionalReview = "INSERT INTO tbl_functional_review(project_id,project_name,project_manager,course_title,start_date,course_level,functional_manager_id,functional_manager_media,functional_manager_tech,developers_id,developers_media,developers_tech,version,pagecount,slidecount,learning_hours,testing_scope,partial_testing,conf_reviews,course_path,sb_path,editsheet,dt_path,test_plan_path,test_checklists,reviewer,comments,support_file1,support_file2,support_file3,support_file4, testenvironment,coursesize,chdreleasedate) values('".$project_id."','".$project."','".$pm."','".$courseTitle."','".$SDate."','".$courseLevel."','".$fmid."','".$fmmedia."','".$fmtech."','".$devsid."','".$devsmed."','".$devstech."', '".$version."','".$pagecount."','".$slidecount."','".$learningHours."','".$testingScope."','".$partialTesting."','".$confReviews."','".$path."','".$sbpath."','".$editsheet."','".$dtpath."','".$tppath."','".$chk."','".$reviewer."','".$comments."','".$fstr1."','".$fstr2."','".$fstr3."','".$fstr4."', '".$testenvironment."','".$coursesize."','".$chd_submit_date."')";
+		if(mysql_query($insertFunctionalReview)){
+			$FReviewNo = mysql_insert_id();
+			$successMessage = "Record has been created for project '".$project."'. Please click on the 'Show All Fileinfo' button to read the entries.";
+		} else {
+			$errorMessage = "Record has not been created for project '".$project . "'";
+		}
+	} else {
+		$updateFunctionalReview = "UPDATE tbl_functional_review set project_id='".$project_id."',project_name='".$project."',project_manager='".$pm."',course_title='".$courseTitle."',start_date='".$SDate."',course_level='".$courseLevel."',functional_manager_id='".$fmid."',functional_manager_media='".$fmmedia."',functional_manager_tech='".$fmtech."',developers_id='".$devsid."',developers_media='".$devsmed."',developers_tech='".$devstech."',version='".$version."',pagecount='".$pagecount."',slidecount='".$slidecount."',learning_hours='".$learningHours."',testing_scope='".$testingScope."',partial_testing='".$partialTesting."',conf_reviews='".$confReviews."',course_path='".$path."',sb_path='".$sbpath."',editsheet='".$editsheet."',dt_path='".$dtpath."',test_plan_path='".$tppath."',test_checklists='".$chk."',reviewer='".$reviewer."',comments='".$comments."',support_file1='".$fstr1."',support_file2='".$fstr2."',support_file3='".$fstr3."',support_file4='".$fstr4."', testenvironment='".$testenvironment."',coursesize='".$coursesize."',chdreleasedate='".$chd_submit_date."', status='' where id =".$_POST['edit'];
+		if(mysql_query($updateFunctionalReview)){
+			$FReviewNo = $_POST['edit'];
+			$successMessage = "Record has been updated for project '".$project."'. Please click on the 'Show All Fileinfo' button to read the entries.";
+		} else {
+			$errorMessage = "Record has not been updated for project '".$project . "'";
+		}
+	}
+    if($FReviewNo) { 		
+		$str  = '<html><head><style type="text/css">body{background:url(\'qcr.jpg\') no-repeat;} .table_text{font-family:Calibri; font-size:12px; font-style:normal; line-height:normal; font-weight:normal; font-variant:normal; color:#000000; text-indent:10px; vertical-align:middle;}  
 </style></head>';
   	$str .= '<body>';    
   	$str .= '<h4>Dear QA Team,</h4>';
@@ -206,11 +220,9 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
   
    	$mailer->Send();
   	echo $mailer->ErrorInfo."<br/>";  
-  
-    $successMessage = "Record has been created for project '".$project."'. Please click on the 'Show All Fileinfo' button to read the entries.";    
-    header("Location: chd.php?project=".urlencode($project)."&successMessage=".urlencode($successMessage));
+	header("Location: chd.php?project=".urlencode($project)."&successMessage=".urlencode($successMessage));
   }else{
-    $errorMessage = "Record has not been created for project '".$project . "'";
+    
 	$_POST['errorMessage'] = $errorMessage;
     //header("Location: chd.php?project=".urlencode($project)."&errorMessage=".urlencode($errorMessage));
   }	
@@ -546,6 +558,40 @@ if( !empty($message) ){
 }
 ?>
 <?php
+if(isset($_GET['chdid']) && !empty($_GET['chdid'])) {
+	$query = "select * from tbl_functional_review where id = ".$_GET['chdid'];
+	$retval = mysql_query($query, $con);
+	$row = mysql_fetch_assoc($retval); 
+	$_REQUEST['project'] = $row['project_name'];
+	$_REQUEST['pm'] = $row['project_manager'];
+	$_REQUEST['courseTitle'] = $row['course_title'];
+	$_REQUEST['SDate'] = $row['start_date'];
+	$_REQUEST['courseLevel'] = $row['course_level'];
+	$_REQUEST['fmid'] = $row['functional_manager_id'];
+	$_REQUEST['fmmedia'] = $row['functional_manager_media'];
+	$_REQUEST['fmtech'] = $row['functional_manager_tech'];
+	$_REQUEST['devsid'] = explode(",", $row['developers_id']);
+	$_REQUEST['devstech'] = explode(",", $row['developers_tech']);
+	$_REQUEST['devsmed'] = explode(",", $row['developers_media']);
+	$_REQUEST["version"] = $row['version'];
+	$_REQUEST["pagecount"] = $row['pagecount'];
+	$_REQUEST["slidecount"] = $row['slidecount'];
+	$_REQUEST["iterationRound"] = $row['iterationRound'];
+	$_REQUEST["learningHours"] = $row['learning_hours'];
+	$_REQUEST["coursesize"] = $row['coursesize'];
+	$_REQUEST["testingScope"] = $row['testing_scope'];
+	$_REQUEST["partialTesting"] = explode(",", $row['partial_testing']);
+	$_REQUEST["confReviews"] = explode(",", $row['conf_reviews']);
+	$_REQUEST["path"] = $row['course_path'];
+	$_REQUEST["sbpath"] = $row['sb_path'];
+	$_REQUEST["editsheet"] = $row['editsheet'];
+	$_REQUEST["dtpath"] = $row['dt_path'];
+	$_REQUEST["tppath"] = $row['test_plan_path'];
+	$_REQUEST["chk"] = $row['test_checklists'];
+	$_REQUEST["comments"] = $row['comments'];
+	$_REQUEST["testenvironment"] = $row['testenvironment'];
+	$_REQUEST["function"] = $row['function'];
+}
   $project        = $_REQUEST["project"];
   $pm             = $_REQUEST["pm"];
   $courseTitle    = $_REQUEST["courseTitle"];
@@ -882,16 +928,23 @@ if(!empty($numrowsDEV)){
 <TR>
   <TD><label for="type">Partial Testing</label> <font color='red'>*</font></TD>
   <TD id="check1">
-    <label for="audioreview"><input type="checkbox" name="partialTesting[]" id="audioreview" value="Audio review" <?php if(in_array("Audio review", $partialTesting))echo " checked"; ?>>Audio review</label>
-    <label for="contentmapping"><input type="checkbox" name="partialTesting[]" id="contentmapping" value="Content mapping" <?php if(in_array("Content mapping", $partialTesting))echo " checked"; ?>>Content mapping</label>
-    <label for="functionality"><input type="checkbox" name="partialTesting[]" id="functionality" value="Functionality" <?php if(in_array("Functionality", $partialTesting))echo " checked"; ?>>Functionality</label>
-    <label for="transcriptmapping"><input type="checkbox" name="partialTesting[]" id="transcriptmapping" value="Transcript mapping" <?php if(in_array("Transcript mapping", $partialTesting))echo " checked"; ?>>Transcript mapping</label>
+    <label for="audioreview"><input type="checkbox" name="partialTesting[]" id="audioreview" class="check" value="Audio review" <?php if(in_array("Audio review", $partialTesting))echo " checked"; ?>>Audio review</label>
+    <label for="contentmapping"><input type="checkbox" name="partialTesting[]" id="contentmapping" class="check" value="Content mapping" <?php if(in_array("Content mapping", $partialTesting))echo " checked"; ?>>Content mapping</label>
+    <label for="functionality"><input type="checkbox" name="partialTesting[]" id="functionality" class="check" value="Functionality" <?php if(in_array("Functionality", $partialTesting))echo " checked"; ?>>Functionality</label>
+    <label for="transcriptmapping"><input type="checkbox" name="partialTesting[]" id="transcriptmapping" class="check" value="Transcript mapping" <?php if(in_array("Transcript mapping", $partialTesting))echo " checked"; ?>>Transcript mapping</label>
     <label for="internaledit"><input type="checkbox" name="partialTesting[]" id="internaledit" value="Internal edit" <?php if(in_array("Internal edit", $partialTesting))echo " checked"; ?>>Internal edit</label>
     <label for="clienteditalpha"><input type="checkbox" name="partialTesting[]" id="clienteditalpha" value="Clientedit alpha" <?php if(in_array("Clientedit alpha", $partialTesting))echo " checked"; ?>>Clientedit alpha</label>
     <label for="clienteditbeta"><input type="checkbox" name="partialTesting[]" id="clienteditbeta" value="Clientedit beta" <?php if(in_array("Clientedit beta", $partialTesting))echo " checked"; ?>>Clientedit beta</label>
-    <label for="scormtesting"><input type="checkbox" name="partialTesting[]" id="scormtesting" value="Scorm testing" <?php if(in_array("Scorm testing", $partialTesting))echo " checked"; ?>>Scorm testing</label>
-    <label for="audiomapping"><input type="checkbox" name="partialTesting[]" id="audiomapping" value="Audio mapping" <?php if(in_array("Audio mapping", $partialTesting))echo " checked"; ?>>Audio mapping</label>
-    <label for="audiosynching"><input type="checkbox" name="partialTesting[]" id="audiosynching" value="Audio synching" <?php if(in_array("Audio synching", $partialTesting))echo " checked"; ?>>Audio synching</label>
+    <label for="clienteditgold"><input type="checkbox" name="partialTesting[]" id="clienteditgold" value="Clientedit gold" <?php if(in_array("Clientedit gold", $partialTesting))echo " checked"; ?>>Clientedit gold</label>
+	<br/>
+	<label for="scormtesting" style="margin-left:10px;"><input type="checkbox" name="partialTesting[]" id="scormtesting" value="Scorm 1.2" <?php if(in_array("Scorm 1.2", $partialTesting))echo " checked"; ?>>Scorm 1.2</label>
+	<label for="scorm2004"><input type="checkbox" name="partialTesting[]" id="scorm2004" value="Scorm 2004" <?php if(in_array("Scorm 2004", $partialTesting))echo " checked"; ?>>Scorm 2004</label>
+	
+	<label for="AICC" ><input type="checkbox" name="partialTesting[]" id="AICC" value="AICC" <?php if(in_array("AICC", $partialTesting))echo " checked"; ?>>AICC</label>
+    <label for="audiomapping"><input type="checkbox" name="partialTesting[]" id="audiomapping" class="check" value="Audio mapping" <?php if(in_array("Audio mapping", $partialTesting))echo " checked"; ?>>Audio mapping</label>
+    <label for="audiosynching"><input type="checkbox" name="partialTesting[]" id="audiosynching" class="check" value="Audio synching" <?php if(in_array("Audio synching", $partialTesting))echo " checked"; ?>>Audio synching</label>
+    
+	<label for="ILT"><input type="checkbox" name="partialTesting[]" id="ILT" value="ILT" <?php if(in_array("ILT", $partialTesting))echo " checked"; ?>>ILT</label>
   </TD>
 </TR>
 
@@ -970,6 +1023,7 @@ if(!empty($numrowsDEV)){
 </TABLE>
 <br>
 <input type="hidden" name="reviewer" id="reviewer" value="<?php echo $username; ?>">
+<input type="hidden" name="edit" value="<?php echo $_GET['chdid']; ?>">
 <input type="submit" name="addInfo" class="button" value="Add">
 <input type="button" class="button" value="Log Out" onclick="location.href='logout.php';">
 <input type="button" class="button" value="Show All Fileinfo" onClick="showAll()">
@@ -983,9 +1037,9 @@ if(!empty($numrowsDEV)){
 <script>
 function checkAllPT(tsval){
   if(tsval=='e2e'){
-    $( '#check1' + ' :checkbox' ).attr('checked', true);
+    $('.check').attr('checked', true);
   }else{
-    $( '#check1' + ' :checkbox' ).attr('checked', false);
+    $('.check').attr('checked', false);
   }
 }
 </script>

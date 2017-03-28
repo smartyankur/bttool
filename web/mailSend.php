@@ -1,7 +1,7 @@
 <body>
 <?php
 error_reporting(0);
-
+include("config.php");
 $mailid=trim($_POST['pmmail']);
 $message=trim($_POST['msg']);
 $id=trim($_POST['fmonemail']);
@@ -12,6 +12,13 @@ $qc=trim(isset($_POST['qc']) ? $_POST['qc'] : '');
 $rev=trim(isset($_POST['rev']) ? $_POST['rev'] : '');
 $project=trim($_POST['project']);
 $subject=trim($_POST['subject']);
+$status = isset($_POST['status']) ? $_POST['status'] : '';
+$chd_id = $_POST['chd_id'];
+if(!empty($status)) {
+	$query = "update tbl_functional_review set status='".$status."', qccomment='".$message."' where id = $chd_id";
+	mysql_query($query);
+}
+
 $dm="anuradhaj@gc-solutions.net";
 
 //echo "Mailid :".$mailid;

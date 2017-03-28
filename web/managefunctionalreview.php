@@ -12,7 +12,7 @@ $user = $_SESSION['login'];
 
 include("config.php");
 
-$query = "select username, role from login where uniqueid='$user'";
+$query = "select username, role, dept from login where uniqueid='$user'";
 $retval = mysql_query( $query, $con );
 $count = mysql_num_rows($retval);
 
@@ -27,6 +27,7 @@ while($row = mysql_fetch_assoc($retval)){
   echo "<h4>" . "Hi " . $row['username'] . " ! Welcome to Course Handover Document" . "</h4>";
   $username = $row['username'];
   $userrole = $row['role'];  
+  $userdept = $row['dept'];  
 }
 
 ?>
@@ -100,7 +101,12 @@ xmlhttp.send();
 
 }
 function automailer(chd_id){
-	mywindow=window.open ("chdAutoMailer.php?chd_id="+chd_id,'AutoMailer','width=600,height=600,scrollbars=1');
+	var status = document.getElementById('chd'+chd_id).value;
+	if(status == '') {
+		alert('Please select status');
+		return;
+	}
+	mywindow=window.open("chdAutoMailer.php?chd_id="+chd_id+"&status="+status, 'AutoMailer','width=600,height=600,scrollbars=1');
 	if (window.focus) {mywindow.focus()}
 }
 
@@ -206,13 +212,16 @@ function outSourced(id) {
   <th>Reviewer</th>  
   <th>QC/s</th>
   <th>Remarks</th>
-  <?php if($userrole == 'QC'){ ?>
   <th>Status</th>
-  <th>Change Status</th>
-  <th>Assignment</th>
+  <?php if($userdept == 'Content'){ ?>
+		<th>Change Status</th>
+	  <!--<th>Assignment</th>-->
   <?php } ?>    
   <th>Comments</th>
   <th>Attach supporting documents</th>
+  <?php if($userrole == "ID" || $userrole == "Tech" || $userrole == "Media" || $userrole == "Dev") { ?> 
+	<th>Action</th>
+  <?php } ?>
 </tr>
 <?php
 $i = 1;
@@ -226,7 +235,7 @@ if( isset($_REQUEST['project']) && !empty($_REQUEST['project']) && ($_REQUEST['p
       echo "<tr>";
         echo "<td>".$i."</td>";
 		echo "<td>".$fetchFuncRvw['id']."</td>"; 
-		echo "<td>".date('d-m-Y', strtotime($fetchFuncRvw['start_date']))."<br/><input class='button' type='button' value='Submit CHD' onclick='automailer($fetchFuncRvw[id])'/></td>"; 		
+		echo "<td>".date('d-m-Y', strtotime($fetchFuncRvw['start_date']))."<br/><!--<input class='button' type='button' value='Submit CHD' onclick='automailer($fetchFuncRvw[id])'/>--></td>"; 		
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['project_name']."</div>"."</td>";
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['project_manager']."</div>"."</td>";  
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['course_title']."</div>"."</td>";
@@ -236,7 +245,7 @@ if( isset($_REQUEST['project']) && !empty($_REQUEST['project']) && ($_REQUEST['p
         <td><div align='center' style="width:40;height:100;overflow:auto"><input type='checkbox' name='reject_course' onclick="rejectCourse(<?php echo $fetchFuncRvw['id'] ?>)" id="reject-<?php echo $fetchFuncRvw['id'] ?>" <?php echo ($fetchFuncRvw['reject_course']) ? "checked" : '' ?>></div></td>
 		<td><div align='center' style="width:40;height:100;overflow:auto"><input type='checkbox' name='phase_closed' onclick="phaseClosed(<?php echo $fetchFuncRvw['id'] ?>)" id="closed-<?php echo $fetchFuncRvw['id'] ?>" <?php echo ($fetchFuncRvw['phase_closed']) ? "checked" : '' ?>></div></td>
 		<td><div align='center' style="width:40;height:100;overflow:auto"><input type='checkbox' name='out_sourced' onclick="outSourced(<?php echo $fetchFuncRvw['id'] ?>)" id="outsourced-<?php echo $fetchFuncRvw['id'] ?>" <?php echo ($fetchFuncRvw['out_sourced']) ? "checked" : '' ?>></div></td>
-		<?php 
+	<?php 
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['functional_manager_id']."</div>"."</td>";
 		echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['developers_id']."</div>"."</td>";
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['functional_manager_media']."</div>"."</td>";
@@ -260,24 +269,24 @@ if( isset($_REQUEST['project']) && !empty($_REQUEST['project']) && ($_REQUEST['p
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['assignqc']."</div>"."</td>";
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['qccomment']."</div>"."</td>";
       
-        if($userrole == 'QC'){
+        if($userdept == 'Content'){
           $rownumbers = 29;
-          $haystack = explode(",", $fetchFuncRvw['assignqc']);  
-          if( in_array($username, $haystack) ){               
+          //$haystack = explode(",", $fetchFuncRvw['assignqc']);  
+          if( empty($fetchFuncRvw['status']) ){               
 ?>
         <TD>
           <select id="<?php echo "chd".$fetchFuncRvw['id']; ?>" size="1">
-            <option value="select" selected>Select</option>
+            <option value="" selected>Select</option>
             <option value="accepted" <?php if($fetchFuncRvw['status'] == 'accepted')echo " selected"; ?>>Accepted</option>
             <option value="rejected" <?php if($fetchFuncRvw['status'] == 'rejected')echo " selected"; ?>>Rejected</option>
           </select>          
         </TD>
-        <TD><input type="button" class="button" value="Change" onclick="submitchdresponse(<?php echo $fetchFuncRvw['id'] ?>)"></TD>
-<?php     }else{ ?>        
-        <TD align='center'>Not allowed</TD>
-        <TD align='center'>Not allowed</TD>
-<?php     } ?>
-        <TD><input type="button" name="qcassignment" class="button" value="QC Assignment" onclick="location.href='chdchangestatus.php?chdid=<?php echo $fetchFuncRvw['id']; ?>&pname=<?php echo urlencode($fetchFuncRvw['project_name']); ?>';"></TD>
+        <TD><input type="button" class="button" value="Change" onclick="automailer(<?php echo $fetchFuncRvw['id']?>)"></TD>
+	<?php } else { ?>        
+			<TD align='center'><?php echo ucfirst($fetchFuncRvw['status']) ?></TD>
+			<TD align='center'>N/A</TD>
+	<?php  } ?>
+        <!--<TD><input type="button" name="qcassignment" class="button" value="QC Assignment" onclick="location.href='chdchangestatus.php?chdid=<?php echo $fetchFuncRvw['id']; ?>&pname=<?php echo urlencode($fetchFuncRvw['project_name']); ?>';"></TD>-->
 <?php 
         }  
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['comments']."</div>"."</td>";
@@ -287,6 +296,13 @@ if( isset($_REQUEST['project']) && !empty($_REQUEST['project']) && ($_REQUEST['p
         ".((!empty($fetchFuncRvw['support_file3']))?'<a href="support/'.$fetchFuncRvw['support_file3'].'">'.$fetchFuncRvw['support_file3'].'</a><br />':'')."
         ".((!empty($fetchFuncRvw['support_file4']))?'<a href="support/'.$fetchFuncRvw['support_file4'].'">'.$fetchFuncRvw['support_file4'].'</a><br />':'')."
         </div></td>";
+		if($userrole == "ID" || $userrole == "Tech" || $userrole == "Media" || $userrole == "Dev") {
+			if($fetchFuncRvw['status'] == "rejected") { ?>
+				<TD><input type="button" name="qcassignment" class="button" value="Edit" onclick="location.href='chd.php?chdid=<?php echo $fetchFuncRvw['id'] ?>'"></TD>
+			 <?php } else {
+				echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>N/A</div></td>";
+			}
+		}
       echo "</tr>";
       $i++;  
     }

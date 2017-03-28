@@ -28,10 +28,8 @@
 		echo "<br>";
 		echo "<h4>"."Hi ".$row['username']." ! Welcome to QC bug logging Tool"."</h4>";
 		$username=$row['username'];
-	} 	
-	if(isset($_GET['message']) && $_GET['message'] != '') {
-		echo "<h5 style='color:green'>".$_GET['message']."</h5>";
 	}
+	
 	if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
 		// Configuration - Your Options
@@ -59,7 +57,8 @@
 			$fmthree=$row['fmthree'];
 			$fmfour=$row['fmfour']; 
 		}
-	
+		$errorMessage   = "";    
+		$successMessage = "";
 		$b="PM :".$pm."| ID FM :".$fmone."|  Media FM :".$fmtwo."|  Scripting FM :".$fmthree."|  QC FM :".$fmfour;
 		//$b=mysql_real_escape_string($_POST["fmHint"]);//fm details
 		//echo '<pre>'; print_r($_POST); die;
@@ -82,23 +81,24 @@
 		$chd=explode("-",$_POST["course"]);
 		//$loggeduser=mysql_real_escape_string($_POST["user"]);
 		$filename = $_FILES['userfile']['name']; // Get the name of the file (including file extension).
-	
 		if($filename<>"")
 		{
 		   	$ext = substr($filename, strpos($filename,'.'), strlen($filename)-1); // Get the extension from the filename.
 		   	// Check if the filetype is allowed, if not DIE and inform the user.
 			if(!in_array($ext,$allowed_filetypes)){
-				die('The file you attempted to upload is not allowed.Allowed are : doc,docx,xls,xlsx,jpg,jpeg,png,bmp');
+				$errorMessage = "The file you attempted to upload is not allowed.Allowed are : doc,docx,xls,xlsx,jpg,jpeg,png,bmp";
 			}
 		   	//we can also try this : if($_FILES['userfile']['type'] != "image/gif") { echo "Sorry, we only allow uploading GIF images";   exit;}
 		 
 		   	// Now check the filesize, if it is too large then DIE and inform the user.
-		   	if(filesize($_FILES['userfile']['tmp_name']) > $max_filesize)
-		      		die('The file you attempted to upload is too large.');
+		   	if(filesize($_FILES['userfile']['tmp_name']) > $max_filesize) {
+		      	$errorMessage = 'The file you attempted to upload is too large.';
+			}
 		 
 		   	// Check if we can upload to the specified path, if not DIE and inform the user.
-		   	if(!is_writable($upload_path))
-		      	die('You cannot upload to the specified directory, please CHMOD it to 777.');
+		   	if(!is_writable($upload_path)) {
+		      	$errorMessage = 'You cannot upload to the specified directory, please CHMOD it to 777.';
+			}
 		
 			$date = date('m/d/Y h:i:s a', time());
 			$mydate = date('Y-m-d h:i:s', time());
@@ -109,48 +109,45 @@
 			$timex=$dates[1]."_".$dates[0]."_".$dates[2]."_"."T".$times[0]."_".$times[1]."_".$times[2];
 			$str=$a."_".$f."_".$timex.$ext;
 			$str=mysql_real_escape_string($str);
-			
-			if(move_uploaded_file($_FILES['userfile']['tmp_name'],$upload_path . $str))
-			{
-			    $msg='Your file '.$filename.' upload was successful for project :'.$a.' and phase :'.$f.',You can view the file <a href="' . $upload_path . $str . '" title="Your File" target="_blank">here</a>'; // It worked.
-			    echo "</br>";
-				$query="INSERT INTO qcuploadinfo(project_id, chd_id,project,phase,module,topic,receivedate,browser,coursestatus,function, bcat,bscat,bdr,asignee,qc,screen,filepath,filename,uploaddate,severity,whenchangedstatus,whochangedstatus) values('".$pro_id."','".$chd[0]."','".$a."','".$f."','".$g."','".$h."','".$x."','".$j."','".$k."','".$fun."','".$l."','".$l1."','".$m."','".$n."','".$o."','".$p."','".$str."','".$filename."','".$mydate."','".$q."','".$mydate."','".$username."')";
-			
+			if(empty($errorMessage)) {
+				if(move_uploaded_file($_FILES['userfile']['tmp_name'],$upload_path . $str))
+				{
+					$successMessage='Your file '.$filename.' upload was successful for project :'.$a.' and phase :'.$f.',You can view the file <a href="' . $upload_path . $str . '" title="Your File" target="_blank">here</a>'; // It worked.
+					echo "</br>";
+					$query="INSERT INTO qcuploadinfo(project_id, chd_id,project,phase,module,topic,receivedate,browser,coursestatus,function, bcat,bscat,bdr,asignee,qc,screen,filepath,filename,uploaddate,severity,whenchangedstatus,whochangedstatus) values('".$pro_id."','".$chd[0]."','".$a."','".$f."','".$g."','".$h."','".$x."','".$j."','".$k."','".$fun."','".$l."','".$l1."','".$m."','".$n."','".$o."','".$p."','".$str."','".$filename."','".$mydate."','".$q."','".$mydate."','".$username."')";
 				
-				if (mysql_query($query))
-				{
-					//echo "Record created with id :".$row['id']." and description :".$w;
-					header ("Location: openbug2.php?message=".urlencode($msg)."&proj=".urlencode($a)."&fmdetails=".urlencode($b)."&phase=".urlencode($f)."&module=".urlencode($g)."&topic=".urlencode($h)."&receivedate=".urlencode($i)."&browser=".urlencode($j)."&coursestatus=".urlencode($k)."&function=".urlencode($fun)."&bcat=".urlencode($l)."&bscat".urlencode($l1)."&bdr=".urlencode($m)."&asignee=".urlencode($n)."&qc=".urlencode($o)."&screen=".urlencode($p)."&severity=".urlencode($q)."&course=".urlencode($_POST["course"]));
+					
+					if (mysql_query($query))
+					{
+						//echo "Record created with id :".$row['id']." and description :".$w;
+						header ("Location: openbug2.php?message=".urlencode($successMessage)."&proj=".urlencode($a)."&fmdetails=".urlencode($b)."&phase=".urlencode($f)."&module=".urlencode($g)."&topic=".urlencode($h)."&receivedate=".urlencode($i)."&browser=".urlencode($j)."&coursestatus=".urlencode($k)."&function=".urlencode($fun)."&bcat=".urlencode($l)."&bscat".urlencode($l1)."&bdr=".urlencode($m)."&asignee=".urlencode($n)."&qc=".urlencode($o)."&screen=".urlencode($p)."&severity=".urlencode($q)."&course=".urlencode($_POST["course"]));
+					}
+					else
+					{
+						$errorMessage = "Uploadinfo table couldn't be updated.";
+						header ("Location: openbug2.php?errorMessage=".urlencode($errorMessage)."&proj=".urlencode($a)."&fmdetails=".urlencode($b)."&phase=".urlencode($f)."&module=".urlencode($g)."&topic=".urlencode($h)."&receivedate=".urlencode($i)."&browser=".urlencode($j)."&coursestatus=".urlencode($k)."&function=".$fun."&bcat=".urlencode($l)."&bscat=".urlencode($l1)."&bdr=".urlencode($m)."&asignee=".urlencode($n)."&qc=".urlencode($o)."&screen=".urlencode($p)."&severity=".urlencode($q)."&course=".urlencode($_POST["course"]));
+
+					}
 				}
-				else
-				{
-					echo "Uploadinfo table couldn't be updated.";
-					exit();
-				}
-			}	  
-		   	else {
-				echo 'There was an error during the file upload.  Please try again.'; // It failed :(.
-			}
-			exit();
-		
-		} //this is end of if which is checking whether filename is blank or not.
-		else //filename is blank means the user has not uploaded any file.
-		{
+			} else {
+				header ("Location: openbug2.php?errorMessage=".urlencode($errorMessage)."&proj=".urlencode($a)."&fmdetails=".urlencode($b)."&phase=".urlencode($f)."&module=".urlencode($g)."&topic=".urlencode($h)."&receivedate=".urlencode($i)."&browser=".urlencode($j)."&coursestatus=".urlencode($k)."&function=".$fun."&bcat=".urlencode($l)."&bscat=".urlencode($l1)."&bdr=".urlencode($m)."&asignee=".urlencode($n)."&qc=".urlencode($o)."&screen=".urlencode($p)."&severity=".urlencode($q)."&course=".urlencode($_POST["course"]));
+			}			
+		} else if(empty($errorMessage)){
 			//$date = date('m/d/Y h:i:s a', time());
 			$mydate = date('Y-m-d h:i:s', time());     
 			$query="INSERT INTO qcuploadinfo(project_id,chd_id, project,phase,module,topic,receivedate,browser,coursestatus,function,bcat,bscat,bdr,asignee,qc,screen,uploaddate,severity,whenchangedstatus,whochangedstatus) values('".$pro_id."','".$chd[0]."','".$a."','".$f."','".$g."','".$h."','".$x."','".$j."','".$k."','".$fun."','".$l."','".$l1."','".$m."','".$n."','".$o."','".$p."','".$mydate."','".$q."','".$mydate."','".$username."')";
-	    		
+				
 			if (mysql_query($query))
-	       	{
+			{
 				//echo "Record created with id :".$row['id']." and description :".$w;
-				$msg="The bug has been logged without file. You can click on Show All Fileinfo to see the details";
+				$successMessage="The bug has been logged without file. You can click on Show All Fileinfo to see the details";
 				//header ("Location: openbug2.php?message=".urlencode($msg)."&proj=".urlencode($a)."&pm=".urlencode($b));
-			  	header ("Location: openbug2.php?message=".urlencode($msg)."&proj=".urlencode($a)."&fmdetails=".urlencode($b)."&phase=".urlencode($f)."&module=".urlencode($g)."&topic=".urlencode($h)."&receivedate=".urlencode($i)."&browser=".urlencode($j)."&coursestatus=".urlencode($k)."&function=".$fun."&bcat=".urlencode($l)."&bscat=".urlencode($l1)."&bdr=".urlencode($m)."&asignee=".urlencode($n)."&qc=".urlencode($o)."&screen=".urlencode($p)."&severity=".urlencode($q)."&course=".urlencode($_POST["course"]));
-		   	} else {
-	        	echo "Uploadinfo table couldn't be updated.";
-				exit();
-		   	}
-		}
+				header ("Location: openbug2.php?message=".urlencode($successMessage)."&proj=".urlencode($a)."&fmdetails=".urlencode($b)."&phase=".urlencode($f)."&module=".urlencode($g)."&topic=".urlencode($h)."&receivedate=".urlencode($i)."&browser=".urlencode($j)."&coursestatus=".urlencode($k)."&function=".$fun."&bcat=".urlencode($l)."&bscat=".urlencode($l1)."&bdr=".urlencode($m)."&asignee=".urlencode($n)."&qc=".urlencode($o)."&screen=".urlencode($p)."&severity=".urlencode($q)."&course=".urlencode($_POST["course"]));
+			} else {
+				$errorMessage = "Uploadinfo table couldn't be updated.";
+				header ("Location: openbug2.php?errorMessage=".urlencode($errorMessage)."&proj=".urlencode($a)."&fmdetails=".urlencode($b)."&phase=".urlencode($f)."&module=".urlencode($g)."&topic=".urlencode($h)."&receivedate=".urlencode($i)."&browser=".urlencode($j)."&coursestatus=".urlencode($k)."&function=".$fun."&bcat=".urlencode($l)."&bscat=".urlencode($l1)."&bdr=".urlencode($m)."&asignee=".urlencode($n)."&qc=".urlencode($o)."&screen=".urlencode($p)."&severity=".urlencode($q)."&course=".urlencode($_POST["course"]));
+			}
+		} 
 	}
 	mysql_close($con);
 ?>
@@ -824,8 +821,31 @@ function submitresponse_devcomment(str)
 
 
 </script>
-<script language="JavaScript" src="datetimepicker.js">
-</script>
+<script language="JavaScript" src="datetimepicker.js"></script>
+<?php 
+$message = "";  
+$color   = "";
+
+if(isset($_REQUEST['message']) && !empty($_REQUEST['message'])){
+	$message = $_REQUEST['message'];  
+	$color  = "green";    
+}elseif(isset($_REQUEST['errorMessage']) && !empty($_REQUEST['errorMessage'])){
+  $message = $_REQUEST['errorMessage'];  
+  $color   = "red";  
+}
+
+if( !empty($message) ){
+?> 
+<table cellpading="0" cellspacing="0" class="table_text">
+  <tr>
+    <td valign="top">
+      <font color="<?php echo $color; ?>"><?php echo $message; ?></font>
+      <br />
+      <br />
+    </td>
+  </tr>  
+</table>
+<?php } ?>
 <form name="tstest" action="./openbug2.php" onSubmit="return verify();" method="post" enctype="multipart/form-data">
 <TABLE>
 <TR>
