@@ -29,13 +29,13 @@
 		echo "<h4>"."Hi ".$row['username']." ! Welcome to QC bug logging Tool"."</h4>";
 		$username=$row['username'];
 	}
-	
+	$upload_path = './qcfiles/'; 
 	if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
 		// Configuration - Your Options
 		$allowed_filetypes = array('.doc','.docx','.xls','.xlsx','.jpeg','.jpg','.JPG','.JPEG','.png','.PNG','.bmp','.BMP','.gif','.GIF'); // These will be the types of file that will pass the validation.
 		$max_filesize = 1048576; // Maximum filesize in BYTES (currently 1MB).
-		$upload_path = './qcfiles/'; // The place the files will be uploaded to (currently a 'files' directory).
+		// The place the files will be uploaded to (currently a 'files' directory).
 		/* @saurav change here to add project_id */
 		$pro_id = $_POST['pro_id'];
 		$a=mysql_real_escape_string($_POST["project"]);
@@ -102,19 +102,13 @@
 		
 			$date = date('m/d/Y h:i:s a', time());
 			$mydate = date('Y-m-d h:i:s', time());
-			
-			$values = explode(" ",$date);
-			$dates = explode("/", $values[0]);
-			$times = explode(":", $values[1]);
-			$timex=$dates[1]."_".$dates[0]."_".$dates[2]."_"."T".$times[0]."_".$times[1]."_".$times[2];
-			$str=$a."_".$f."_".$timex.$ext;
-			$str=mysql_real_escape_string($str);
+			$str = time().$ext;
 			if(empty($errorMessage)) {
-				if(move_uploaded_file($_FILES['userfile']['tmp_name'],$upload_path . $str))
+				if(move_uploaded_file($_FILES['userfile']['tmp_name'], $upload_path . $str))
 				{
 					$successMessage='Your file '.$filename.' upload was successful for project :'.$a.' and phase :'.$f.',You can view the file <a href="' . $upload_path . $str . '" title="Your File" target="_blank">here</a>'; // It worked.
 					echo "</br>";
-					$query="INSERT INTO qcuploadinfo(project_id, chd_id,project,phase,module,topic,receivedate,browser,coursestatus,function, bcat,bscat,bdr,asignee,qc,screen,filepath,filename,uploaddate,severity,whenchangedstatus,whochangedstatus) values('".$pro_id."','".$chd[0]."','".$a."','".$f."','".$g."','".$h."','".$x."','".$j."','".$k."','".$fun."','".$l."','".$l1."','".$m."','".$n."','".$o."','".$p."','".$str."','".$filename."','".$mydate."','".$q."','".$mydate."','".$username."')";
+					$query="INSERT INTO qcuploadinfo(project_id,chd_id,project,phase,module,topic,receivedate,browser,coursestatus,function, bcat,bscat,bdr,asignee,qc,screen,filepath,filename,uploaddate,severity,whenchangedstatus,whochangedstatus) values('".$pro_id."','".$chd[0]."','".$a."','".$f."','".$g."','".$h."','".$x."','".$j."','".$k."','".$fun."','".$l."','".$l1."','".$m."','".$n."','".$o."','".$p."','".$str."','".$filename."','".$mydate."','".$q."','".$mydate."','".$username."')";
 				
 					
 					if (mysql_query($query))
@@ -128,6 +122,9 @@
 						header ("Location: openbug2.php?errorMessage=".urlencode($errorMessage)."&proj=".urlencode($a)."&fmdetails=".urlencode($b)."&phase=".urlencode($f)."&module=".urlencode($g)."&topic=".urlencode($h)."&receivedate=".urlencode($i)."&browser=".urlencode($j)."&coursestatus=".urlencode($k)."&function=".$fun."&bcat=".urlencode($l)."&bscat=".urlencode($l1)."&bdr=".urlencode($m)."&asignee=".urlencode($n)."&qc=".urlencode($o)."&screen=".urlencode($p)."&severity=".urlencode($q)."&course=".urlencode($_POST["course"]));
 
 					}
+				} else {
+					$errorMessage = "Uploadinfo table couldn't be updated.";
+					header ("Location: openbug2.php?errorMessage=".urlencode($errorMessage)."&proj=".urlencode($a)."&fmdetails=".urlencode($b)."&phase=".urlencode($f)."&module=".urlencode($g)."&topic=".urlencode($h)."&receivedate=".urlencode($i)."&browser=".urlencode($j)."&coursestatus=".urlencode($k)."&function=".$fun."&bcat=".urlencode($l)."&bscat=".urlencode($l1)."&bdr=".urlencode($m)."&asignee=".urlencode($n)."&qc=".urlencode($o)."&screen=".urlencode($p)."&severity=".urlencode($q)."&course=".urlencode($_POST["course"]));
 				}
 			} else {
 				header ("Location: openbug2.php?errorMessage=".urlencode($errorMessage)."&proj=".urlencode($a)."&fmdetails=".urlencode($b)."&phase=".urlencode($f)."&module=".urlencode($g)."&topic=".urlencode($h)."&receivedate=".urlencode($i)."&browser=".urlencode($j)."&coursestatus=".urlencode($k)."&function=".$fun."&bcat=".urlencode($l)."&bscat=".urlencode($l1)."&bdr=".urlencode($m)."&asignee=".urlencode($n)."&qc=".urlencode($o)."&screen=".urlencode($p)."&severity=".urlencode($q)."&course=".urlencode($_POST["course"]));
@@ -140,7 +137,7 @@
 			if (mysql_query($query))
 			{
 				//echo "Record created with id :".$row['id']." and description :".$w;
-				$successMessage="The bug has been logged without file. You can click on Show All Fileinfo to see the details";
+				$successMessage="The bug has been logged without file. You can use filters and click on Show Bug button to see the details";
 				//header ("Location: openbug2.php?message=".urlencode($msg)."&proj=".urlencode($a)."&pm=".urlencode($b));
 				header ("Location: openbug2.php?message=".urlencode($successMessage)."&proj=".urlencode($a)."&fmdetails=".urlencode($b)."&phase=".urlencode($f)."&module=".urlencode($g)."&topic=".urlencode($h)."&receivedate=".urlencode($i)."&browser=".urlencode($j)."&coursestatus=".urlencode($k)."&function=".$fun."&bcat=".urlencode($l)."&bscat=".urlencode($l1)."&bdr=".urlencode($m)."&asignee=".urlencode($n)."&qc=".urlencode($o)."&screen=".urlencode($p)."&severity=".urlencode($q)."&course=".urlencode($_POST["course"]));
 			} else {

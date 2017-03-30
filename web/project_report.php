@@ -74,33 +74,13 @@ body{
 }
 </style>
 <script type="text/javascript" src="js/jquery.js"></script>
+<script language="JavaScript" src="datetimepicker.js"></script>
 <script>
-
-
-
 function displayRecords(numRecords = 10, pageNum = 1){
 	var project = trim(document.getElementById('project').value);
 	var pro_id = document.forms["tstest"]["project"].options[document.forms['tstest']['project'].selectedIndex].getAttribute('ref');
-	if(project=="Select"){
-		// $.ajax({
-			// type: "GET",
-			// url: "project_report_chd.php",
-			// data: "show="+ numRecords +"&pagenum=" +pageNum,
-			// cache: false,
-			// beforeSend: function() {
-				// $('.loader').show();
-				// $('.loaderParent').show();
-			// },
-			// success: function(html) {
-				// $("#txtHint").html(html);
-				// //$('.loader').html('');
-				// $('.loader').hide();
-				// $('.loaderParent').hide();
-			// }
-		// });
-		alert('please select project name');
-		return;
-	}else{
+	var fdate = trim(document.getElementById('FDate').value);
+	if(project != "Select" ){
 		$.ajax({
 			type: "GET",
 			url: "project_report_chd.php",
@@ -116,7 +96,28 @@ function displayRecords(numRecords = 10, pageNum = 1){
 				$('.loader').hide();
 				$('.loaderParent').hide();
 			}
-		});  
+		});
+		
+	}else if(fdate != "") {
+		$.ajax({
+			type: "GET",
+			url: "project_report_chd.php",
+			data: "fdate="+fdate,
+			cache: false,
+			beforeSend: function() {
+				$('.loader').show();
+				$('.loaderParent').show();
+			},
+			success: function(html) {
+				$("#txtHint").html(html);
+				//$('.loader').html('');
+				$('.loader').hide();
+				$('.loaderParent').hide();
+			}
+		});
+	}else{
+		alert('please select project name or from date');
+		return;  
 	}
 }
 function showAll(){
@@ -165,33 +166,6 @@ function rtrim(s)
 
 <body>
 
-<?php 
-$message = "";  
-$color   = "";
-
-if( isset($_REQUEST["successMessage"]) && !empty($_REQUEST["successMessage"]) ){
-  $message = $_REQUEST["successMessage"];  
-  $color   = "green";    
-}elseif( isset($_REQUEST["errorMessage"]) && !empty($_REQUEST["errorMessage"]) ){
-  $message = $_REQUEST["errorMessage"];  
-  $color   = "red";  
-}
-
-if( !empty($message) ){
-?> 
-<table cellpading="0" cellspacing="0" class="table_text">
-  <tr>
-    <td valign="top">
-      <font color="<?php echo $color; ?>"><?php echo $message; ?></font>
-      <br />
-      <br />
-    </td>
-  </tr>  
-</table>
-<?php
-}
-?>
-
 <form name="tstest" id="tstest" method="post" action="" onsubmit="return test()" enctype="multipart/form-data">
 <TABLE cellpading="0" cellspacing="0" class="table_text">
 <TR>
@@ -223,14 +197,19 @@ if(!empty($numrowsProject)){
 } 
 ?>
     </select>
-	<!--<input type="hidden" name="pro_id" id="pro_id_hidden" value="<?php //echo $pro_id; ?>" />-->
   </td>
+</TR>
+<TR><td align="center">OR</td></TR>
+<TR>
+<TD>From Date <font color='red'>*</font></TD>
+<TD><input type="text" name="FDate" id="FDate" value="" maxlength="20" size="19" readonly="readonly">
+  <a href="javascript:NewCal('FDate','ddmmyyyy')"><img src="cal.gif" width="16" height="16" border="0" alt="Pick a date"></a> 
+</TD>
 </TR>
 </TABLE>
 <br>
 <input type="button" class="button" value="Log Out" onclick="location.href='logout.php';">
 <input type="button" class="button" value="Show All Fileinfo" onClick="showAll()">
-<!--<input type="button" class="button" value="Show All Projects Info" onClick="showAllProject()">-->
 <br>
 <br>
 <div id="ResHint"></div>
