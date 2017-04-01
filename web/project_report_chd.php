@@ -118,89 +118,89 @@ foreach($tmp as $key => $val) {
 					}
 				}
 				$final[$key]['total_bug'] = $final[$key]['total_bug'] + $v['bug_count'];
-				if($v['category'] == "Text Formatting") {
-					$final[$key]['tfbug_count'] = $final[$key]['tfbug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Text Mismatch") {
-					$final[$key]['tmbug_count'] = $final[$key]['tmbug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Text Overlap/Truncation/Overflow") {
-					$final[$key]['tobug_count'] = $final[$key]['tobug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Junck Characters") {
-					$final[$key]['jcbug_count'] = $final[$key]['jcbug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Punctuation") {
-					$final[$key]['pcbug_count'] = $final[$key]['pcbug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Spelling Error") {
-					$final[$key]['spbug_count'] = $final[$key]['spbug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Grammatical Error") {
-					$final[$key]['grbug_count'] = $final[$key]['grbug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Content Incorrect/Unclear") {
-					$final[$key]['cibug_count'] = $final[$key]['cibug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Translation Error") {
-					$final[$key]['tebug_count'] = $final[$key]['tebug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Inconsistent Use of Terms") {
-					$final[$key]['iutbug_count'] = $final[$key]['iutbug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Instruction Text Missing/Unclear") {
-					$final[$key]['itmbug_count'] = $final[$key]['itmbug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Inconsistent Layout") {
-					$final[$key]['ilbug_count'] = $final[$key]['ilbug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Image Missing/Incorrect") {
-					$final[$key]['imibug_count'] = $final[$key]['imibug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Image Stretched or Distorted") {
-					$final[$key]['isdbug_count'] = $final[$key]['isdbug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Image/Animation/Video is  not loading") {
-					$final[$key]['iavbug_count'] = $final[$key]['iavbug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Controls Do Not Function") {
-					$final[$key]['cdnfbug_count'] = $final[$key]['cdnfbug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Image Overlap/Truncation/Missing Border") {
-					$final[$key]['iotmbug_count'] = $final[$key]['iotmbug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Preloader Missing") {
-					$final[$key]['pmbug_count'] = $final[$key]['pmbug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Settings Error") {
-					$final[$key]['sebug_count'] = $final[$key]['sebug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Video With Blank Screen At The End") {
-					$final[$key]['vwbsbug_count'] = $final[$key]['vwbsbug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Pronunciation Error") {
-					$final[$key]['prebug_count'] = $final[$key]['prebug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Audio Mismatch With Transcript/CC Text") {
-					$final[$key]['amwtbug_count'] = $final[$key]['amwtbug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Audio Pitch/Speed/Echo") {
-					$final[$key]['apsebug_count'] = $final[$key]['apsebug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Audio Ends Abruptly") {
-					$final[$key]['aeabug_count'] = $final[$key]['aeabug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Audio/Visuals Not In Synch") {
-					$final[$key]['avnisbug_count'] = $final[$key]['avnisbug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Audio Missing") {
-					$final[$key]['ambug_count'] = $final[$key]['ambug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Mentor's Lip Not in Sync With Audio") {
-					$final[$key]['mlbug_count'] = $final[$key]['mlbug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Hit Area Incorrect") {
-					$final[$key]['haibug_count'] = $final[$key]['haibug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Button/Link Not Functional") {
-					$final[$key]['blnfbug_count'] = $final[$key]['blnfbug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Incorrect Link or Hotspot - Destination") {
-					$final[$key]['ilhdbug_count'] = $final[$key]['ilhdbug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Template Functionality Error") {
-					$final[$key]['tfebug_count'] = $final[$key]['tfebug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Information button/Hint Text Not Displaying") {
-					$final[$key]['ibhtbug_count'] = $final[$key]['ibhtbug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Autojump Error") {
-					$final[$key]['ajebug_count'] = $final[$key]['ajebug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Page Loading Error") {
-					$final[$key]['plebug_count'] = $final[$key]['plebug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Page Not Responding") {
-					$final[$key]['pnrbug_count'] = $final[$key]['pnrbug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Page or Frame Missing or Incorrect") {
-					$final[$key]['pfibug_count'] = $final[$key]['pfibug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Flickering Error") {
-					$final[$key]['flibug_count'] = $final[$key]['flibug_count'] + $v['bug_count'];
-				}else if($v['category'] == "ADA/508 Error") {
-					$final[$key]['adabug_count'] = $final[$key]['adabug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Bookmarking Error") {
-					$final[$key]['bebug_count'] = $final[$key]['bebug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Scoring Error") {
-					$final[$key]['scebug_count'] = $final[$key]['scebug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Completion Marking Error") {
-					$final[$key]['cmebug_count'] = $final[$key]['cmebug_count'] + $v['bug_count'];
-				}
+			}
+			if(trim($v['category']) == "Text Formatting") {
+				$final[$key]['tfbug_count'] = $final[$key]['tfbug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Text Mismatch") {
+				$final[$key]['tmbug_count'] = $final[$key]['tmbug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Text Overlap/Truncation/Overflow") {
+				$final[$key]['tobug_count'] = $final[$key]['tobug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Junck Characters") {
+				$final[$key]['jcbug_count'] = $final[$key]['jcbug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Punctuation") {
+				$final[$key]['pcbug_count'] = $final[$key]['pcbug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Spelling Error") {
+				$final[$key]['spbug_count'] = $final[$key]['spbug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Grammatical Error") {
+				$final[$key]['grbug_count'] = $final[$key]['grbug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Content Incorrect/Unclear") {
+				$final[$key]['cibug_count'] = $final[$key]['cibug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Translation Error") {
+				$final[$key]['tebug_count'] = $final[$key]['tebug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Inconsistent Use of Terms") {
+				$final[$key]['iutbug_count'] = $final[$key]['iutbug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Instruction Text Missing/Unclear") {
+				$final[$key]['itmbug_count'] = $final[$key]['itmbug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Inconsistent Layout") {
+				$final[$key]['ilbug_count'] = $final[$key]['ilbug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Image Missing/Incorrect") {
+				$final[$key]['imibug_count'] = $final[$key]['imibug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Image Stretched or Distorted") {
+				$final[$key]['isdbug_count'] = $final[$key]['isdbug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Image/Animation/Video is  not loading") {
+				$final[$key]['iavbug_count'] = $final[$key]['iavbug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Controls Do Not Function") {
+				$final[$key]['cdnfbug_count'] = $final[$key]['cdnfbug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Image Overlap/Truncation/Missing Border") {
+				$final[$key]['iotmbug_count'] = $final[$key]['iotmbug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Preloader Missing") {
+				$final[$key]['pmbug_count'] = $final[$key]['pmbug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Settings Error") {
+				$final[$key]['sebug_count'] = $final[$key]['sebug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Video With Blank Screen At The End") {
+				$final[$key]['vwbsbug_count'] = $final[$key]['vwbsbug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Pronunciation Error") {
+				$final[$key]['prebug_count'] = $final[$key]['prebug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Audio Mismatch With Transcript/CC Text") {
+				$final[$key]['amwtbug_count'] = $final[$key]['amwtbug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Audio Pitch/Speed/Echo") {
+				$final[$key]['apsebug_count'] = $final[$key]['apsebug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Audio Ends Abruptly") {
+				$final[$key]['aeabug_count'] = $final[$key]['aeabug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Audio/Visuals Not In Synch") {
+				$final[$key]['avnisbug_count'] = $final[$key]['avnisbug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Audio Missing") {
+				$final[$key]['ambug_count'] = $final[$key]['ambug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Mentor's Lip Not in Sync With Audio") {
+				$final[$key]['mlbug_count'] = $final[$key]['mlbug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Hit Area Incorrect") {
+				$final[$key]['haibug_count'] = $final[$key]['haibug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Button/Link Not Functional") {
+				$final[$key]['blnfbug_count'] = $final[$key]['blnfbug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Incorrect Link or Hotspot - Destination") {
+				$final[$key]['ilhdbug_count'] = $final[$key]['ilhdbug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Template Functionality Error") {
+				$final[$key]['tfebug_count'] = $final[$key]['tfebug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Information button/Hint Text Not Displaying") {
+				$final[$key]['ibhtbug_count'] = $final[$key]['ibhtbug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Autojump Error") {
+				$final[$key]['ajebug_count'] = $final[$key]['ajebug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Page Loading Error") { 
+				$final[$key]['plebug_count'] = $final[$key]['plebug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Page Not Responding") {
+				$final[$key]['pnrbug_count'] = $final[$key]['pnrbug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Page or Frame Missing or Incorrect") {
+				$final[$key]['pfibug_count'] = $final[$key]['pfibug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Flickering Error") {
+				$final[$key]['flibug_count'] = $final[$key]['flibug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "ADA/508 Error") {
+				$final[$key]['adabug_count'] = $final[$key]['adabug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Bookmarking Error") {
+				$final[$key]['bebug_count'] = $final[$key]['bebug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Scoring Error") {
+				$final[$key]['scebug_count'] = $final[$key]['scebug_count'] + $v['bug_count'];
+			}if(trim($v['category']) == "Completion Marking Error") {
+				$final[$key]['cmebug_count'] = $final[$key]['cmebug_count'] + $v['bug_count'];
 			}
 		}
 		$final[$key]['closed_count_lh'] = $final[$key]['bug_closed'] / $final[$key]['lh'];

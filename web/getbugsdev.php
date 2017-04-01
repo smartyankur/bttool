@@ -40,9 +40,9 @@ if ($pagenum < 1) {
 $lower_limit = ($pagenum - 1) * $page_limit;
 
 if($issuetype != 'any'){
-  $sql = "SELECT *, c.category FROM qcuploadinfo left join tbl_category as c on bcat = c.id WHERE project_id = '".$pro_id."' and chd_id = '".$chd[0]."' and bugstatus = '".$issuetype."' limit ". ($lower_limit)." ,  ". ($page_limit). "";
+  $sql = "SELECT qcuploadinfo.*, c.category FROM qcuploadinfo left join tbl_category as c on bcat = c.id WHERE project_id = '".$pro_id."' and chd_id = '".$chd[0]."' and bugstatus = '".$issuetype."' limit ". ($lower_limit)." ,  ". ($page_limit). "";
 }else{
-  $sql = "SELECT *, c.category FROM qcuploadinfo left join tbl_category as c on bcat = c.id WHERE project_id = '".$pro_id."' and chd_id = '".$chd[0]."' limit ". ($lower_limit)." ,  ". ($page_limit). "";
+  $sql = "SELECT qcuploadinfo.*, c.category FROM qcuploadinfo left join tbl_category as c on bcat = c.id WHERE project_id = '".$pro_id."' and chd_id = '".$chd[0]."' limit ". ($lower_limit)." ,  ". ($page_limit). "";
 }
 try {
 		$stmt = $DB->prepare($sql);

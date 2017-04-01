@@ -7,7 +7,7 @@ $pro_id = $_GET["pro_id"];
 if(isset($_GET['chd_id'])){
 	$chd = explode("-", $_GET['chd_id']);
 }
-$upload_path = './qcfiles/';
+$upload_path = 'http://180.151.87.232/bttool2/qcfiles/';
 include("config.php");
 
 $mode=isset($_REQUEST['mode']) && !empty($_REQUEST['mode']) ? $_REQUEST['mode'] : '';
@@ -164,7 +164,7 @@ while($row = mysql_fetch_array($result))
   </select></TD>
   <TD><input type='button' value='Change Status' onclick='submitbugresponse(".$row['id'].")'></TD>";*/
 
-  $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".'<a href="'.htmlentities($upload_path).htmlentities($row['filepath']).'" title="Your File" target="new">'.$row['filepath'].'</a>'."</div>"."</td>";
+  $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".'<a href="'.htmlentities($upload_path).htmlentities($row['filepath']).'" title="Your File" target="new">'.(empty($row['filepath']) ? '' : $upload_path).$row['filepath'].'</a>'."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['uploaddate'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['asignee'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['qc'])."</div>"."</td>";
