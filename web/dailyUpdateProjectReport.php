@@ -41,7 +41,11 @@ class DailyUpdateProjectReport {
 						$row['bug_info'][] = $v;
 					}
 					$pin = $row['pin'];
-					$screen_count[$pin][$row['version']] = $row['pagecount'];
+					if($row['version'] == "alpha") {
+						$screen_count[$pin][$row['version']] = $row['pagecount'];
+					} else {
+						$screen_count[$pin][$row['version']] = 0;
+					}
 					unset($row['pin']);
 					unset($row['pagecount']);
 					$tmp[$pin][] = $row;

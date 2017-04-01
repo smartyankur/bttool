@@ -127,6 +127,7 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
 		} else {
 			$errorMessage = "Record has not been updated for project '".$project . "'";
 		}
+		//echo '<pre>'; print_r($_POST); die;
 	}
     if($FReviewNo) { 		
 		$str  = '<html><head><style type="text/css">body{background:url(\'qcr.jpg\') no-repeat;} .table_text{font-family:Calibri; font-size:12px; font-style:normal; line-height:normal; font-weight:normal; font-variant:normal; color:#000000; text-indent:10px; vertical-align:middle;}  
@@ -562,6 +563,9 @@ if(isset($_GET['chdid']) && !empty($_GET['chdid'])) {
 	$query = "select * from tbl_functional_review where id = ".$_GET['chdid'];
 	$retval = mysql_query($query, $con);
 	$row = mysql_fetch_assoc($retval); 
+	if($row['status'] != "rejected") {
+		exit;
+	}
 	$_REQUEST['project'] = $row['project_name'];
 	$_REQUEST['pm'] = $row['project_manager'];
 	$_REQUEST['courseTitle'] = $row['course_title'];
@@ -1039,13 +1043,19 @@ $(document).ready(function(){
 	$(".version").click(function(){
 		if($(this).is(":checked")){
 			var version = $(this).val();
-			if(version == "beta" || version == "gold") {
+			if(version != "beta" && version != "gold") {
 				$(".disable").attr("disabled", true);
+				$(".disable").attr("checked", false);
 			} else  {
 				$(".disable").attr("disabled", false);
 			}
 		}
 	});
+    var ver = '<?php echo $_REQUEST['version']?>';
+	if(ver != "beta" && ver != "gold") {
+		$(".disable").attr("checked", false);
+		$(".disable").attr("disabled", true);
+	}
 });
 function checkAllPT(tsval){
   if(tsval=='e2e'){

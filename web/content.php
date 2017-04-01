@@ -23,11 +23,11 @@ if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
 	$links = array();
 	if($role=="PM" || $role=="FM" || $role=="ID FM" || $role=="Media FM" || $role=="Tech FM" || $role=="DM" || $role=="RM" || $role=="PH" || $role=="IQ")
 	{
-		$links['ncreport.php'] = "For PMs- Find and Respond to NCs";
-		$links['closedlist.php'] = "For PMs-Find Closed NCs";
-		$links['ncreportglobalresponse.php'] = "For PMs-Give Global Response For NCs";
-		$links['ncdreport.php'] = "For PMs-Find NC Density Projectwise.";
-		$links['mastercom.php'] = "For PMs-Master Compliance Report";
+		$links['ncreport.php'] = "For PMs - Find and Respond to NCs";
+		$links['closedlist.php'] = "For PMs - Find Closed NCs";
+		$links['ncreportglobalresponse.php'] = "For PMs - Give Global Response for NCs";
+		$links['ncdreport.php'] = "For PMs - Find NC Density Project-Wise";
+		$links['mastercom.php'] = "For PMs - Master Compliance Report";
 		$links['sb_review.php'] = "SB Review";
 		if($dept=="LMS")
 		{
@@ -38,17 +38,17 @@ if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
 		}
 		if($dept=="Content")
 		{
-			$links['funrev.php'] = "Log predelivery functional review findings";
-			$links['qccalc12.php'] = "Link to view function wise QC defect status";
+			$links['funrev.php'] = "Log Predelivery Functional Review Findings";
+			$links['qccalc12.php'] = "Link to View Function-Wise QC Defect Status";
 		}	
 	}
 	if($role=="PM" || $role=="FM" || $role=="ID FM" || $role=="Media FM" || $role=="Tech FM" || $role=="DM" || $role=="RM" || $role=="PH" || $role=="IQ" || $role=="QC FM" || $role=="QC") {	
 		if($dept=="Content"){
-			$links['openbug2.php'] = "For QC Team -Log A New Bug and Manage Status.";
-			$links['countholdissues.php'] = "Link for COUNT or HOLD issues.";
-			$links['chd.php'] = "Link for Course Handover Document.";
+			$links['openbug2.php'] = "For QC Team - Log a New Bug and Manage Status";
+			$links['countholdissues.php'] = "Link for Count of Hold Issues";
+			$links['chd.php'] = "Link for Course Handover Document";
 			
-			$links['devcomment.php'] = "For Dev Team -Log Response to Bugs from QC.";
+			$links['devcomment.php'] = "For Dev Team - Log Response to Bugs From QC";
 			$links['sb_review.php'] = "SB Review";
 		}
 		$links['project_report.php'] = "Project Report";
@@ -69,8 +69,8 @@ if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
 	}
 	if($role == 'DEV' || $role == "IQ" || $role == "Tech" || $role == "Media" || $role == "ID" || $role == "ID, Media" || $role == "ID, Tech" || $role == "Tech, Media" || $role == "Tech, ID" || $role == "Media, ID" || $role == "Media, Tech"){
 		if($dept=="Content"){
-			$links['devcomment.php'] = "For Dev Team -Log Response to Bugs from QC.";
-			$links['funrev.php'] = "Check functional review findings";
+			$links['devcomment.php'] = "For Dev Team - Log Response to Bugs from QC";
+			$links['funrev.php'] = "Check Functional Review Findings";
 			$links['sb_review.php'] = "SB Review";
 			
 		}
@@ -122,8 +122,8 @@ if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
                     <p><span>W</span>elcome <span>T</span>o <span>RADAR!</span></p>
                 </div>
                 <form action="">                    
-                    <select class="links">
-                        <option value="">None</option>
+                    <select class="classic">
+                        <option value="">Select Option</option>
 						<?php foreach($links as $key => $val){ ?>
 							<option value="<?php echo $key; ?>"><?php echo $val; ?></option>
 						<?php } ?>
@@ -137,7 +137,7 @@ if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
     </div>
 	<script>
 		$(document).ready(function(){
-			$(".links").change(function(){
+			$(".classic").change(function(){
 				var link = $(this).val();
 				if(link != '') {
 					window.location.href = link;

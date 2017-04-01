@@ -6,9 +6,9 @@ if(isset($_GET["id"])) {
 	$pro_id = $_GET["id"];
 }
 else if(isset($_GET["fdate"])) {
-	$fdate = strtotime($_GET["fdate"]);
+	$fdate = strtotime($_GET["fdate"], "-1 Days");
 }
-$sql = "SELECT project_name, project_manager, course_title, course_level, version, pagecount, functional_manager_id, functional_manager_media, functional_manager_tech, developers_id, developers_media, developers_tech, testing_scope, partial_testing FROM tbl_functional_review"; 
+$sql = "SELECT id, project_name, project_manager, course_title, course_level, version, pagecount, functional_manager_id, functional_manager_media, functional_manager_tech, developers_id, developers_media, developers_tech, testing_scope, partial_testing FROM tbl_functional_review"; 
 if(isset($_GET["id"])) {
 	$sql .= " WHERE project_id = ".$pro_id;
 } else if(isset($_GET["fdate"])) {
@@ -76,6 +76,7 @@ $final = array();
 
 foreach($tmp as $key => $val) {
 	$version = $val['version'];
+	$final[$key]['id'] = $val['id'];
 	$final[$key]['project_name'] = $val['project_name'];
 	$final[$key]['project_manager'] = $val['project_manager'];
 	$final[$key]['course_title'] = $val['course_title'];
@@ -101,17 +102,17 @@ foreach($tmp as $key => $val) {
 				if($v['bugstatus'] == "hold") {
 					$final[$key]['hold'] = $final[$key]['hold'] + $v['bug_count'];	
 				}
-				if(strtolower($v['function']) == "media" || strtolower($v['bcat']) == "media") {
+				if(strtolower($v['function']) == "media") {
 					if($v['bugstatus'] == "closed") {
 						$final[$key]['mclosed'] = $final[$key]['mclosed'] + $v['bug_count'];	
 					}
 				}
-				if(strtolower($v['function']) == "functionality" || strtolower($v['bcat']) == "functionality"){
+				if(strtolower($v['function']) == "functionality"){
 					if($v['bugstatus'] == "closed") {
 						$final[$key]['fclosed'] = $final[$key]['fclosed'] + $v['bug_count'];	
 					}
 				}
-				if(strtolower($v['function']) == "editorial" || strtolower($v['bcat']) == "editorial") {
+				if(strtolower($v['function']) == "editorial") {
 					if($v['bugstatus'] == "closed") {
 						$final[$key]['eclosed'] = $final[$key]['eclosed'] + $v['bug_count'];	
 					}
@@ -295,7 +296,7 @@ echo "<table cellpadding='5' cellspacing='0' border='1'>
 		if(!isset($val['L2']['eclosed'])) $val['L2']['eclosed'] = 0;
 		if(!isset($val['L3']['eclosed'])) $val['L3']['eclosed'] = 0;
 	  echo "<tr>";
-	  echo "<td>".ucfirst($key)."</td>";
+	  echo "<td>".$val['id']."</td>";
 	  echo "<td>".$val['project_name']."</td>";
 	  echo "<td>".$val['project_manager']."</td>";
 	  echo "<td>".$val['course_title']."</td>";
@@ -304,7 +305,7 @@ echo "<table cellpadding='5' cellspacing='0' border='1'>
 	  echo "<td>".$val['functional_manager_media']."</td>";
 	  echo "<td>".$val['functional_manager_tech']."</td>";
       echo "<td>".$val['developers']."</td>";
-	  echo "<td>".$val['version']."</td>";
+	  echo "<td>".strtoupper($val['version'])."</td>";
 	  echo "<td>".$val['pagecount']."</td>";
 	  echo "<td>".$val['lh']."</td>";
       echo "<td>".$val['testing_scope']."</td>";
@@ -313,10 +314,10 @@ echo "<table cellpadding='5' cellspacing='0' border='1'>
 	  echo "<td>".(int)$val['edit_closed_count']."</td>";
 	  echo "<td>".(int)$val['media_closed_count']."</td>";
 	  echo "<td>".(int)$val['fun_closed_count']."</td>";
-	  echo "<td>".(int)$val['closed_count_lh']."</td>";
-	  echo "<td>".(int)$val['edit_closed_count_lh']."</td>";
-	  echo "<td>".(int)$val['media_closed_count_lh']."</td>";
-	  echo "<td>".(int)$val['edit_closed_count_lh']."</td>";
+	  echo "<td>".round($val['closed_count_lh'], 2)."</td>";
+	  echo "<td>".round($val['edit_closed_count_lh'], 2)."</td>";
+	  echo "<td>".round($val['media_closed_count_lh'], 2)."</td>";
+	  echo "<td>".round($val['edit_closed_count_lh'], 2)."</td>";
 	  echo "<td>".(int)$val['total_bug']."</td>";
 	  echo "<td>".(int)$val['tfbug_count']."</td>";
 	  echo "<td>".(int)$val['tmbug_count']."</td>";
