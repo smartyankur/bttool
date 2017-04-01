@@ -40,9 +40,9 @@ if ($pagenum < 1) {
 $lower_limit = ($pagenum - 1) * $page_limit;
 
 if($issuetype != 'any'){
-  $sql = "SELECT * FROM qcuploadinfo WHERE project_id = '".$pro_id."' and chd_id = '".$chd[0]."' and bugstatus = '".$issuetype."' limit ". ($lower_limit)." ,  ". ($page_limit). "";
+  $sql = "SELECT *, c.category FROM qcuploadinfo left join tbl_category as c on bcat = c.id WHERE project_id = '".$pro_id."' and chd_id = '".$chd[0]."' and bugstatus = '".$issuetype."' limit ". ($lower_limit)." ,  ". ($page_limit). "";
 }else{
-  $sql = "SELECT * FROM qcuploadinfo WHERE project_id = '".$pro_id."' and chd_id = '".$chd[0]."' limit ". ($lower_limit)." ,  ". ($page_limit). "";
+  $sql = "SELECT *, c.category FROM qcuploadinfo left join tbl_category as c on bcat = c.id WHERE project_id = '".$pro_id."' and chd_id = '".$chd[0]."' limit ". ($lower_limit)." ,  ". ($page_limit). "";
 }
 try {
 		$stmt = $DB->prepare($sql);
@@ -103,7 +103,7 @@ echo "<table cellpadding='0' cellspacing='0' border='1'>
 	  echo "<td>"."<b>".$row['round']."</b>"."</td>";
 	  echo "<td>".$row['devcomment']."</td>";
 	  echo "<td>".$row['bugstatus']."</td>";
-	  echo "<td>"."<b>".$row['bcat']."</b>"."</td>";
+	  echo "<td>"."<b>".$row['category']."</b>"."</td>";
 	  echo "<td>".'<a target="_blank" href="'.$upload_path.$row['filepath'].'" title="Your File">'.$row['filepath'].'</a>'."</td>";
 	  echo "<td><textarea id=".$row['id']." rows="."4"." cols="."30"."></textarea>";
 	  echo " Change Status ";

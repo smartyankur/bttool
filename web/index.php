@@ -91,43 +91,38 @@ function focuson()
 document.forms["tstest"]["username"].focus();
 }
 </script>
-<style type="text/css">
-body
-{
-background:url('qcr.jpg') no-repeat;
-}
-.button
-{
-background-color: #F7941C;
-border-bottom:#F7941C;
-border-left: #F7941C;
-border-right:#F7941C;
-border-top: #F7941C;
-color: black;
-font-family: Tahoma
-box-shadow:2px 2px 0 0 #014D06,;
-border-radius: 10px;
-border: 1px outset #b37d00 ;
-}
-</style>
+<!DOCTYPE html>
+<html lang="en">
 
-<title>Login To Audit Tracking Tool.</title>
+<head>
+    <meta charset="UTF-8">
+    <title>BT Tool</title>
+    <link rel="stylesheet" href="css/style.css" />
 </head>
-<body onload="focuson()">
 
-<FORM NAME ="tstest" METHOD ="POST" ACTION ="index.php" onsubmit="return validateForm()">
-<br>
-<br>
-<br>
-<br>
-<b>Unique ID:</b><INPUT TYPE = 'password' Name ='username' maxlength="20">
+<body>
+    <div class="wrapper">
+        <div class="login_box">
+            <div class="logo">
+                <img src="images/logo.png" alt="" />               
+            </div>
+			<div class="login_area">
+				<form name="tstest" method="POST" action="index.php" onsubmit="return validateForm()">
+					Unique ID:
+					<input type="password" name="username">
+					<br>
+					<button type="submit" class="subtn">Login</button>
+				</form>
+				
+				<b><?PHP echo $errorMessage;?></b>
 
-<P align = left>
-<INPUT TYPE = "Submit" class="button" Name = "Submit1"  VALUE = "Login">
-</P>
-</FORM>
-
-<P>
-<b><?PHP echo $errorMessage;?></b>
+            </div>
+			
+            <div class="char_img">
+            	<img src="images/char_img.png" alt="" />
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>

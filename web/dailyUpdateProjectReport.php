@@ -7,7 +7,7 @@ class DailyUpdateProjectReport {
 	
 	function prepareData($con) {
 		
-		echo $cur_date_timestamp = strtotime(date('Y-m-d', strtotime("-1 Days")));
+		$cur_date_timestamp = strtotime(date('Y-m-d', strtotime("-1 Days")));
 		$sub_sql = "select project_id from tbl_functional_review where UNIX_TIMESTAMP(statusupdate) >= '".$cur_date_timestamp."' group by project_id UNION select project_id from qcuploadinfo where UNIX_TIMESTAMP(whenchangedstatus) >= '".$cur_date_timestamp."' group by project_id";
 		try {
 			$retval = mysql_query($sub_sql, $con);
@@ -133,8 +133,6 @@ class DailyUpdateProjectReport {
 									}
 									$final[$key1][$version]['total_media_bug'] = $final[$key1][$version]['total_media_bug'] + $v['bug_status_count'];
 								}
-								$final[$key1][$version]['total_media_bug_closed'] = $final[$key1][$version]['L1']['mclosed'] + $final[$key1][$version]['L2']['mclosed'] + $final[$key1][$version]['L3']['mclosed'];
-								$final[$key1][$version]['total_media_dd'] = $final[$key1][$version]['total_media_bug'] / $final[$key1][$version]['lh'];
 								
 								if(strtolower($v['function']) == "functionality") {
 									if( $v['bugstatus'] == "closed" && strtolower($v['severity']) == 'low') {
@@ -146,8 +144,7 @@ class DailyUpdateProjectReport {
 									}
 									$final[$key1][$version]['total_functional_bug'] = $final[$key1][$version]['total_functional_bug'] + $v['bug_status_count'];
 								}									
-								$final[$key1][$version]['total_functional_bug_closed'] = $final[$key1][$version]['L1']['fclosed'] + $final[$key1][$version]['L2']['fclosed'] + $final[$key1][$version]['L3']['fclosed'];
-								$final[$key1][$version]['total_functional_dd'] = $final[$key1][$version]['total_functional_bug'] / $final[$key1][$version]['lh'];
+								
 								if(strtolower($v['function']) == "editorial") {	
 									if($v['bugstatus'] == "closed" && strtolower($v['severity']) == 'low') {
 										$final[$key1][$version]['L1']['eclosed'] = $final[$key1][$version]['L1']['eclosed'] + $v['bug_status_count'];	
@@ -158,10 +155,7 @@ class DailyUpdateProjectReport {
 									}
 									$final[$key1][$version]['total_editorial_bug'] = $final[$key1][$version]['total_editorial_bug'] + $v['bug_status_count'];
 								}
-								$final[$key1][$version]['total_editorial_bug_closed'] = $final[$key1][$version]['L1']['eclosed'] + $final[$key1][$version]['L2']['eclosed'] + $final[$key1][$version]['L3']['eclosed'];
-								$final[$key1][$version]['total_editorial_dd'] = $final[$key1][$version]['total_editorial_bug'] / $final[$key1][$version]['lh'];
 								$final[$key1][$version]['total_bug'] = $final[$key1][$version]['total_bug'] + $v['bug_status_count'];
-								$final[$key1][$version]['bug_density'] = $final[$key1][$version]['total_bug_closed']/$final[$key1][$version]['lh'];
 							} else if(strtolower($v['severity']) == "suggestion") {
 								if(strtolower($v['bugstatus']) == "closed" || strtolower($v['bugstatus']) == "fixed" || strtolower($v['bugstatus']) == "reopened"){
 									$final[$key1][$version]['total_closed_suggestion_bug'] = $final[$key1][$version]['total_closed_suggestion_bug'] + $v['bug_status_count'];
@@ -170,6 +164,13 @@ class DailyUpdateProjectReport {
 						}
 						
 					}
+					$final[$key1][$version]['total_media_bug_closed'] = $final[$key1][$version]['L1']['mclosed'] + $final[$key1][$version]['L2']['mclosed'] + $final[$key1][$version]['L3']['mclosed'];
+					$final[$key1][$version]['total_media_dd'] = $final[$key1][$version]['total_media_bug'] / $final[$key1][$version]['lh'];
+					$final[$key1][$version]['total_functional_bug_closed'] = $final[$key1][$version]['L1']['fclosed'] + $final[$key1][$version]['L2']['fclosed'] + $final[$key1][$version]['L3']['fclosed'];
+					$final[$key1][$version]['total_functional_dd'] = $final[$key1][$version]['total_functional_bug'] / $final[$key1][$version]['lh'];
+					$final[$key1][$version]['total_editorial_bug_closed'] = $final[$key1][$version]['L1']['eclosed'] + $final[$key1][$version]['L2']['eclosed'] + $final[$key1][$version]['L3']['eclosed'];
+					$final[$key1][$version]['total_editorial_dd'] = $final[$key1][$version]['total_editorial_bug'] / $final[$key1][$version]['lh'];
+					$final[$key1][$version]['bug_density'] = $final[$key1][$version]['total_bug_closed']/$final[$key1][$version]['lh'];
 				}	
 			}
 			//echo '<pre>'; print_r($final); die;

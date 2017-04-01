@@ -6,16 +6,14 @@ if(isset($_GET["id"])) {
 	$pro_id = $_GET["id"];
 }
 else if(isset($_GET["fdate"])) {
-	$fdate = $_GET["fdate"];
+	$fdate = strtotime($_GET["fdate"]);
 }
-
 $sql = "SELECT project_name, project_manager, course_title, course_level, version, pagecount, functional_manager_id, functional_manager_media, functional_manager_tech, developers_id, developers_media, developers_tech, testing_scope, partial_testing FROM tbl_functional_review"; 
 if(isset($_GET["id"])) {
 	$sql .= " WHERE project_id = ".$pro_id;
 } else if(isset($_GET["fdate"])) {
 	$sql .= " WHERE start_date >= ".$fdate;
 }
-
 try {
 	$retval = mysql_query($sql, $con);
 	$results = mysql_num_rows($retval);
@@ -24,7 +22,7 @@ try {
 }
 	
 if($results == 0){
-  die('No '.$issuetype.' item was found with this project name.');
+  die('No item was found');
 } else {
 	$tmp = array();
 	$screen_count = array();
@@ -45,7 +43,7 @@ if($results == 0){
 		$tmp[] = $row;
 		//$screen_count[$row['version']] = $row['pagecount'];
 	}
-	//echo '<pre>'; print_r($tmp); die;
+	//echo '<pre>'; print_r($tmp);
 }
 ?>
 <!--<div style="width:100%;margin:10px;">
@@ -95,57 +93,29 @@ foreach($tmp as $key => $val) {
 		foreach($val['bug_info'] as $k => $v) {
 			if(strtolower($v['severity']) != "suggestion") {
 				if($v['bugstatus'] == "closed" || $v['bugstatus'] == "fixed" || $v['bugstatus'] == "reopened") {
-					$final[$key]['bug_closed'] = $final[$version]['bug_closed'] + $v['bug_count'];
+					$final[$key]['bug_closed'] = $final[$key]['bug_closed'] + $v['bug_count'];
 				}
-				$final[$key]['closed_count_lh'] = $final[$key]['bug_closed'] / $final[$key]['lh'];
 				if($v['bugstatus'] == "ok as is") {
-					$final[$key]['oai'] = $final[$version]['oai'] + $v['bug_count'];	
+					$final[$key]['oai'] = $final[$key]['oai'] + $v['bug_count'];	
 				} 
 				if($v['bugstatus'] == "hold") {
-					$final[$key]['hold'] = $final[$version]['hold'] + $v['bug_count'];	
+					$final[$key]['hold'] = $final[$key]['hold'] + $v['bug_count'];	
 				}
-				//$final[$key]['L1']['mclosed'] = 0;
-				//$final[$key]['L2']['mclosed'] = 0;
-				//$final[$key]['L3']['mclosed'] = 0;
-				if(strtolower($v['function']) == "media") {
-					if($v['bugstatus'] == "closed" && $v['severity'] == 'Low') {
-						$final[$key]['L1']['mclosed'] = $final[$key]['L1']['mclosed'] + $v['bug_count'];	
-					} if($v['bugstatus'] == "closed" && $v['severity'] == 'Medium') {
-						$final[$key]['L2']['mclosed'] = $final[$key]['L2']['mclosed'] + $v['bug_count'];	
-					} if($v['bugstatus'] == "closed" && $v['severity'] == 'High'){
-						$final[$key]['L3']['mclosed'] = $final[$key]['L3']['mclosed'] + $v['bug_count'];
-					} 
-				}
-				$final[$key]['media_closed_count'] = $final[$key]['L1']['mclosed'] + $final[$key]['L2']['mclosed'] + $final[$key]['L3']['mclosed'];
-				$final[$key]['media_closed_count_lh'] = $final[$key]['media_closed_count'] / $final[$key]['lh'];
-				//$final[$key]['L1']['fclosed'] = 0;
-				//$final[$key]['L2']['fclosed'] = 0;
-				//$final[$key]['L3']['fclosed'] = 0;
-				if(strtolower($v['function']) == "functionality"){
-					if($v['bugstatus'] == "closed" && $v['severity'] == 'Low') {
-						$final[$key]['L1']['fclosed'] = $final[$key]['L1']['fclosed'] + $v['bug_count'];	
-					} if($v['bugstatus'] == "closed" && $v['severity'] == 'Medium') {
-						$final[$key]['L2']['fclosed'] = $final[$key]['L2']['fclosed'] + $v['bug_count'];	
-					} if($v['bugstatus'] == "closed" && $v['severity'] == 'High'){
-						$final[$key]['L3']['fclosed'] = $final[$key]['L3']['fclosed'] + $v['bug_count'];
+				if(strtolower($v['function']) == "media" || strtolower($v['bcat']) == "media") {
+					if($v['bugstatus'] == "closed") {
+						$final[$key]['mclosed'] = $final[$key]['mclosed'] + $v['bug_count'];	
 					}
 				}
-				$final[$key]['fun_closed_count'] = $final[$key]['L1']['fclosed'] + $final[$key]['L2']['fclosed'] + $final[$key]['L3']['fclosed'];
-				$final[$key]['fun_closed_count_lh'] = $final[$key]['fun_closed_count'] / $final[$key]['lh'];
-				//$final[$key]['L1']['eclosed'] = 0;
-				//$final[$key]['L2']['eclosed'] = 0;
-				//$final[$key]['L3']['eclosed'] = 0;
-				if(strtolower($v['function']) == "editorial") {
-					if($v['bugstatus'] == "closed" && $v['severity'] == 'Low') {
-						$final[$key]['L1']['eclosed'] = $final[$key]['L1']['eclosed'] + $v['bug_count'];	
-					}  if($v['bugstatus'] == "closed" && $v['severity'] == 'Medium') {
-						$final[$key]['L2']['eclosed'] = $final[$key]['L2']['eclosed'] + $v['bug_count'];	
-					}  if($v['bugstatus'] == "closed" && $v['severity'] == 'High'){
-						$final[$key]['L3']['eclosed'] = $final[$key]['L3']['eclosed'] + $v['bug_count'];
+				if(strtolower($v['function']) == "functionality" || strtolower($v['bcat']) == "functionality"){
+					if($v['bugstatus'] == "closed") {
+						$final[$key]['fclosed'] = $final[$key]['fclosed'] + $v['bug_count'];	
 					}
 				}
-				$final[$key]['edit_closed_count'] = $final[$key]['L1']['eclosed'] + $final[$key]['L2']['eclosed'] + $final[$key]['L3']['eclosed'];
-				$final[$key]['edit_closed_count_lh'] = $final[$key]['edit_closed_count'] / $final[$key]['lh'];
+				if(strtolower($v['function']) == "editorial" || strtolower($v['bcat']) == "editorial") {
+					if($v['bugstatus'] == "closed") {
+						$final[$key]['eclosed'] = $final[$key]['eclosed'] + $v['bug_count'];	
+					}
+				}
 				$final[$key]['total_bug'] = $final[$key]['total_bug'] + $v['bug_count'];
 				if($v['category'] == "Text Formatting") {
 					$final[$key]['tfbug_count'] = $final[$key]['tfbug_count'] + $v['bug_count'];
@@ -225,8 +195,6 @@ foreach($tmp as $key => $val) {
 					$final[$key]['adabug_count'] = $final[$key]['adabug_count'] + $v['bug_count'];
 				}else if($v['category'] == "Bookmarking Error") {
 					$final[$key]['bebug_count'] = $final[$key]['bebug_count'] + $v['bug_count'];
-				}else if($v['category'] == "Bookmarking Error") {
-					$final[$key]['bebug_count'] = $final[$key]['bebug_count'] + $v['bug_count'];
 				}else if($v['category'] == "Scoring Error") {
 					$final[$key]['scebug_count'] = $final[$key]['scebug_count'] + $v['bug_count'];
 				}else if($v['category'] == "Completion Marking Error") {
@@ -234,9 +202,16 @@ foreach($tmp as $key => $val) {
 				}
 			}
 		}
+		$final[$key]['closed_count_lh'] = $final[$key]['bug_closed'] / $final[$key]['lh'];
+		$final[$key]['media_closed_count'] = $final[$key]['mclosed'];
+		$final[$key]['media_closed_count_lh'] = $final[$key]['media_closed_count'] / $final[$key]['lh'];
+		$final[$key]['fun_closed_count'] = $final[$key]['fclosed'];
+		$final[$key]['fun_closed_count_lh'] = $final[$key]['fun_closed_count'] / $final[$key]['lh'];
+		$final[$key]['edit_closed_count'] = $final[$key]['eclosed'];
+		$final[$key]['edit_closed_count_lh'] = $final[$key]['edit_closed_count'] / $final[$key]['lh'];
 	}
 }
-//echo '<pre>'; print_r($final); die;
+//echo '<pre>'; print_r($final);
 echo "<table cellpadding='5' cellspacing='0' border='1'>
 	<tr>
 	  <th>S.No.</th>
@@ -334,15 +309,15 @@ echo "<table cellpadding='5' cellspacing='0' border='1'>
 	  echo "<td>".$val['lh']."</td>";
       echo "<td>".$val['testing_scope']."</td>";
 	  echo "<td>".$val['partial_testing']."</td>";
-	  echo "<td>".$val['bug_closed']."</td>";
-	  echo "<td>".$val['edit_closed_count']."</td>";
-	  echo "<td>".$val['media_closed_count']."</td>";
-	  echo "<td>".$val['fun_closed_count']."</td>";
-	  echo "<td>".$val['closed_count_lh']."</td>";
-	  echo "<td>".$val['edit_closed_count_lh']."</td>";
-	  echo "<td>".$val['media_closed_count_lh']."</td>";
-	  echo "<td>".$val['edit_closed_count_lh']."</td>";
-	  echo "<td>".$val['total_bug']."</td>";
+	  echo "<td>".(int)$val['bug_closed']."</td>";
+	  echo "<td>".(int)$val['edit_closed_count']."</td>";
+	  echo "<td>".(int)$val['media_closed_count']."</td>";
+	  echo "<td>".(int)$val['fun_closed_count']."</td>";
+	  echo "<td>".(int)$val['closed_count_lh']."</td>";
+	  echo "<td>".(int)$val['edit_closed_count_lh']."</td>";
+	  echo "<td>".(int)$val['media_closed_count_lh']."</td>";
+	  echo "<td>".(int)$val['edit_closed_count_lh']."</td>";
+	  echo "<td>".(int)$val['total_bug']."</td>";
 	  echo "<td>".(int)$val['tfbug_count']."</td>";
 	  echo "<td>".(int)$val['tmbug_count']."</td>";
 	  echo "<td>".(int)$val['tobug_count']."</td>";
@@ -374,9 +349,16 @@ echo "<table cellpadding='5' cellspacing='0' border='1'>
 	  echo "<td>".(int)$val['blnfbug_count']."</td>";
 	  echo "<td>".(int)$val['ilhdbug_count']."</td>";
 	  echo "<td>".(int)$val['tfebug_count']."</td>";
-	  echo "<td>".(int)$val['ilhdbug_count']."</td>";
-	  echo "<td>".(int)$val['ilhdbug_count']."</td>";
-	  echo "<td>".(int)$val['ilhdbug_count']."</td>";
+	  echo "<td>".(int)$val['ibhtbug_count']."</td>";
+	  echo "<td>".(int)$val['ajebug_count']."</td>";
+	  echo "<td>".(int)$val['plebug_count']."</td>";
+	  echo "<td>".(int)$val['pnrbug_count']."</td>";
+	  echo "<td>".(int)$val['pfibug_count']."</td>";
+	  echo "<td>".(int)$val['flibug_count']."</td>";
+	  echo "<td>".(int)$val['adabug_count']."</td>";
+	  echo "<td>".(int)$val['bebug_count']."</td>";
+	  echo "<td>".(int)$val['scebug_count']."</td>";
+	  echo "<td>".(int)$val['cmebug_count']."</td>";
 	  echo "</tr>";
 	  
 	}

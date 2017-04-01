@@ -38,7 +38,7 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
   $project_id     = $_POST["pro_id"];
   $pm             = $_POST["pm"];
   $courseTitle    = mysql_real_escape_string($_POST["courseTitle"]);
-  $SDate          = date('d-M-Y');//$_POST["SDate"];
+  $SDate          = time(); //$_POST["SDate"];
   $courseLevel    = $_POST["courseLevel"];
   $fmid           = $_POST["fmid"];
   $fmmedia        = $_POST["fmmedia"];
@@ -859,11 +859,11 @@ if(!empty($numrowsDEV)){
 <TR>
   <TD><label for="type">Version</label> <font color='red'>*</font></TD>
   <TD>
-    <label for="proto"><input class="radio_style" id="proto" name="version" type="radio" value="proto" <?php echo $version == "proto" ? "checked" : "" ?>>Proto</label>
-    <label for="POC"><input class="radio_style" id="POC" name="version" type="radio" value="POC" <?php echo $version == "POC" ? "checked" : "" ?>>POC</label>
-    <label for="alpha"><input class="radio_style" id="alpha" name="version" type="radio" value="alpha" <?php echo $version == "alpha" ? "checked" : "" ?>>Alpha</label>
-    <label for="beta"><input class="radio_style" id="beta" name="version" type="radio" value="beta" <?php echo $version == "beta" ? "checked" : "" ?>>Beta</label>
-    <label for="gold"><input class="radio_style" id="gold" name="version" type="radio" value="gold" <?php echo $version == "gold" ? "checked" : "" ?>>Gold</label>
+    <label for="proto"><input class="radio_style version" id="proto" name="version" type="radio" value="proto" <?php echo $version == "proto" ? "checked" : "" ?>>Proto</label>
+    <label for="POC"><input class="radio_style version" id="POC" name="version" type="radio" value="POC" <?php echo $version == "POC" ? "checked" : "" ?>>POC</label>
+    <label for="alpha"><input class="radio_style version" id="alpha" name="version" type="radio" value="alpha" <?php echo $version == "alpha" ? "checked" : "" ?>>Alpha</label>
+    <label for="beta"><input class="radio_style version" id="beta" name="version" type="radio" value="beta" <?php echo $version == "beta" ? "checked" : "" ?>>Beta</label>
+    <label for="gold"><input class="radio_style version" id="gold" name="version" type="radio" value="gold" <?php echo $version == "gold" ? "checked" : "" ?>>Gold</label>
   </TD>
 </TR>
 
@@ -933,14 +933,14 @@ if(!empty($numrowsDEV)){
     <label for="functionality"><input type="checkbox" name="partialTesting[]" id="functionality" class="check" value="Functionality" <?php if(in_array("Functionality", $partialTesting))echo " checked"; ?>>Functionality</label>
     <label for="transcriptmapping"><input type="checkbox" name="partialTesting[]" id="transcriptmapping" class="check" value="Transcript mapping" <?php if(in_array("Transcript mapping", $partialTesting))echo " checked"; ?>>Transcript mapping</label>
     <label for="internaledit"><input type="checkbox" name="partialTesting[]" id="internaledit" value="Internal edit" <?php if(in_array("Internal edit", $partialTesting))echo " checked"; ?>>Internal edit</label>
-    <label for="clienteditalpha"><input type="checkbox" name="partialTesting[]" id="clienteditalpha" value="Clientedit alpha" <?php if(in_array("Clientedit alpha", $partialTesting))echo " checked"; ?>>Clientedit alpha</label>
-    <label for="clienteditbeta"><input type="checkbox" name="partialTesting[]" id="clienteditbeta" value="Clientedit beta" <?php if(in_array("Clientedit beta", $partialTesting))echo " checked"; ?>>Clientedit beta</label>
-    <label for="clienteditgold"><input type="checkbox" name="partialTesting[]" id="clienteditgold" value="Clientedit gold" <?php if(in_array("Clientedit gold", $partialTesting))echo " checked"; ?>>Clientedit gold</label>
+    <label for="clienteditalpha"><input type="checkbox" name="partialTesting[]" id="clienteditalpha" class="disable" value="Clientedit alpha" <?php if(in_array("Clientedit alpha", $partialTesting))echo " checked"; ?>>Clientedit alpha</label>
+    <label for="clienteditbeta"><input type="checkbox" name="partialTesting[]" id="clienteditbeta" class="disable" value="Clientedit beta" <?php if(in_array("Clientedit beta", $partialTesting))echo " checked"; ?>>Clientedit beta</label>
+    <label for="clienteditgold"><input type="checkbox" name="partialTesting[]" id="clienteditgold" class="disable" value="Clientedit gold" <?php if(in_array("Clientedit gold", $partialTesting))echo " checked"; ?>>Clientedit gold</label>
 	<br/>
-	<label for="scormtesting" style="margin-left:10px;"><input type="checkbox" name="partialTesting[]" id="scormtesting" value="Scorm 1.2" <?php if(in_array("Scorm 1.2", $partialTesting))echo " checked"; ?>>Scorm 1.2</label>
-	<label for="scorm2004"><input type="checkbox" name="partialTesting[]" id="scorm2004" value="Scorm 2004" <?php if(in_array("Scorm 2004", $partialTesting))echo " checked"; ?>>Scorm 2004</label>
+	<label for="scormtesting" style="margin-left:10px;"><input type="checkbox" name="partialTesting[]" id="scormtesting" class="disable" value="Scorm 1.2" <?php if(in_array("Scorm 1.2", $partialTesting))echo " checked"; ?>>Scorm 1.2</label>
+	<label for="scorm2004"><input type="checkbox" name="partialTesting[]" id="scorm2004" class="disable" value="Scorm 2004" <?php if(in_array("Scorm 2004", $partialTesting))echo " checked"; ?>>Scorm 2004</label>
 	
-	<label for="AICC" ><input type="checkbox" name="partialTesting[]" id="AICC" value="AICC" <?php if(in_array("AICC", $partialTesting))echo " checked"; ?>>AICC</label>
+	<label for="AICC" ><input type="checkbox" name="partialTesting[]" id="AICC" class="disable" value="AICC" <?php if(in_array("AICC", $partialTesting))echo " checked"; ?>>AICC</label>
     <label for="audiomapping"><input type="checkbox" name="partialTesting[]" id="audiomapping" class="check" value="Audio mapping" <?php if(in_array("Audio mapping", $partialTesting))echo " checked"; ?>>Audio mapping</label>
     <label for="audiosynching"><input type="checkbox" name="partialTesting[]" id="audiosynching" class="check" value="Audio synching" <?php if(in_array("Audio synching", $partialTesting))echo " checked"; ?>>Audio synching</label>
     
@@ -1035,6 +1035,18 @@ if(!empty($numrowsDEV)){
 </body>
 </html> 
 <script>
+$(document).ready(function(){
+	$(".version").click(function(){
+		if($(this).is(":checked")){
+			var version = $(this).val();
+			if(version == "beta" || version == "gold") {
+				$(".disable").attr("disabled", true);
+			} else  {
+				$(".disable").attr("disabled", false);
+			}
+		}
+	});
+});
 function checkAllPT(tsval){
   if(tsval=='e2e'){
     $('.check').attr('checked', true);

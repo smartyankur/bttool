@@ -296,7 +296,7 @@ if( isset($_REQUEST['project']) && !empty($_REQUEST['project']) && ($_REQUEST['p
         ".((!empty($fetchFuncRvw['support_file3']))?'<a href="support/'.$fetchFuncRvw['support_file3'].'">'.$fetchFuncRvw['support_file3'].'</a><br />':'')."
         ".((!empty($fetchFuncRvw['support_file4']))?'<a href="support/'.$fetchFuncRvw['support_file4'].'">'.$fetchFuncRvw['support_file4'].'</a><br />':'')."
         </div></td>";
-		if($userrole == "ID" || $userrole == "Tech" || $userrole == "Media" || $userrole == "Dev") {
+		if($userrole == "ID FM" || $userrole == "Tech FM" || $userrole == "Media FM" || $userrole == "QC FM" || $userrole == "FM" || $userrole == "QC") {
 			if($fetchFuncRvw['status'] == "rejected") { ?>
 				<TD><input type="button" name="qcassignment" class="button" value="Edit" onclick="location.href='chd.php?chdid=<?php echo $fetchFuncRvw['id'] ?>'"></TD>
 			 <?php } else {
