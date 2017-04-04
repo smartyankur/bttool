@@ -235,7 +235,7 @@ if( isset($_REQUEST['project']) && !empty($_REQUEST['project']) && ($_REQUEST['p
       echo "<tr>";
         echo "<td>".$i."</td>";
 		echo "<td>".$fetchFuncRvw['id']."</td>"; 
-		echo "<td>".date('d-m-Y', strtotime($fetchFuncRvw['start_date']))."<br/><!--<input class='button' type='button' value='Submit CHD' onclick='automailer($fetchFuncRvw[id])'/>--></td>"; 		
+		echo "<td>".date('d-m-Y', $fetchFuncRvw['start_date'])."<br/><!--<input class='button' type='button' value='Submit CHD' onclick='automailer($fetchFuncRvw[id])'/>--></td>"; 		
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['project_name']."</div>"."</td>";
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['project_manager']."</div>"."</td>";  
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['course_title']."</div>"."</td>";

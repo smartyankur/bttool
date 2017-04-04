@@ -9,7 +9,7 @@ $pro_id = $_GET["pro_id"];
 include("config.php");
 
 $obj_utility = new Utility();
-$sql="SELECT id , course_title, version, start_date  from tbl_functional_review WHERE project_id = '".$pro_id."'";
+$sql="SELECT id , course_title from tbl_functional_review WHERE project_id = '".$pro_id."'";
 $result = mysql_query($sql) or die (mysql_error());
 $count = mysql_num_rows($result);
 $ary=array();

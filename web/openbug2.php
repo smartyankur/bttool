@@ -880,8 +880,8 @@ if( !empty($message) ){
 	$qc=$_REQUEST["qc"];
 	$screen=$_REQUEST["screen"];
 	$severity=$_REQUEST["severity"];
-	$phase=$_REQUEST["phase"];
 	$function = $_REQUEST["function"];
+	$course = $_REQUEST["course"];
 	//$sdate = $_REQUEST["SDate"];
 	
 	
@@ -911,9 +911,23 @@ if( !empty($message) ){
 </TR>
 
 <TR>
+<?php
+if($pro_id) { 
+$sql="SELECT id , course_title from tbl_functional_review WHERE project_id = '".$pro_id."'";
+$result = mysql_query($sql) or die (mysql_error());
+$count = mysql_num_rows($result);
+}
+?>
 <TD>Course</TD><TD><select name="course" size="1" id="course">
 <option value="select">Select</option>
+<?php if($count > 0){
+		while($row = mysql_fetch_array($result)) {
+			if(!empty($row['course_title']) && $row['course_title'] != "NA") { ?>
+				<option value="<?php echo $row['id']."-".$row['course_title']?>" <?php if($course ==  $row['id']."-".$row['course_title']) echo "selected"; ?>><?php echo $row['id']."-".$row['course_title'] ?></option>
+			<?php }
+		}
 
+}?>
 </select></TD>
 </TR>
 

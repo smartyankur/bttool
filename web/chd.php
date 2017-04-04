@@ -142,7 +142,7 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
     $str .= "<td>".$project."</td>";
     $str .= "<td>".$pm."</td>";  
     $str .= "<td>".$courseTitle."</td>";
-    $str .= "<td>".$SDate."</td>";
+    $str .= "<td>".date("d-m-Y", $SDate)."</td>";
     $str .= "<td>".$courseLevel."</td>";
     $str .= "<td>".$fmid."</td>";
 	$str .= "<td>".$devsid."</td>";
@@ -569,7 +569,7 @@ if(isset($_GET['chdid']) && !empty($_GET['chdid'])) {
 	$_REQUEST['project'] = $row['project_name'];
 	$_REQUEST['pm'] = $row['project_manager'];
 	$_REQUEST['courseTitle'] = $row['course_title'];
-	$_REQUEST['SDate'] = $row['start_date'];
+	//$_REQUEST['SDate'] = $row['start_date'];
 	$_REQUEST['courseLevel'] = $row['course_level'];
 	$_REQUEST['fmid'] = $row['functional_manager_id'];
 	$_REQUEST['fmmedia'] = $row['functional_manager_media'];
@@ -1052,7 +1052,7 @@ $(document).ready(function(){
 		}
 	});
     var ver = '<?php echo $_REQUEST['version']?>';
-	if(ver != "beta" && ver != "gold") {
+	if(ver != "beta" && ver != "gold" && ver != "") {
 		$(".disable").attr("checked", false);
 		$(".disable").attr("disabled", true);
 	}
