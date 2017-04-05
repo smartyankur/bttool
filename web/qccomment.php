@@ -25,7 +25,7 @@
     { 
        echo "<br>";
        echo "<br>";
-       echo "<h3>"."Hi ".$row['username']." ! Welcome To QC Team Response Interface"."</h3>";
+       echo "<h3>"."Hi ".$row['username']." ! Welcome To QC Team Response Interface."."</h3>";
 	 $username=$row['username'];
     } 	
 	?>

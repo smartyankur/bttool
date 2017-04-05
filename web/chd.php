@@ -19,13 +19,13 @@ $retval = mysql_query($query, $con);
 $count  = mysql_num_rows($retval);
 
 if($count==0){
-  die('Data Not Found Please contact SEPG');
+  die('Data Not Found. Please contact SEPG.');
 }
 
 while($row = mysql_fetch_assoc($retval)){ 
   echo "<br>";
   echo "<br>";
-  echo "<h4>"."Hi ".$row['username']." ! Welcome to Course Handover Document"."</h4>";
+  echo "<h4>"."Hi ".$row['username']." ! Welcome to Course Handover Document."."</h4>";
   $username = $row['username'];
   $email    = $row['email'];  
 } ?>	
@@ -136,7 +136,7 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
   	$str .= '<h4>Dear QA Team,</h4>';
   	$str .= '<h5>Please find below the CHD details :-</h5>';
   	$str .= '<table border=1 class="table_text">';
-  	$str .= '<tr><th>S. No.</th><th>Project Name</th><th>Project Manager</th><th>Course Title</th><th>Start Date</th><th>Course Level</th><th>Functional Manager[ID]</th><th>Developers[ID]</th><th>Functional Manager[Med]</th><th>Developers[Med]</th><th>Functional Manager[Tech]</th><th>Developers[Tech]</th><th>Version</th><th>No of HTML/Flash Pages</th><th>No. of slides in PPT</th><th>Learning Hours</th><th>Course Memory Size in MB</th><th>Scope for testing</th><th>Partial Testing</th><th>Confirmation On Reviews</th><th>Course Path [SVN]</th><th>SB Path [SVN]</th><th>Edit Sheet</th><th>Development Tracker Path [SVN]</th><th>Test Plan Path [SVN]</th><th>Test Case/Checklists [SVN]</th><th>Reviewer</th><th>Comments</th><th>Test Environment</th><th>Attach supporting documents</th></tr>';
+  	$str .= '<tr><th>S. No.</th><th>Project Name</th><th>Project Manager</th><th>Course Title</th><th>CHD Submission Date</th><th>Course Level</th><th>Functional Manager[ID]</th><th>Developers[ID]</th><th>Functional Manager[Med]</th><th>Developers[Med]</th><th>Functional Manager[Tech]</th><th>Developers[Tech]</th><th>Version</th><th>No of HTML/Flash Pages</th><th>No. of slides in PPT</th><th>Learning Hours</th><th>Course Memory Size in MB</th><th>Scope for testing</th><th>Partial Testing</th><th>Confirmation On Reviews</th><th>Course Path [SVN]</th><th>SB Path [SVN]</th><th>Edit Sheet</th><th>Development Tracker Path [SVN]</th><th>Test Plan Path [SVN]</th><th>Test Case/Checklists [SVN]</th><th>Reviewer</th><th>Comments</th><th>Test Environment</th><th>Attach supporting documents</th></tr>';
   	$str .= '<tr>';
   	$str .= "<td>".$FReviewNo."</td>";
     $str .= "<td>".$project."</td>";
@@ -175,9 +175,9 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
 	$str .= '</body></html>';
         
 	$to_emails = array();
-	$to_emails[] = "manojk@gc-solutions.net"; 
-	$to_emails[] = "manojs@gc-solutions.net";
-	$to_emails[] = "kanchanr@gc-solutions.net";	
+	$to_emails[] = "content_qc@gc-solutions.net"; 
+	//$to_emails[] = "manojs@gc-solutions.net";
+	//$to_emails[] = "kanchanr@gc-solutions.net";	
 	$to_emails[] = getEmail($pm);
 	$to_emails[] = getEmail($fmid);
 	$to_emails[] = getEmail($fmmedia);
@@ -199,9 +199,9 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
   	$mailer->IsSMTP();
   	$mailer->IsHTML(true);
   
-  	$mailer->Host     = "smtp.emailsrvr.com";
+   	$mailer->Host     = "98.129.185.2";
   	$mailer->Username = "sepg@gc-solutions.net";
-  	$mailer->Password = "pass@12";
+  	$mailer->Password = "Gcube!123";
   
   	$mailer->SMTPAuth  = true;
   	$mailer->SMTPDebug = false;
@@ -692,7 +692,7 @@ if(!empty($numrowsProject)){
 </TR>
 
 <!--<TR>
-  <TD>Start Date <font color='red'>*</font></TD>
+  <TD>CHD Submission Date <font color='red'>*</font></TD>
   <TD><input type="text" name="SDate" id="SDate" value="<?php echo $SDate; ?>" maxlength="20" size="19" readonly="readonly">
   <a href="javascript:NewCal('SDate','ddmmmyyyy')"><img src="cal.gif" width="16" height="16" border="0" alt="Pick a date"></a></TD>
 </TR>-->

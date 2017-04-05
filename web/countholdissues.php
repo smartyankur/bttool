@@ -23,7 +23,7 @@ if($count==0){
 while($row = mysql_fetch_assoc($retval)){ 
   echo "<br>";
   echo "<br>"; 
-  echo "<h4>"."Hi ".$row['username']." ! Welcome to Count or Hold Issues"."</h4>";
+  echo "<h4>"."Hi ".$row['username']." ! Welcome to Count of Hold Issues."."</h4>";
   $username=$row['username'];
 }
 

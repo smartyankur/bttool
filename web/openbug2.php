@@ -18,7 +18,7 @@
 	
 	if($count==0)
 	{
-		die('Data Not Found Please contact SEPG');
+		die('Data Not Found. Please Contact SEPG.');
 	}
 
     
@@ -26,7 +26,7 @@
 	{ 
 		echo "<br>";
 		echo "<br>";
-		echo "<h4>"."Hi ".$row['username']." ! Welcome to QC bug logging Tool"."</h4>";
+		echo "<h4>"."Hi ".$row['username']." ! Welcome to RADAR!"."</h4>";
 		$username=$row['username'];
 	}
 	$upload_path = './qcfiles/'; 
@@ -46,7 +46,7 @@
 	
 		if($count==0)
 		{
-			die('Data Not Found');
+			die('Project Not Selected.');
 		}
 	
 		while($row = mysql_fetch_array($result))
@@ -972,7 +972,7 @@ $count = mysql_num_rows($result);
 	
 	if($count==0)
 		{
-			die('Users Not Found; Contact SEPG');
+			die('Users Not Found; Contact SEPG.');
 		}
     
 	if(mysql_num_rows($retval)) 
@@ -1013,7 +1013,7 @@ $count = mysql_num_rows($result);
 	
 	if($count==0)
 		{
-			die('Users Not Found; Contact SEPG');
+			die('Users Not Found; Contact SEPG.');
 		}
 
     echo "<select name=\"asignee\" id=\"asignee\">"; 

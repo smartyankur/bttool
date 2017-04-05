@@ -93,8 +93,15 @@ if (i=="Select")
 </script>
 </head>
 <?php	
+	$con = mysql_connect("localhost","root","password");
 	$user=mysql_real_escape_string($_REQUEST['user']);
 	include("config.php");
+  	 if (!$con)
+      {
+        die('Could not connect: ' . mysql_error());
+      }
+
+	mysql_select_db("bttool17jan17") or die(mysql_error());
 
 	$query = "select username from adminlogin where uniqueid='$user'";
 	$retval = mysql_query( $query, $con );
@@ -108,7 +115,7 @@ if (i=="Select")
     
     while($row = mysql_fetch_assoc($retval)) 
     { 
-     echo "<h3>"."Hi ".$row['username']." ! You Can Add Testers Here"."<h3>";
+     echo "<h3>"."Hi ".$row['username']." ! You Can Add Testers Here."."<h3>";
 	 $username=$row['username'];
 	 //$pwd=$row['pwd'];
     } 	
@@ -139,8 +146,15 @@ function getData(){
 	<TD>Project Name</TD>
 	<td>
     <?php
-	
-    $query = "select DISTINCT projectname, pindatabaseid from projectmaster";
+	$con = mysql_connect("localhost","root","password");
+
+    if (!$con)
+      {
+        die('Could not connect: ' . mysql_error());
+      }
+
+	mysql_select_db("bttool17jan17") or die(mysql_error());
+    $query = "select DISTINCT projectname, pindatabaseid from projectmaster order by projectname";
     
 	$retval = mysql_query( $query, $con );
     $count = mysql_num_rows($retval);

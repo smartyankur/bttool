@@ -55,14 +55,14 @@ if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
 	}
 	if($role=="QC" || $role=="QC FM" || $role=="IQ"){
 		if($dept=="Content"){
-			$links['qccomment.php'] = "For QC Team -Log Response to Developers' Comment.";
-			$links['qccalc12.php'] = "Link to view function wise QC defect status";
+			$links['qccomment.php'] = "For QC Team - Log Response to Developers' Comment";
+			$links['qccalc12.php'] = "Link to View Function-Wise QC Defect Status";
 		}
 		$links['alloc.php'] = "Receive & Manage QC Request";
 		$links['taskclosure.php'] = "Link to Close LMS QC Task";
-		$links['lmsbt.php'] = "Link to Log issues or defects.";
-		$links['collateral.php'] = "Log ancilliary or collateral issues.";
-		$links['managebug.php'] = "Respond to Dev Comments.";
+		$links['lmsbt.php'] = "Link to Log Issues or Defects";
+		$links['collateral.php'] = "Log Ancillary or Collateral Issues";
+		$links['managebug.php'] = "Respond to Dev Comments";
 		$links['productlevelbugs.php'] = "Product Level Bugs";
 		$links['sb_review.php'] = "SB Review";
 		$links['project_report.php'] = "Project Report";

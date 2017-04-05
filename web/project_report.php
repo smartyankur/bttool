@@ -18,13 +18,13 @@ $retval = mysql_query($query, $con);
 $count  = mysql_num_rows($retval);
 
 if($count==0){
-  die('Data Not Found Please contact SEPG');
+  die('Data Not Found. Please contact SEPG.');
 }
 
 while($row = mysql_fetch_assoc($retval)){ 
   echo "<br>";
   echo "<br>"; 
-  echo "<h4>"."Hi ".$row['username']." ! Welcome to SB Reviewe Document"."</h4>";
+  echo "<h4>"."Hi ".$row['username']." ! Welcome to CHD-Wise Project Report."."</h4>";
   $username = $row['username'];
   $email    = $row['email'];    
 } 	

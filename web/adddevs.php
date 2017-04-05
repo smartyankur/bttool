@@ -111,7 +111,7 @@ if (i=="Select")
     
     while($row = mysql_fetch_assoc($retval)) 
     { 
-     echo "<h3>"."Hi ".$row['username']." ! You Can Add Developpers Here"."<h3>";
+     echo "<h3>"."Hi ".$row['username']." ! You Can Add Developers Here."."<h3>";
 	 $username=$row['username'];
 	 //$pwd=$row['pwd'];
     } 	
@@ -147,7 +147,7 @@ function getData(){
 	<td>
     <?php
 	
-    $query = "select DISTINCT projectname, pindatabaseid from projectmaster";
+    $query = "select DISTINCT projectname, pindatabaseid from projectmaster order by projectname";
     
 	$retval = mysql_query( $query, $con );
     $count = mysql_num_rows($retval);

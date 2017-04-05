@@ -118,7 +118,7 @@ foreach($tmp as $key => $val) {
 					}
 				}
 				$final[$key]['total_bug'] = $final[$key]['total_bug'] + $v['bug_count'];
-			}
+			
 			if(trim($v['category']) == "Text Formatting") {
 				$final[$key]['tfbug_count'] = $final[$key]['tfbug_count'] + $v['bug_count'];
 			}if(trim($v['category']) == "Text Mismatch") {
@@ -203,6 +203,7 @@ foreach($tmp as $key => $val) {
 				$final[$key]['cmebug_count'] = $final[$key]['cmebug_count'] + $v['bug_count'];
 			}
 		}
+		}
 		$final[$key]['closed_count_lh'] = $final[$key]['bug_closed'] / $final[$key]['lh'];
 		$final[$key]['media_closed_count'] = $final[$key]['mclosed'];
 		$final[$key]['media_closed_count_lh'] = $final[$key]['media_closed_count'] / $final[$key]['lh'];
@@ -215,7 +216,7 @@ foreach($tmp as $key => $val) {
 //echo '<pre>'; print_r($final);
 echo "<table cellpadding='5' cellspacing='0' border='1'>
 	<tr>
-	  <th>S.No.</th>
+	  <th>CHD No.</th>
 	  <th>Project Name</th>
 	  <th>Project Manager</th>
 	  <th>Course Title</th>

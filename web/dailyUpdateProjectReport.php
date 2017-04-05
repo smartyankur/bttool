@@ -193,7 +193,8 @@ if( is_array($res) && array_key_exists('errorMessage', $res)) {
     return;
 }
 	
-$url = "http://61.12.24.68/Efficianttestv1/api/BTToolIntegration/syncbt";
+//$url = "http://61.12.24.68/Efficianttestv1/api/BTToolIntegration/syncbt";
+$url = "http://61.12.24.68/Efficiant/api/BTToolIntegration/syncbt";
 
 $ch = curl_init( $url );
 # Setup request to send json via POST.

@@ -17,7 +17,7 @@
     
     while($row = mysql_fetch_assoc($retval)) 
     { 
-     echo "<h3>"."Hi ".$row['username']." ! You Can Create Project Records"."<h3>";
+     echo "<h3>"."Hi ".$row['username']." ! You Can Create Project Records."."<h3>";
 	 $username=$row['username'];
 	 //$pwd=$row['pwd'];
     } 	

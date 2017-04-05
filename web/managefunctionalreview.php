@@ -24,7 +24,7 @@ while($row = mysql_fetch_assoc($retval)){
   echo "</br>";
   echo "</br>";
   echo "</br>";
-  echo "<h4>" . "Hi " . $row['username'] . " ! Welcome to Course Handover Document" . "</h4>";
+  echo "<h4>" . "Hi " . $row['username'] . " ! Welcome to Course Handover Document." . "</h4>";
   $username = $row['username'];
   $userrole = $row['role'];  
   $userdept = $row['dept'];  

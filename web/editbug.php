@@ -54,9 +54,8 @@ if($filename<>"")
 	$dates = explode("/", $values[0]);
 	$times = explode(":", $values[1]);
 	$timex=$dates[1]."_".$dates[0]."_".$dates[2]."_"."T".$times[0]."_".$times[1]."_".$times[2];
-	$str=$a."_".$f."_".$timex.$ext;
-	$str=mysql_real_escape_string($str);
-	
+	$str= time().$ext;
+   
    if(move_uploaded_file($_FILES['userfile']['tmp_name'],$upload_path . $str))
    {
     $msg='Your file '.$filename.' upload was successful for project :'.$a.' and phase :'.$f.',You can view the file <a href="' . $upload_path . $str . '" title="Your File">here</a>'; // It worked.

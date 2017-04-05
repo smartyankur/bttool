@@ -20,7 +20,7 @@ if($count==0){
 while($row = mysql_fetch_assoc($retval)){ 
   echo "<br>";
   echo "<br>";
-  echo "<h3>"."Hi ".$row['username']." ! Welcome To Dev Team Response Interface"."</h3>";
+  echo "<h3>"."Hi ".$row['username']." ! Welcome To Dev Team Response Interface."."</h3>";
   $username=$row['username'];
 } 	
 ?>

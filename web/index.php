@@ -80,7 +80,7 @@ var x=trim(document.forms["tstest"]["username"].value);
 
 if (x=="")
   {
-  alert("Unique ID must be filled");
+  alert("Unique ID must be filled.");
   document.forms["tstest"]["username"].focus();
   return false;
   }
@@ -108,8 +108,8 @@ document.forms["tstest"]["username"].focus();
             </div>
 			<div class="login_area">
 				<form name="tstest" method="POST" action="index.php" onsubmit="return validateForm()">
-					Unique ID:
-					<input type="password" name="username">
+					<b>Unique ID:</b>
+					<input type="password" name="username" style = "height:25px">
 					<br>
 					<button type="submit" class="subtn">Login</button>
 				</form>
