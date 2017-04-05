@@ -34,21 +34,21 @@ while($row = mysql_fetch_assoc($retval)){
 <?php
 $post_data = array();
 if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
-  $project        = urldecode($_POST["project"]);
+  $project        = $_POST["project"];
   $project_id     = $_POST["pro_id"];
   $pm             = $_POST["pm"];
-  $courseTitle    = mysql_real_escape_string($_POST["courseTitle"]);
+  $courseTitle    = $_POST["courseTitle"];
   $SDate          = time(); //$_POST["SDate"];
   $courseLevel    = $_POST["courseLevel"];
   $fmid           = $_POST["fmid"];
   $fmmedia        = $_POST["fmmedia"];
   $fmtech         = $_POST["fmtech"];
-  $devsid           = implode(",", $_POST["devsid"]);  
-  $devsmed           = implode(",", $_POST["devsmed"]);  
-  $devstech           = implode(",", $_POST["devstech"]);  
+  $devsid         = implode(",", $_POST["devsid"]);  
+  $devsmed        = implode(",", $_POST["devsmed"]);  
+  $devstech       = implode(",", $_POST["devstech"]);  
   $version        = $_POST["version"];
   $pagecount      = $_POST["pagecount"];
-  $slidecount      = $_POST["slidecount"];
+  $slidecount     = $_POST["slidecount"];
   //$iterationRound = $_POST["iterationRound"];
   $learningHours  = $_POST["learningHours"];
   $coursesize     = $_POST["coursesize"];
@@ -569,7 +569,7 @@ if(isset($_GET['chdid']) && !empty($_GET['chdid'])) {
 	$_REQUEST['project'] = $row['project_name'];
 	$_REQUEST['pm'] = $row['project_manager'];
 	$_REQUEST['courseTitle'] = $row['course_title'];
-	//$_REQUEST['SDate'] = $row['start_date'];
+	$_REQUEST['SDate'] = $row['start_date'];
 	$_REQUEST['courseLevel'] = $row['course_level'];
 	$_REQUEST['fmid'] = $row['functional_manager_id'];
 	$_REQUEST['fmmedia'] = $row['functional_manager_media'];

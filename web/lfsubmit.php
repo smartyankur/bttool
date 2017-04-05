@@ -24,7 +24,7 @@ echo "fmfour :".$fmfour;
 
 include("config.php");
 
-$cquery="update projectmaster set lead='".$lead."',fmone='".$fmone."',fmtwo='".$fmtwo."',fmthree='".$fmthree."',fmfour='".$fmfour."',ceo='".$ceo."',md='".$md."' where projectname='".$project."'";
+$cquery="update projectmaster set lead='".$lead."',fmone='".$fmone."',fmtwo='".$fmtwo."',fmthree='".$fmthree."',fmfour='".$fmfour."',ceo='".$ceo."',md='".$md."' where pindatabaseid='".$project."'";
 //echo $cquery;
 $cresult=mysql_query($cquery) or die (mysql_error());
 $adminuser=trim($_REQUEST['adminuser']);

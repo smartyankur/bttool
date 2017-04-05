@@ -166,7 +166,7 @@ function getData(){
     {
 	 if(strlen($row[projectname])<>0)
 		{		 
-         echo "<option ref='".$row['pindatabaseid']."'>$row[projectname]</option>"; 
+         echo "<option ref='".$row['pindatabaseid']."' value='".$row['pindatabaseid']."'>$row[projectname]</option>"; 
         }
 	} 
  

@@ -92,16 +92,9 @@ if (i=="Select")
 
 </script>
 </head>
-<?php	
-	$con = mysql_connect("localhost","root","password");
+<?php
 	$user=mysql_real_escape_string($_REQUEST['user']);
 	include("config.php");
-  	 if (!$con)
-      {
-        die('Could not connect: ' . mysql_error());
-      }
-
-	mysql_select_db("bttool17jan17") or die(mysql_error());
 
 	$query = "select username from adminlogin where uniqueid='$user'";
 	$retval = mysql_query( $query, $con );
@@ -146,14 +139,6 @@ function getData(){
 	<TD>Project Name</TD>
 	<td>
     <?php
-	$con = mysql_connect("localhost","root","password");
-
-    if (!$con)
-      {
-        die('Could not connect: ' . mysql_error());
-      }
-
-	mysql_select_db("bttool17jan17") or die(mysql_error());
     $query = "select DISTINCT projectname, pindatabaseid from projectmaster order by projectname";
     
 	$retval = mysql_query( $query, $con );
@@ -173,7 +158,7 @@ function getData(){
     {
 	 if(strlen($row[projectname])<>0)
 		{		 
-         echo "<option ref='".$row['pindatabaseid']."'>$row[projectname]</option>"; 
+         echo "<option ref='".$row['pindatabaseid']."' value='".$row['pindatabaseid']."'>$row[projectname]</option>"; 
         }
 	} 
  

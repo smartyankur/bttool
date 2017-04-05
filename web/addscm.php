@@ -84,15 +84,7 @@ function getData(){
 	<TD>Project Name</TD>
 	<td>
     <?php
-	$con = mysql_connect("localhost","root","password");
-
-    if (!$con)
-      {
-        die('Could not connect: ' . mysql_error());
-      }
-
-	mysql_select_db("audit") or die(mysql_error());
-    $query = "select projectname from projectmaster";
+    $query = "select DISTINCT projectname, pindatabaseid from projectmaster order by projectname";
     
 	$retval = mysql_query( $query, $con );
     $count = mysql_num_rows($retval);
@@ -111,7 +103,7 @@ function getData(){
     {
 	 if(strlen($row[projectname])<>0)
 		{		 
-         echo "<option>$row[projectname]</option>"; 
+         echo "<option ref='".$row['pindatabaseid']."' value='".$row['pindatabaseid']."'>$row[projectname]</option>"; 
         }
 	} 
  

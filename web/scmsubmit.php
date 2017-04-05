@@ -20,7 +20,7 @@ echo "fmfour :".$fmfour;
 
 include('config.php');
 
-$cquery="update projectmaster set scm='".$scm."',scmtwo='".$scmtwo."' where projectname='".$project."'";
+$cquery="update projectmaster set scm='".$scm."',scmtwo='".$scmtwo."' where pindatabaseid='".$project."'";
 //echo $cquery;
 $cresult=mysql_query($cquery) or die (mysql_error());
 $adminuser=trim($_REQUEST['adminuser']);

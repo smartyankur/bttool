@@ -35,7 +35,7 @@ echo "</br>";
 
 include("config.php");
 
-$cquery="update projectmaster set dev1='".$devone."',dev2='".$devtwo."',dev3='".$devthree."',dev4='".$devfour."',dev5='".$devfive."',dev6='".$devsix."',dev7='".$devseven."',dev8='".$deveight."',dev9='".$devnine."',dev10='".$devten."',dev11='".$develeven."',dev12='".$devtwelve."' where projectname='".$project."'";
+$cquery="update projectmaster set dev1='".$devone."',dev2='".$devtwo."',dev3='".$devthree."',dev4='".$devfour."',dev5='".$devfive."',dev6='".$devsix."',dev7='".$devseven."',dev8='".$deveight."',dev9='".$devnine."',dev10='".$devten."',dev11='".$develeven."',dev12='".$devtwelve."' where pindatabaseid='".$project."'";
 //echo $cquery;
 $cresult=mysql_query($cquery) or die (mysql_error());
 $adminuser=trim($_REQUEST['adminuser']);

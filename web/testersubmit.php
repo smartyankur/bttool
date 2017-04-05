@@ -29,7 +29,7 @@ echo "</br>";
 //echo "teight :".$teight;
 
 include("config.php");
-$cquery="update projectmaster set tester1='".$tone."',tester2='".$ttwo."',tester3='".$tthree."',tester4='".$tfour."',tester5='".$tfive."',tester6='".$tsix."',tester7='".$tseven."',tester8='".$teight."' where projectname='".$project."'";
+$cquery="update projectmaster set tester1='".$tone."',tester2='".$ttwo."',tester3='".$tthree."',tester4='".$tfour."',tester5='".$tfive."',tester6='".$tsix."',tester7='".$tseven."',tester8='".$teight."' where pindatabaseid='".$project."'";
 //echo $cquery;
 $cresult=mysql_query($cquery) or die (mysql_error());
 $adminuser=trim($_REQUEST['adminuser']);
