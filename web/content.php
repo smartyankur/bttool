@@ -129,7 +129,7 @@ if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
 						<?php } ?>
                     </select>
                     <br>
-                    <button class="subtn" onclick="location.href='logout.php';">Logout</button>
+                    <button class="subtn" onclick="logout();">Logout</button>
                 </form>
             </div>
            
@@ -144,6 +144,9 @@ if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
 				}
 			});
 		});
+		function logout(){
+			window.location.href = 'logout.php';
+		}
 	</script>
 </body>
 

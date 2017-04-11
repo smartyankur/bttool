@@ -5,14 +5,15 @@
 	session_start();
 	
 	if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
-	header ("Location:index.php");
+		header ("Location:index.php");
     }
-	$user=$_SESSION['login'];
+	$user = $_SESSION['login'];
 	include("config.php");
 
     $query = "select username from login where uniqueid='$user'";
     
-	$retval = mysql_query( $query, $con );
+	$retval = mysql_query($query, $con);
+	
     $count = mysql_num_rows($retval);
 	
 	if($count==0)
@@ -119,7 +120,7 @@ function rtrim(s)
 <TD>Reviewee</TD>
 <TD>
     <?php
-	$query = "select DISTINCT username from login where role='DEV' AND dept='Content' order by username";
+	$query = "select DISTINCT username from login where role IN('ID, Media', 'ID, Tech', 'Media, Tech', 'Media, ID', 'Tech, ID', 'Tech, Media') AND dept='Content' order by username";
     $retval = mysql_query( $query, $con );
     $count = mysql_num_rows($retval);
 	
