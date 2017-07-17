@@ -105,7 +105,7 @@ if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
 
 <head>
     <meta charset="UTF-8">
-    <title>BT Tool</title>
+    <title>RADAR</title>
     <link rel="stylesheet" href="css/style.css" />
 	<script type="text/javascript" src="js/jquery.js"></script>
 </head>
@@ -121,6 +121,7 @@ if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
                 <div class="welcome_txt">
                     <p><span>W</span>elcome <span>T</span>o <span>RADAR!</span></p>
                 </div>
+		<b><font color="#e15616">R</font></b>eview, <b><font color="#e15616">A</font></b>ct, <b><font color="#e15616">D</font></b>eliver & <b><font color="#e15616">A</font></b>ttain <b><font color="#e15616">R</font></b>eliability!
                 <form action="">                    
                     <select class="classic">
                         <option value="">Select Option</option>

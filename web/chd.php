@@ -34,7 +34,7 @@ while($row = mysql_fetch_assoc($retval)){
 <?php
 $post_data = array();
 if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
-  $project        = $_POST["project"];
+  $project        = urldecode($_POST["project"]);
   $project_id     = $_POST["pro_id"];
   $pm             = $_POST["pm"];
   $courseTitle    = $_POST["courseTitle"];
@@ -63,7 +63,7 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
   $chk            = mysql_real_escape_string($_POST["chk"]);
   $reviewer       = mysql_real_escape_string($_POST["reviewer"]);
   $comments       = mysql_real_escape_string($_POST["comments"]);
-  $testenvironment = mysql_real_escape_string($_POST["testenvironment"]);
+  $testenvironment = implode(",", $_POST["testenvironment"]);
   $chd_submit_date = date('d-m-Y'); 
   
 ///////////////////////////////////////////////////////////////////////////////////
@@ -199,7 +199,8 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
   	$mailer->IsSMTP();
   	$mailer->IsHTML(true);
   
-   	$mailer->Host     = "98.129.185.2";
+  	$mailer->Host     = "98.129.185.2";
+	$mailer->Port     = 587;
   	$mailer->Username = "sepg@gc-solutions.net";
   	$mailer->Password = "Gcube!123";
   
@@ -593,7 +594,7 @@ if(isset($_GET['chdid']) && !empty($_GET['chdid'])) {
 	$_REQUEST["tppath"] = $row['test_plan_path'];
 	$_REQUEST["chk"] = $row['test_checklists'];
 	$_REQUEST["comments"] = $row['comments'];
-	$_REQUEST["testenvironment"] = $row['testenvironment'];
+	$_REQUEST["testenvironment"] = explode(",", $row['testenvironment']);
 	$_REQUEST["function"] = $row['function'];
 }
   $project        = $_REQUEST["project"];
@@ -941,10 +942,10 @@ if(!empty($numrowsDEV)){
     <label for="clienteditbeta"><input type="checkbox" name="partialTesting[]" id="clienteditbeta" class="disable" value="Clientedit beta" <?php if(in_array("Clientedit beta", $partialTesting))echo " checked"; ?>>Clientedit beta</label>
     <label for="clienteditgold"><input type="checkbox" name="partialTesting[]" id="clienteditgold" class="disable" value="Clientedit gold" <?php if(in_array("Clientedit gold", $partialTesting))echo " checked"; ?>>Clientedit gold</label>
 	<br/>
-	<label for="scormtesting" style="margin-left:10px;"><input type="checkbox" name="partialTesting[]" id="scormtesting" class="disable" value="Scorm 1.2" <?php if(in_array("Scorm 1.2", $partialTesting))echo " checked"; ?>>Scorm 1.2</label>
-	<label for="scorm2004"><input type="checkbox" name="partialTesting[]" id="scorm2004" class="disable" value="Scorm 2004" <?php if(in_array("Scorm 2004", $partialTesting))echo " checked"; ?>>Scorm 2004</label>
+	<label for="scormtesting" style="margin-left:10px;"><input type="checkbox" name="partialTesting[]" id="scormtesting" class="" value="Scorm 1.2" <?php if(in_array("Scorm 1.2", $partialTesting))echo " checked"; ?>>Scorm 1.2</label>
+	<label for="scorm2004"><input type="checkbox" name="partialTesting[]" id="scorm2004" class="" value="Scorm 2004" <?php if(in_array("Scorm 2004", $partialTesting))echo " checked"; ?>>Scorm 2004</label>
 	
-	<label for="AICC" ><input type="checkbox" name="partialTesting[]" id="AICC" class="disable" value="AICC" <?php if(in_array("AICC", $partialTesting))echo " checked"; ?>>AICC</label>
+	<label for="AICC" ><input type="checkbox" name="partialTesting[]" id="AICC" class="" value="AICC" <?php if(in_array("AICC", $partialTesting))echo " checked"; ?>>AICC</label>
     <label for="audiomapping"><input type="checkbox" name="partialTesting[]" id="audiomapping" class="check" value="Audio mapping" <?php if(in_array("Audio mapping", $partialTesting))echo " checked"; ?>>Audio mapping</label>
     <label for="audiosynching"><input type="checkbox" name="partialTesting[]" id="audiosynching" class="check" value="Audio synching" <?php if(in_array("Audio synching", $partialTesting))echo " checked"; ?>>Audio synching</label>
     
@@ -961,6 +962,50 @@ if(!empty($numrowsDEV)){
     <label for="peerreview"><input type="checkbox" name="confReviews[]" id="peerreview" value="Peer review" <?php if(in_array("Programing Review Sign Off Internal", $confReviews))echo " checked"; ?>>Peer review</label>
     <label for="functionalreview"><input type="checkbox" name="confReviews[]" id="functionalreview" value="Functional Review" <?php if(in_array("Functional Review", $confReviews))echo " checked"; ?>>Functional Review</label>
     <label for="idsignoff"><input type="checkbox" name="confReviews[]" id="idsignoff" value="ID Sign Off" <?php if(in_array("ID Sign Off", $confReviews))echo " checked"; ?>>ID Sign Off</label>
+  </TD>
+</TR>
+
+<TR>
+  <TD><label for="type">Test Environment</label> <font color='red'>*</font></TD>
+  <TD id="check1">
+<label for="Win7/8 IE11"><input type="checkbox" name="testenvironment[]" id="Win7/8 IE11" value="Win7/8 IE11" <?php if(in_array("Win7/8 IE11", $testenvironment))echo " checked"; ?>>Win7/8 IE11</label>
+<label for="Win7 IE10"><input type="checkbox" name="testenvironment[]" id="Win7 IE10" value="Win7 IE10" <?php if(in_array("Win7 IE10", $testenvironment))echo " checked"; ?>>Win7 IE10</label>
+<label for="Win7 IE9"><input type="checkbox" name="testenvironment[]" id="Win7 IE9" value="Win7 IE9" <?php if(in_array("Win7 IE9", $testenvironment))echo " checked"; ?>>Win7 IE9</label>
+<label for="Win7 IE8"><input type="checkbox" name="testenvironment[]" id="Win7 IE8" value="Win7 IE8" <?php if(in_array("Win7 IE8", $testenvironment))echo " checked"; ?>>Win7 IE8</label>
+    <label for="Win7/8 Firefox Latest"><input type="checkbox" name="testenvironment[]" id="Win7/8 Firefox Latest" value="Win7/8 Firefox Latest" <?php if(in_array("Win7/8 Firefox Latest", $testenvironment))echo "  checked"; ?>>Win7/8 Firefox Latest</label>
+    <label for="Win7/8 Chrome Latest"><input type="checkbox" name="testenvironment[]" id="Win7/8 Chrome Latest" value="Win7/8 Chrome Latest" <?php if(in_array("WWin7/8 Chrome Latest", $testenvironment))echo " checked";  ?>>Win7/8 Chrome Latest</label>
+<label for="iPad 3"><input type="checkbox" name="testenvironment[]" id="iPad 3" value="iPad 3" <?php if(in_array("iPad 3", $testenvironment))echo " checked"; ?>>iPad 3</label>
+<label for="iPad 4"><input type="checkbox" name="testenvironment[]" id="iPad 4" value="iPad 4" <?php if(in_array("iPad 4", $testenvironment))echo " checked"; ?>>iPad 4</label>
+<label for="iPad Mini"><input type="checkbox" name="testenvironment[]" id="iPad Mini" value="iPad Mini" <?php if(in_array("iPad Mini", $testenvironment))echo " checked"; ?>>iPad Mini</label>
+<label for="iPad Air"><input type="checkbox" name="testenvironment[]" id="iPad Air" value="iPad Air" <?php if(in_array("iPad Air", $testenvironment))echo " checked"; ?>>iPad Air</label>
+<label for="Apple iPhone 4S"><input type="checkbox" name="testenvironment[]" id="Apple iPhone 4S" value="Apple iPhone 4S" <?php if(in_array("Apple iPhone 4S", $testenvironment))echo " checked"; ?>>Apple iPhone 4S</label>
+<br/>&nbsp&nbsp&nbsp
+
+<label for="Apple iPhone 6"><input type="checkbox" name="testenvironment[]" id="Apple iPhone 6" value="Apple iPhone 6" <?php if(in_array("Apple iPhone 6", $testenvironment))echo "  
+checked"; ?>>Apple iPhone 6</label>
+<label for="Apple iPhone 3GS"><input type="checkbox" name="testenvironment[]" id="Apple iPhone 3GS" value="Apple iPhone 3GS" <?php if(in_array("Apple iPhone 3GS",  
+$testenvironment))echo " checked"; ?>>Apple iPhone 3GS</label>
+<label for="Apple iPhone 5C"><input type="checkbox" name="testenvironment[]" id="Apple iPhone 5C" value="Apple iPhone 5C" <?php if(in_array("Apple iPhone 5C", $testenvironment))echo  
+" checked"; ?>>Apple iPhone 5C</label>
+<label for="Nokia Lumia 925"><input type="checkbox" name="testenvironment[]" id="Nokia Lumia 925" value="Nokia Lumia 925" <?php if(in_array("Nokia Lumia 925", $testenvironment))echo  
+" checked"; ?>>Nokia Lumia 925</label>
+<label for="Nokia Lumia 550"><input type="checkbox" name="testenvironment[]" id="Nokia Lumia 550" value="Nokia Lumia 550" <?php if(in_array("Nokia Lumia 550", $testenvironment))echo  
+" checked"; ?>>Nokia Lumia 550</label>
+<label for="Samsung Galaxy S3 Neo"><input type="checkbox" name="testenvironment[]" id="Samsung Galaxy S3 Neo" value="Samsung Galaxy S3 Neo" <?php if(in_array("Samsung Galaxy S3 Neo", $testenvironment))echo " checked"; ?>>Samsung Galaxy S3 Neo</label>
+<label for="Samsung Galaxy S4"><input type="checkbox" name="testenvironment[]" id="Samsung Galaxy S4" value="Samsung Galaxy S4" <?php if(in_array("Samsung Galaxy S4",  
+$testenvironment))echo " checked"; ?>>Samsung Galaxy S4</label>
+<label for="Samsung Grand 2"><input type="checkbox" name="testenvironment[]" id="Samsung Grand 2" value="Samsung Grand 2" <?php if(in_array("Samsung Grand 2",  
+$testenvironment))echo " checked"; ?>>Samsung Grand 2</label>
+<label for="Samsung Galaxy Tab 3, 8 inch"><input type="checkbox" name="testenvironment[]" id="Samsung Galaxy Tab 3, 8 inch" value="Samsung Galaxy Tab 3, 8 inch" <?php if (in_array("Samsung Galaxy Tab 3, 8 inch", $testenvironment))echo " checked"; ?>>Samsung Galaxy Tab 3, 8 inch</label>
+<br/>&nbsp&nbsp&nbsp
+<label for="Samsung Galaxy Tab 4, 8 inch"><input type="checkbox" name="testenvironment[]" id="Samsung Galaxy Tab 4, 8 inch" value="Samsung Galaxy Tab 4, 8 inch" <?php if (in_array("Samsung Galaxy Tab 4, 8 inch", $testenvironment))echo " checked"; ?>>Samsung Galaxy Tab 4, 8 inch</label>
+<label for="Samsung Note 10"><input type="checkbox" name="testenvironment[]" id="Samsung Note 10" value="Samsung Note 10" <?php if(in_array("Samsung Note 10", $testenvironment))echo " checked"; ?>>Samsung Note 10</label>
+<label for="Samsung Galaxy Tab E"><input type="checkbox" name="testenvironment[]" id="Samsung Galaxy Tab E" value="Samsung Galaxy Tab E" <?php if(in_array("Samsung Galaxy Tab E", $testenvironment))echo " checked"; ?>>Samsung Galaxy Tab E</label>
+<label for="Microsoft Surface RT"><input type="checkbox" name="testenvironment[]" id="Microsoft Surface RT" value="Microsoft Surface RT" <?php if(in_array("Microsoft Surface RT", $testenvironment))echo " checked"; ?>>Microsoft Surface RT</label>
+<label for="Mac Book"><input type="checkbox" name="testenvironment[]" id="Mac Book" value="Mac Book" <?php if(in_array("Mac Book", $testenvironment))echo " checked"; ?>>Mac Book</label>
+<label for="MS Word"><input type="checkbox" name="testenvironment[]" id="MS Word" value="MS Word" <?php if(in_array("MS Word", $testenvironment))echo " checked"; ?>>MS Word</label>
+<label for="Media Player"><input type="checkbox" name="testenvironment[]" id="Media Player" value="Media Player" <?php if(in_array("Media Player", $testenvironment))echo " checked"; ?>>Media Player</label>
+<label for="PPT"><input type="checkbox" name="testenvironment[]" id="PPT" value="PPT" <?php if(in_array("PPT", $testenvironment))echo " checked"; ?>>PPT</label>
   </TD>
 </TR>
 
@@ -999,10 +1044,8 @@ if(!empty($numrowsDEV)){
   <TD><textarea name="comments" id="comments" rows="4" cols="30"><?php echo stripslashes($comments); ?></textarea></TD>
 </TR>
 
-<TR>
-  <TD width="150">Test Environment(OS, browsers and devices)</TD>
-  <TD><textarea name="testenvironment" id="testenvironment" rows="4" cols="30"><?php echo stripslashes($testenvironment); ?></textarea></TD>
-</TR>
+
+
 
 <TR>
 	<TD valign="top">Attach supporting documents</TD>

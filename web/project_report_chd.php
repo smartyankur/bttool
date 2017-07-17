@@ -125,7 +125,7 @@ foreach($tmp as $key => $val) {
 				$final[$key]['tmbug_count'] = $final[$key]['tmbug_count'] + $v['bug_count'];
 			}if(trim($v['category']) == "Text Overlap/Truncation/Overflow") {
 				$final[$key]['tobug_count'] = $final[$key]['tobug_count'] + $v['bug_count'];
-			}if(trim($v['category']) == "Junck Characters") {
+			}if(trim($v['category']) == "Junk Characters") {
 				$final[$key]['jcbug_count'] = $final[$key]['jcbug_count'] + $v['bug_count'];
 			}if(trim($v['category']) == "Punctuation") {
 				$final[$key]['pcbug_count'] = $final[$key]['pcbug_count'] + $v['bug_count'];
@@ -242,7 +242,7 @@ echo "<table cellpadding='5' cellspacing='0' border='1'>
 	  <th>Text Formatting</th>
 	  <th>Text Mismatching</th>
 	  <th>Text Overlap/Truncation/Overflow</th>
-	  <th>Junck Characters</th>
+	  <th>Junk Characters</th>
 	  <th>Punctuation</th>
 	  <th>Spelling Error</th>
 	  <th>Grammatical Error</th>

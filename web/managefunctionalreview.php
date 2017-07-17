@@ -203,6 +203,7 @@ function outSourced(id) {
   <th>Scope for testing</th>  
   <th>Partial Testing</th>
   <th>Confirmation On Reviews</th>  
+  <th>Test Eenvironment</th>
   <th>Course Path [SVN]</th>
   <th>SB Path [SVN]</th>
   <th>EDIT Sheet</th>    
@@ -259,6 +260,7 @@ if( isset($_REQUEST['project']) && !empty($_REQUEST['project']) && ($_REQUEST['p
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['testing_scope']."</div>"."</td>";
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['partial_testing']."</div>"."</td>";
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['conf_reviews']."</div>"."</td>";
+        echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['testenvironment']."</div>"."</td>";
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['course_path']."</div>"."</td>";
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['sb_path']."</div>"."</td>";
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['editsheet']."</div>"."</td>";           
@@ -296,7 +298,7 @@ if( isset($_REQUEST['project']) && !empty($_REQUEST['project']) && ($_REQUEST['p
         ".((!empty($fetchFuncRvw['support_file3']))?'<a href="support/'.$fetchFuncRvw['support_file3'].'">'.$fetchFuncRvw['support_file3'].'</a><br />':'')."
         ".((!empty($fetchFuncRvw['support_file4']))?'<a href="support/'.$fetchFuncRvw['support_file4'].'">'.$fetchFuncRvw['support_file4'].'</a><br />':'')."
         </div></td>";
-		if($userrole == "ID FM" || $userrole == "Tech FM" || $userrole == "Media FM" || $userrole == "QC FM" || $userrole == "FM" || $userrole == "QC") {
+		if($userrole == "ID FM" || $userrole == "Tech FM" || $userrole == "Media FM" || $userrole == "QC FM" || $userrole == "FM" || $userrole == "PM" || $userrole == "QC") {
 			if($fetchFuncRvw['status'] == "rejected") { ?>
 				<TD><input type="button" name="qcassignment" class="button" value="Edit" onclick="location.href='chd.php?chdid=<?php echo $fetchFuncRvw['id'] ?>'"></TD>
 			 <?php } else {

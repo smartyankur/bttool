@@ -96,7 +96,7 @@ document.forms["tstest"]["username"].focus();
 
 <head>
     <meta charset="UTF-8">
-    <title>BT Tool</title>
+    <title>Radar</title>
     <link rel="stylesheet" href="css/style.css" />
 </head>
 

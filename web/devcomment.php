@@ -308,8 +308,8 @@ border: 1px outset #b37d00 ;
   <TD>Bug Status</TD>
   <TD>
     <select name="bugStatus" id="bugStatus"> 
-      <option>hold</option>
       <option>open</option>
+      <option>hold</option>
       <option>closed</option>
       <option>ok as is</option>
       <option>reopened</option>

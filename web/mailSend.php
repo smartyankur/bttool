@@ -19,7 +19,7 @@ if(!empty($status)) {
 	mysql_query($query);
 }
 
-$dm="anuradhaj@gc-solutions.net";
+$dm="rachnad@gc-solutions.net";
 
 //echo "Mailid :".$mailid;
 //echo "</br>";
@@ -31,9 +31,10 @@ $mailer = new phpmailer();
 $mailer->IsSMTP();
 $mailer->IsHTML(true);
 
-$mailer->Host = "smtp.emailsrvr.com";
-$mailer->Username = "sepg@gc-solutions.net";
-$mailer->Password = "pass@12";
+  	$mailer->Host     = "98.129.185.2";
+	$mailer->Port     = 587;
+  	$mailer->Username = "sepg@gc-solutions.net";
+  	//$mailer->Password = "Gcube!123";
 
 $mailer->SMTPAuth = true;
 
@@ -43,7 +44,7 @@ $mailer->From = "sepg@gc-solutions.net";
 $mailer->FromName = "QC";
 
 $mailer->AddAddress($mailid);
-$mailer->AddCC($dm,'DM');
+$mailer->AddCC($dm,'');
 if($id<>"") $mailer->AddCC($id,'ID FM');
 if($med<>"") $mailer->AddCC($med,'MED FM');
 if($scr<>"") $mailer->AddCC($scr,'SCR FM');

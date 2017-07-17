@@ -120,7 +120,7 @@ function rtrim(s)
 <TD>Reviewee</TD>
 <TD>
     <?php
-	$query = "select DISTINCT username from login where role IN('ID, Media', 'ID, Tech', 'Media, Tech', 'Media, ID', 'Tech, ID', 'Tech, Media') AND dept='Content' order by username";
+	$query = "select DISTINCT username from login where role IN('ID, Media', 'ID, Tech', 'Media, Tech', 'Media, ID', 'Tech, ID', 'Tech, Media', 'ID', 'Media', 'Tech', 'ID FM', 'Tech FM', 'Media FM') AND dept='Content' order by username";
     $retval = mysql_query( $query, $con );
     $count = mysql_num_rows($retval);
 	
