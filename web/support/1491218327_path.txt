@@ -1,0 +1,9 @@
+
+file to be test: https://ftp2.gc-solutions.net/ftp/Amitk///toolingU/500150_12/
+Base:https://ftp2.gc-solutions.net/ftp/Amitk///toolingU/500150_12/base/500150_12.swf
+
+file to be test: https://ftp2.gc-solutions.net/ftp/Amitk///toolingU/300110_13/
+Base:https://ftp2.gc-solutions.net/ftp/Amitk///toolingU/300110_13/base/300110_13.swf
+
+file to be test:https://ftp2.gc-solutions.net/ftp/Amitk///toolingU/200210_11/
+Base: https://ftp2.gc-solutions.net/ftp/Amitk///toolingU/200210_11/base/200210_11.swf

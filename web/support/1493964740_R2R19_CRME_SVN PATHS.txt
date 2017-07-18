@@ -1,0 +1,9 @@
+SB path: http://192.168.2.4/content2017/Firmenich/ODC/03_Project_Development/Construction/ID/Storyboards/Credit_Risk_Management/R2R19_Credit Risk Management_SB.pptx
+
+SIMS path: http://192.168.2.4/content2017/Firmenich/ODC/03_Project_Development/Construction/ID/Storyboards/Credit_Risk_Management/R2919_Simulations
+
+QRCS path:http://192.168.2.4/content2017/Firmenich/ODC/03_Project_Development/Construction/ID/Storyboards/Credit_Risk_Management/R2R19_QRCs
+
+Course PATH:http://pacific.gc-solutions.net/content2017/Firmenich/ODC/03_Project_Development/Construction/Media_Development/Build/eLearning/R2R_19 - Credit_Risk_Management/Publish
+
+ID review sheet PATH:http://192.168.2.4/content2017/Firmenich/ODC/03_Project_Development/Construction/QC_Reports/Internal/Alpha/R2R19_CRM_ID Review.xlsx

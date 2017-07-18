@@ -1,0 +1,16 @@
+
+Course Path:
+http://192.168.2.4/content2016/IOM/MICIC/03_Project_Development/Construction/Media_Development/Build/Spanish/Module_0/Introducción al curso - Storyline output
+
+
+Audioscript Path:
+
+http://192.168.2.4/content2016/IOM/MICIC/03_Project_Development/Construction/ID/Storyboards/Audioscripts/Spanish/Audio Script/AS_Module 0_Introducción al curso.docx
+
+
+
+Note: 
+
+1. There is no Spanish SB for the module. This is localization.
+
+2. We have done paragraph to paragraph syncing in the course. So Kindly do not raise such issues.

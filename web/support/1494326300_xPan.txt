@@ -1,0 +1,13 @@
+Sample course path:
+http://192.168.2.4/content2017/xPAN/Propulsion/03_Project_Development/Construction/Client_Inputs_Requirements/Base_Content/Module 1/Source Files/Published/BCRTC - Introduction - Storyline output/story.html
+
+
+
+Release notes:
+1) Review client sample before starting the QC to avoid Ok as issues.
+
+2) Script is provided by client so any issue related to editorial will go on hold.
+
+3) Machine audio used, and provided by client, so issue in audio will go on hold.
+
+4) We are using "The correct answer is...." to show answer after second failed attempt as per client suggestion. Some script does not contains this text, so do not mark it as an issue.

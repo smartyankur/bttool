@@ -1,0 +1,29 @@
+Sample course path:
+http://192.168.2.4/content2017/xPAN/Propulsion/03_Project_Development/Construction/Client_Inputs_Requirements/Base_Content/Module 1/Source Files/Published/BCRTC - Introduction - Storyline output/story.html
+
+
+
+Release notes:
+1) Review client sample before starting the QC to avoid Ok as issues.
+
+2) Script is provided by client so any issue related to editorial will go on hold.
+
+3) Machine audio used, and provided by client, so issue in audio will go on hold.
+
+4) We are using "The correct answer is...." to show answer after second failed attempt as per client suggestion. Some script does not contains this text, so do not mark it as an issue.
+
+5) Knowledge Check questions will come as a separate dropdown in Menu as per client suggestion. 
+
+6) Currently force navigation does not become active ones user visit all the pages, it remain forced.
+
+7) All learning objectives (in the opening slide and concluding slide) will have a period. 
+
+8) A bullet item with only one sentence (or partial sentence) do not have a period.
+
+9) A bullet item with more than one sentence will have periods.
+
+10) Some videos has issues, when they loads top corner of content area distorted. As per client comment, this is a known issues and leave it as is.
+
+11) Arrows, highlights, lables should be green as per course standard, untill any specific color is suggested in the script.
+
+12) All lessons intro will begin with this text regardless of what the SB indicates, "You have the option any time in this presentation to PAUSE it. Simply click the button at the bottom left hand corner of the screen.  When you are ready to RESUME, click the same button again."

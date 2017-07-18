@@ -1,0 +1,17 @@
+Course Path [SVN] *:-
+http://192.168.2.4/content2017/Interactive_Services/HY_10/03_Project_Development/Construction/Media_Development/Build/hy_10_participant_guide_03-07-16.pptx
+
+SB Path [SVN] *:-
+http://192.168.2.4/content2016/Interactive_Services_Projects/WM_247U_AML_Updates/03_Project_Development/Construction/ID/Storyboards/WM_247U_01_AML_HTML_MC_14Dec16_TestOut.docx
+
+Updated PSD path [SVN] *:-
+http://192.168.2.4/content2017/Interactive_Services/HY_10/03_Project_Development/Construction/Client_Inputs_Requirements/Standards_Guidelines/HY_10_HANDOVER.pptx
+
+Test Case/Checklists [SVN] * 	:-
+http://192.168.2.4/content2017/Interactive_Services/HY_10/03_Project_Development/Construction/Client_Inputs_Requirements/Base_Content/hy_10_participant_guide_sample_04_07_17_IS_feedback.pptx
+
+
+Release note:-
+1. As discussed with praveen, please follow the same formatting and positioning
+2. we have found double spaces on some instances and fixed them for further such issue please mark the issue as query
+3. we have not included page numbers for now will inform client about it.

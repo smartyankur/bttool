@@ -1,0 +1,9 @@
+Prototype course path:
+http://192.168.2.4/content2017/xPan M7/03_Project_Development/Construction/Client_Inputs_Requirements/Base_Content/Source Files/Unpublished/MTA Prototype - Storyline output/story.html
+
+
+
+Release notes:
+1) This course is devided in 2 part. One part contains Blue screen and second part contains Green screens. Where there is no color, those screens will come in both parts. Current build has only green screen as suggested by client.
+
+2) Machine audio used in this course and it is provided by client, so iisues related to audio go on hold.

@@ -1,0 +1,11 @@
+SVN path of video:
+
+http://192.168.2.4/content2017/Philips Healthcare/MOM/03_Project_Development/Construction/Media_Development/Build/Output/How to Install the MOM Solution - Mobile App Installation/How to Install the MOM Solution Mobile App Installation.mp4
+
+SVN path of SB:
+
+http://192.168.2.4/content2017/Philips Healthcare/MOM/03_Project_Development/Construction/ID/Storyboards/Philips_MOM_How_to_Install_the_MOM_Solution_Mobile_App_Installation.pptx
+
+SVN path of review doc:
+
+http://192.168.2.4/content2017/Philips Healthcare/MOM/03_Project_Development/Construction/QC_Reports/External/Gold/Client Edit Sheet for How to Install MOM Solution – Mobile App Installation.docx

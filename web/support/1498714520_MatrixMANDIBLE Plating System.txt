@@ -1,0 +1,15 @@
+
+
+Course Path:
+http://192.168.2.4/content2016/DePuy Synthes/03_Project_Development/Construction/Media_Development/Build/CMF/MatrixMANDIBLE Plating System/MatrixMANDIBLE Plating System
+
+Storyboard Path:
+http://192.168.2.4/content2016/DePuy Synthes/03_Project_Development/Construction/ID/Storyboards/CMF/MatrixMANDIBLE/MatrixMANDIBLE Plating System.pptx
+
+Audio Script path:
+http://192.168.2.4/content2016/DePuy Synthes/03_Project_Development/Construction/ID/Storyboards/CMF/MatrixMANDIBLE/MatrixMANDIBLE Plating System_AS.docx
+
+
+Release note 
+
+Audio need to be Rerecord for page 3 and 10. This is on hold.

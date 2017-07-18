@@ -1,0 +1,9 @@
+Course Path:
+http://192.168.2.4/content2016/DePuy Synthes/03_Project_Development/Construction/Media_Development/Build/Mitek/DeltaXTEND/DELTA XTEND™
+
+
+Client Feedback sheet Path:
+http://192.168.2.4/content2016/DePuy Synthes/03_Project_Development/Construction/QC_Reports/External/Alpha/Delta Xtend
+
+Storyboard Path:
+http://192.168.2.4/content2016/DePuy Synthes/03_Project_Development/Construction/ID/Storyboards/Mitek/DELTA XTEND/DELTA XTEND.pptx

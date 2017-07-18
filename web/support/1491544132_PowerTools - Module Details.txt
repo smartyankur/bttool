@@ -1,0 +1,33 @@
+
+Build Path -
+
+Coupling -
+
+http://192.168.2.4/content2016/DPS_Power Tools/03_Project_Development/Construction/Media_Development/Build/Power Tools Coupling/Output
+
+
+Cutting Tools -
+
+http://192.168.2.4/content2016/DPS_Power Tools/03_Project_Development/Construction/Media_Development/Build/Power Tools Cutting Tools/Output
+
+
+Power Source -
+
+http://192.168.2.4/content2016/DPS_Power Tools/03_Project_Development/Construction/Media_Development/Build/Power Tools Battery Technology & Air Supply/Output/Power Tools Basic Training Battery Technology & Air Supply - Storyline output
+
+
+Storyboard -
+
+
+Coupling -
+
+http://192.168.2.4/content2016/DPS_Power Tools/03_Project_Development/Construction/ID/Storyboards/Power Tools Coupling_SB.ppt
+
+
+Cutting Tools -
+
+http://192.168.2.4/content2016/DPS_Power Tools/03_Project_Development/Construction/ID/Storyboards/Power Tools_Cutting Tools_SB.ppt
+
+Power Source -
+
+http://192.168.2.4/content2016/DPS_Power Tools/03_Project_Development/Construction/ID/Storyboards/Power Tools Basic Training Power Source.ppt

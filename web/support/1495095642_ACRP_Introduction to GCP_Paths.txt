@@ -1,0 +1,10 @@
+COURSE PATH ON SVN: hhttp://central.gc-solutions.net/content3/ACRP/7 Certification Courses/03_Project_Development/Construction/Media_Development/Build/Introduction to Good Clinical Practice
+
+SB PATH - http://central.gc-solutions.net/content3/ACRP/7 Certification Courses/03_Project_Development/Construction/ID/Storyboards/Introduction to GCP/ACRP_Introduction to Good Clinical Practice.pptx
+
+PSD - http://central.gc-solutions.net/content3/ACRP/7 Certification Courses/03_Project_Development/Construction/Project_Specifications/PSD/ACRP_Certification_Courses_PSD.doc
+
+Client Fixes Log sheet - http://central.gc-solutions.net/content3/ACRP/7 Certification Courses/03_Project_Development/Construction/QC_Reports/External/Alpha/IntroductionTo Good Clinical Practice/ACRP_Introduction to GCP_Alpha_Client Fixes.xlsx
+
+
+
