@@ -1,0 +1,3 @@
+mysqldump: Got error: 1049: Unknown database '%f' when selecting the database
+mysqldump: Got error: 1049: Unknown database '%f' when selecting the database
+mysqldump: Got errno 28 on write
