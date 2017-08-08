@@ -37,7 +37,7 @@ try {
 
 $cnt = count($tresults);
 if($cnt > 0){
-	$firstArray = array("open"=> 0, "closed"=> 0, "hold"=> 0, "reopened"=> 0, "ok as is"=> 0, "Editorial"=>0, "Media"=>0, "Functionality"=>0);
+	$firstArray = array("open"=> 0, "closed"=> 0, "fixed"=> 0, "hold"=> 0, "reopened"=> 0, "ok as is"=> 0, "Editorial"=>0, "Media"=>0, "Functionality"=>0);
 $tmp = array();
 foreach($tresults as $val){
 	$tmp[] = $val;
@@ -193,6 +193,7 @@ foreach($results as $row)
   <option value="select" selected>Select</option>
   <option value="open">Open</option>
   <option value="closed">Closed</option>
+  <option value="fixed">Fixed</option>
   <option value="hold">Hold</option>
   <option value="reopened">Reopened</option>
   <option value="ok as is">Ok As Is</option>

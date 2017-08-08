@@ -28,19 +28,21 @@ while($row = mysql_fetch_assoc($retval)){
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-  $reviewer = $_POST["reviewer"];
-  $project  = $_POST["project"];
+  $reviewer = mysql_real_escape_string($_POST["reviewer"]);
+  $project  = mysql_real_escape_string($_POST["project"]);
   $project_id  = $_POST["pro_id"];
-  $phase    = $_POST["phase"];
-  $reviewee = $_POST["reviewee"];
-  $bcat     = $_POST["bcat"];
-  $severity     = $_POST["severity"];
+  $phase    = mysql_real_escape_string($_POST["phase"]);
+  $module = mysql_real_escape_string($_POST['module']);
+  $screen = mysql_real_escape_string($_POST['screen']);
+  $reviewee = mysql_real_escape_string($_POST["reviewee"]);
+  $bcat     = mysql_real_escape_string($_POST["bcat"]);
+  $severity = mysql_real_escape_string($_POST["severity"]);
   $subcat   = $_POST["subcat"];
   $a        = mysql_real_escape_string($_POST["bdr"]);
   $b        = mysql_real_escape_string($_POST["container"]);
   $cdate    = time();
   
-  $query = "INSERT INTO blobt(reviewer, project_id, project, phase, reviewee, cat, subcat, desc1, grab, creationDate,comment, severity) values('".$reviewer."', '".$project_id."', '".$project."', '".$phase."', '".$reviewee."', '".$bcat."', '".$subcat."', '".$a."', '".$b."', '".$cdate."','', '".$severity."')";
+  $query = "INSERT INTO blobt(reviewer, project_id, project, phase, reviewee, cat, subcat, desc1, grab, creationDate,comment, severity, module, screen) values('".$reviewer."', '".$project_id."', '".$project."', '".$phase."', '".$reviewee."', '".$bcat."', '".$subcat."', '".$a."', '".$b."', '".$cdate."','', '".$severity."', '".$module."', '".$screen."')";
 
   if(mysql_query($query)){
 		$message="Record has been created for project".$project." and "."issue : ".$a.", please click on the Show All Fileinfo to read the entry.";
@@ -107,6 +109,11 @@ function test(){
   var phase = trim(document.getElementById('phase').value);
   if(phase=="Select"){alert("Please select phase"); return false;};
   
+  var module = trim(document.getElementById('module').value);
+  if(module==""){ alert("Module Name should be identified"); return false;}
+  var screen = trim(document.getElementById('screen').value);
+  if(screen==""){ alert("Screen Name should be identified"); return false;}
+  
   var reviewee = trim(document.getElementById('reviewee').value);
   if(reviewee=="Select"){alert("Please select reviewee"); return false;}; 
   
@@ -121,7 +128,7 @@ function test(){
   
   var bdr = trim(document.getElementById('bdr').value);
   if(bdr==""){alert("Please enetr the bug description"); return false;};
-  
+ 
   var nt = document.getElementById('grab').innerHTML;
   document.forms["tstest"].container.value += nt;
   document.forms["tstest"].submit();
@@ -489,7 +496,14 @@ function getinfo(){
 	<span id="phase_hint"></span>
   </td>
 </tr>
-
+<tr>
+<td>Module Name</td>
+<td><input type=text size=42 name="module" id="module" value="<?php echo $module;?>"></td>
+</tr>
+<tr>
+<td>Screen Details</td>
+<td><input type=text size=42 name="screen" id="screen" value="<?php echo $screen;?>"></td>
+</tr>
 <tr>
 <td>Reviewee</td>
 <td>

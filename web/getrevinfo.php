@@ -101,7 +101,7 @@ $lower_limit = ($pagenum - 1) * $page_limit;
 
 <table width='100%' border='1' cellspacing='0' cellpadding='0'>
 
-<tr><th>ID</th><!--<th>Project</th>--><th>Phase</th><th>Reviewee</th><th>Cat</th><th>SubCat</th><th>Bug</th><th>Image</th><th>Reviewer</th><th>Status</th><th>Last Comment</th><th>Select Status</th><th>Comment</th><th>Click-Change</th><th>Change Reviewee</th><th>Creation Date</th></tr>
+<tr><th>ID</th><!--<th>Project</th>--><th>Phase</th><th>Module Name</th><th>Screen Details</th><th>Reviewee</th><th>Cat</th><th>SubCat</th><th>Bug</th><th>Image</th><th>Reviewer</th><th>Status</th><th>Last Comment</th><th>Select Status</th><th>Comment</th><th>Click-Change</th><th>Change Reviewee</th><th>Creation Date</th></tr>
 <?php
 if($cnt > 0) {
 foreach($results as $row)
@@ -110,6 +110,8 @@ foreach($results as $row)
   echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$row['id']."</div>"."</td>";
   //echo "<td>"."<div align=center style="."width:150;height:100;overflow:auto>".$row['project']."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$row['phase']."</div>"."</td>";
+  echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$row['module']."</div>"."</td>";
+  echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$row['screen']."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$row['reviewee']."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$row['cat']."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$row['subcat']."</div>"."</td>";

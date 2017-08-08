@@ -38,12 +38,12 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
   $courseName     = mysql_real_escape_string($_POST["courseName"]);
   $iterationRound = $_POST["iterationRound"];
   $learningHours  = $_POST["learningHours"];
-  $author         = $_POST["author"];
-  $reviewer       = $_POST["reviewer"];
+  $author         = mysql_real_escape_string($_POST["author"]);
+  $reviewer       = mysql_real_escape_string($_POST["reviewer"]);
   $l1_issues      = $_POST["l1_issues"];
   $l2_issues      = $_POST["l2_issues"];
   $l3_issues      = $_POST["l3_issues"];
-  $comment        = $_POST["comment"];
+  $comment        = mysql_real_escape_string($_POST["comment"]);
   $sbpath         = mysql_real_escape_string($_POST["sbpath"]);
   $sb_review_submit_date = date('d-m-Y H:i:s'); 
 

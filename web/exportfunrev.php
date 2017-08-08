@@ -34,6 +34,8 @@ $str = "<table width='50%' border='1' cellspacing='0' cellpadding='0'>
   <th>Id</th>
   <th>Project</th>
   <th>Phase</th>
+  <th>Module Name</th>
+  <th>Screen Details</th>
   <th>Reviewee</th>
   <th>Cat</th>
   <th>SubCat</th>
@@ -50,7 +52,9 @@ while($row = mysql_fetch_array($result))
   $str.= "<tr>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['id'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['project'])."</div>"."</td>";
-  $str.`= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['phase'])."</div>"."</td>";
+  $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['phase'])."</div>"."</td>";
+  $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['module'])."</div>"."</td>";
+  $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['screen'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['reviewee'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['cat'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['subcat'])."</div>"."</td>";

@@ -61,7 +61,6 @@
 		$successMessage = "";
 		$b="PM :".$pm."| ID FM :".$fmone."|  Media FM :".$fmtwo."|  Scripting FM :".$fmthree."|  QC FM :".$fmfour;
 		//$b=mysql_real_escape_string($_POST["fmHint"]);//fm details
-		//echo '<pre>'; print_r($_POST); die;
 		$f=mysql_real_escape_string($_POST["phase"]);//topic
 		$g=mysql_real_escape_string($_POST["module"]);//screen
 		$h=mysql_real_escape_string($_POST["topic"]);//qc
