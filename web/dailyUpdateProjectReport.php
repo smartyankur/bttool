@@ -7,7 +7,7 @@ class DailyUpdateProjectReport {
 	
 	function prepareData($con) {
 		
-		$cur_date_timestamp = strtotime(date('Y-m-d', strtotime("-1 Days")));
+		$cur_date_timestamp = strtotime(date('Y-m-d', strtotime("-500 Days")));
 		$sub_sql = "select project_id from tbl_functional_review where UNIX_TIMESTAMP(statusupdate) >= '".$cur_date_timestamp."' group by project_id UNION select project_id from qcuploadinfo where UNIX_TIMESTAMP(whenchangedstatus) >= '".$cur_date_timestamp."' group by project_id";
 		try {
 			$retval = mysql_query($sub_sql, $con);
@@ -76,6 +76,7 @@ class DailyUpdateProjectReport {
 					} else {
 						$final[$key1][$version]['course_selected'] += 1;
 					}
+					$final[$key1][$version]['total_closed_suggestion_bug'] = 0;
 					$final[$key1][$version]['lh'] = $final[$key1]['screen_count'][$version]/40;
 					$final[$key1][$version]['client'] = $val1[0]['clientspoc'];				
 					$final[$key1][$version]['project'] = $val1[0]['projectname'];			
@@ -175,6 +176,7 @@ class DailyUpdateProjectReport {
 					$final[$key1][$version]['total_editorial_bug_closed'] = $final[$key1][$version]['L1']['eclosed'] + $final[$key1][$version]['L2']['eclosed'] + $final[$key1][$version]['L3']['eclosed'];
 					$final[$key1][$version]['total_editorial_dd'] = $final[$key1][$version]['total_editorial_bug'] / $final[$key1][$version]['lh'];
 					$final[$key1][$version]['bug_density'] = $final[$key1][$version]['total_bug_closed']/$final[$key1][$version]['lh'];
+					$final[$key1][$version]['number_of_qc_rejection'] =  isset($final[$key1][$version]['course_rejected']) ? $final[$key1][$version]['course_rejected'] : 0;
 				}	
 			}
 			//echo '<pre>'; print_r($final); die;
