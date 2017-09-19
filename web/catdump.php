@@ -1,6 +1,7 @@
 <?php
     include("config.php");
 	$cat=$_GET['q'];
+	$subcat = $_GET['subcat'];
     
     $query = "select subcat from catmaster where cat='$cat'";
     
@@ -13,20 +14,19 @@
 		}
 
     echo "<select name=\"subcat\" id=\"subcat\">"; 
-    echo "<option size =30 selected>Select</option>";
+    echo "<option size=30>Select</option>";
     
 	if(mysql_num_rows($retval)) 
     { 
-    while($row = mysql_fetch_assoc($retval)) 
-    {
-	 if(strlen($row[subcat])<>0)
-		{		 
-         echo "<option>$row[subcat]</option>"; 
-        }
-	} 
+		while($row = mysql_fetch_assoc($retval)) 
+		{
+			if(strlen($row[subcat])<>0)
+			{?>		 
+			 <option <?php echo $subcat == $row['subcat'] ? 'selected' : '' ?>><?php echo $row['subcat'] ?></option> 
+			<?php } 
+		} 
  
-    } 
-    else {
-    echo "<option>No Names Present</option>";  
+    } else {
+		echo "<option>No Names Present</option>";  
     }
 ?> 

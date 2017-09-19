@@ -29,6 +29,7 @@ if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
 		$links['ncdreport.php'] = "For PMs - Find NC Density Project-Wise";
 		$links['mastercom.php'] = "For PMs - Master Compliance Report";
 		$links['sb_review.php'] = "SB Review";
+		$links['functional_report.php'] = "Functional Review Data";
 		if($dept=="LMS")
 		{
 			$links['projection.php'] = "Create, Send QC Projections";
@@ -52,6 +53,7 @@ if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
 			$links['sb_review.php'] = "SB Review";
 		}
 		$links['project_report.php'] = "Project Report";
+		$links['functional_report.php'] = "Functional Review Data";
 	}
 	if($role=="QC" || $role=="QC FM" || $role=="IQ"){
 		if($dept=="Content"){
@@ -66,6 +68,7 @@ if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
 		$links['productlevelbugs.php'] = "Product Level Bugs";
 		$links['sb_review.php'] = "SB Review";
 		$links['project_report.php'] = "Project Report";
+		$links['functional_report.php'] = "Functional Review Data";
 	}
 	if($role == 'DEV' || $role == "IQ" || $role == "Tech" || $role == "Media" || $role == "ID" || $role == "ID, Media" || $role == "ID, Tech" || $role == "Tech, Media" || $role == "Tech, ID" || $role == "Media, ID" || $role == "Media, Tech"){
 		if($dept=="Content"){

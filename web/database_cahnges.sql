@@ -77,3 +77,6 @@ ALTER TABLE `tbl_functional_review` ADD `developers_media` TEXT NULL AFTER `deve
 ------------------------------------------------------11/1/2017---------------------------------------------------------------------------------------------
 ALTER TABLE `tbl_functional_review` ADD `slidecount` INT(6) NOT NULL AFTER `pagecount`;
 
+-------------------------------------------------------17/9/2017---------------------------------------------------------------------------------------------
+ALTER TABLE `blobt` ADD INDEX(`creationDate`);
+

@@ -38,6 +38,19 @@ function validateForm()
  var k=trim(document.getElementById('devten').value);
  var l=trim(document.getElementById('develeven').value);
  var m=trim(document.getElementById('devtwelve').value);
+ var n=trim(document.getElementById('devthirteen').value);
+ var o=trim(document.getElementById('devfourteen').value);
+ var p=trim(document.getElementById('devfifteen').value);
+ var q=trim(document.getElementById('devsixteen').value);
+ var r=trim(document.getElementById('devseventeen').value);
+ var s=trim(document.getElementById('deveighteen').value);
+ var t=trim(document.getElementById('devninteen').value);
+ var u=trim(document.getElementById('devtwenty').value);
+ var v=trim(document.getElementById('devtwentyone').value);
+ var w=trim(document.getElementById('devtwentytwo').value);
+ var x=trim(document.getElementById('devtwentythree').value);
+ var y=trim(document.getElementById('devtwentyfour').value);
+ var z=trim(document.getElementById('devtwentyfive').value);
 
 if (a=="Select")
   {
@@ -137,6 +150,19 @@ function getData(){
 			$('#devten').val(data.dev10);
 			$('#develeven').val(data.dev11);
 			$('#devtwelve').val(data.dev12);
+			$('#devthirteen').val(data.dev13);
+			$('#devfourteen').val(data.dev14);
+			$('#devfifteen').val(data.dev15);
+			$('#devsisteen').val(data.dev16);
+			$('#devseventeen').val(data.dev17);
+			$('#deveighteen').val(data.dev18);
+			$('#devninteen').val(data.dev19);
+			$('#devtwenty').val(data.dev20);
+			$('#devtwentyone').val(data.dev21);
+			$('#devtwentytwo').val(data.dev22);
+			$('#devtwentythree').val(data.dev23);
+			$('#devtwentyfour').val(data.dev24);
+			$('#devtwentyfive').val(data.dev25);
 		}, "json");
 }
 </script>
@@ -523,15 +549,6 @@ function getData(){
 <TD>Dev Twelve</TD>
 <TD>
     <?php
-	/*$query = "select DISTINCT username from login order by username";
-    $retval = mysql_query( $query, $con );
-    $count = mysql_num_rows($retval);
-	
-	if($count==0)
-		{
-			die('Users Not Found; Contact SEPG');
-		}*/
-
     echo "<select name=\"devtwelve\" id=\"devtwelve\">"; 
     echo "<option size =30 selected>Select</option>";
     echo "<option size =30>NA</option>";
@@ -549,6 +566,266 @@ function getData(){
     } 
     ?>
     </TD>
+</TR>
+<TR>
+<TD>Dev Thirteen</TD>
+<TD>
+<?php
+    echo "<select name=\"devthirteen\" id=\"devthirteen\">"; 
+    echo "<option size =30 selected>Select</option>";
+    echo "<option size =30>NA</option>";
+	if(count($tmp) > 0) 
+	{ 
+		foreach($tmp as $val) 
+		{ 
+			if($val == '') continue;
+			echo "<option>$val</option>"; 
+		} 
+	} else {
+		echo "<option>No Names Present</option>";  
+	} 
+?>
+</TD>
+</TR>
+<TR>
+<TD>Dev Fourteen</TD>
+<TD>
+<?php
+    echo "<select name=\"devfourteen\" id=\"devfourteen\">"; 
+    echo "<option size =30 selected>Select</option>";
+    echo "<option size =30>NA</option>";
+	if(count($tmp) > 0) 
+	{ 
+		foreach($tmp as $val) 
+		{ 
+			if($val == '') continue;
+			echo "<option>$val</option>"; 
+		} 
+	} else {
+		echo "<option>No Names Present</option>";  
+	} 
+?>
+</TD>
+</TR>
+<TR>
+<TD>Dev Fifteen</TD>
+<TD>
+<?php
+    echo "<select name=\"devfiveteen\" id=\"devfiveteen\">"; 
+    echo "<option size =30 selected>Select</option>";
+    echo "<option size =30>NA</option>";
+	if(count($tmp) > 0) 
+	{ 
+		foreach($tmp as $val) 
+		{ 
+			if($val == '') continue;
+			echo "<option>$val</option>"; 
+		} 
+	} else {
+		echo "<option>No Names Present</option>";  
+	} 
+?>
+</TD>
+</TR>
+<TR>
+<TD>Dev Sixteen</TD>
+<TD>
+<?php
+    echo "<select name=\"devsixteen\" id=\"devsixteen\">"; 
+    echo "<option size =30 selected>Select</option>";
+    echo "<option size =30>NA</option>";
+	if(count($tmp) > 0) 
+	{ 
+		foreach($tmp as $val) 
+		{ 
+			if($val == '') continue;
+			echo "<option>$val</option>"; 
+		} 
+	} else {
+		echo "<option>No Names Present</option>";  
+	} 
+?>
+</TD>
+</TR>
+<TR>
+<TD>Dev Seventeen</TD>
+<TD>
+<?php
+    echo "<select name=\"devseventeen\" id=\"devseventeen\">"; 
+    echo "<option size =30 selected>Select</option>";
+    echo "<option size =30>NA</option>";
+	if(count($tmp) > 0) 
+	{ 
+		foreach($tmp as $val) 
+		{ 
+			if($val == '') continue;
+			echo "<option>$val</option>"; 
+		} 
+	} else {
+		echo "<option>No Names Present</option>";  
+	} 
+?>
+</TD>
+</TR>
+<TR>
+<TD>Dev Eightteen</TD>
+<TD>
+<?php
+    echo "<select name=\"deveighteen\" id=\"deveighteen\">"; 
+    echo "<option size =30 selected>Select</option>";
+    echo "<option size =30>NA</option>";
+	if(count($tmp) > 0) 
+	{ 
+		foreach($tmp as $val) 
+		{ 
+			if($val == '') continue;
+			echo "<option>$val</option>"; 
+		} 
+	} else {
+		echo "<option>No Names Present</option>";  
+	} 
+?>
+</TD>
+</TR>
+<TR>
+<TD>Dev Ninteen</TD>
+<TD>
+<?php
+    echo "<select name=\"devninteen\" id=\"devninteen\">"; 
+    echo "<option size =30 selected>Select</option>";
+    echo "<option size =30>NA</option>";
+	if(count($tmp) > 0) 
+	{ 
+		foreach($tmp as $val) 
+		{ 
+			if($val == '') continue;
+			echo "<option>$val</option>"; 
+		} 
+	} else {
+		echo "<option>No Names Present</option>";  
+	} 
+?>
+</TD>
+</TR>
+<TR>
+<TD>Dev Twenty</TD>
+<TD>
+<?php
+    echo "<select name=\"devtwenty\" id=\"devtwenty\">"; 
+    echo "<option size =30 selected>Select</option>";
+    echo "<option size =30>NA</option>";
+	if(count($tmp) > 0) 
+	{ 
+		foreach($tmp as $val) 
+		{ 
+			if($val == '') continue;
+			echo "<option>$val</option>"; 
+		} 
+	} else {
+		echo "<option>No Names Present</option>";  
+	} 
+?>
+</TD>
+</TR>
+<TR>
+<TD>Dev TwentyOne</TD>
+<TD>
+<?php
+    echo "<select name=\"devtwentyone\" id=\"devtwentyone\">"; 
+    echo "<option size =30 selected>Select</option>";
+    echo "<option size =30>NA</option>";
+	if(count($tmp) > 0) 
+	{ 
+		foreach($tmp as $val) 
+		{ 
+			if($val == '') continue;
+			echo "<option>$val</option>"; 
+		} 
+	} else {
+		echo "<option>No Names Present</option>";  
+	} 
+?>
+</TD>
+</TR>
+<TR>
+<TD>Dev Twentytwo</TD>
+<TD>
+<?php
+    echo "<select name=\"devtwentytwo\" id=\"devtwentytwo\">"; 
+    echo "<option size=30 selected>Select</option>";
+    echo "<option size =30>NA</option>";
+	if(count($tmp) > 0) 
+	{ 
+		foreach($tmp as $val) 
+		{ 
+			if($val == '') continue;
+			echo "<option>$val</option>"; 
+		} 
+	} else {
+		echo "<option>No Names Present</option>";  
+	} 
+?>
+</TD>
+</TR>
+<TR>
+<TD>Dev Twentythree</TD>
+<TD>
+<?php
+    echo "<select name=\"devtwentythree\" id=\"devtwentythree\">"; 
+    echo "<option size =30 selected>Select</option>";
+    echo "<option size =30>NA</option>";
+	if(count($tmp) > 0) 
+	{ 
+		foreach($tmp as $val) 
+		{ 
+			if($val == '') continue;
+			echo "<option>$val</option>"; 
+		} 
+	} else {
+		echo "<option>No Names Present</option>";  
+	} 
+?>
+</TD>
+</TR>
+<TR>
+<TD>Dev Twentyfour</TD>
+<TD>
+<?php
+    echo "<select name=\"devtwentyfour\" id=\"devtwentyfour\">"; 
+    echo "<option size =30 selected>Select</option>";
+    echo "<option size =30>NA</option>";
+	if(count($tmp) > 0) 
+	{ 
+		foreach($tmp as $val) 
+		{ 
+			if($val == '') continue;
+			echo "<option>$val</option>"; 
+		} 
+	} else {
+		echo "<option>No Names Present</option>";  
+	} 
+?>
+</TD>
+</TR>
+<TR>
+<TD>Dev Twentyfive</TD>
+<TD>
+<?php
+    echo "<select name=\"devtwentyfive\" id=\"devtwentyfive\">"; 
+    echo "<option size =30 selected>Select</option>";
+    echo "<option size =30>NA</option>";
+	if(count($tmp) > 0) 
+	{ 
+		foreach($tmp as $val) 
+		{ 
+			if($val == '') continue;
+			echo "<option>$val</option>"; 
+		} 
+	} else {
+		echo "<option>No Names Present</option>";  
+	} 
+?>
+</TD>
 </TR>
 </TABLE>
 <input type="submit"/>

@@ -17,7 +17,7 @@ if(!empty($project)) {
 		break;
 
 		case "developers":
-			$result = mysql_query("SELECT dev1, dev2, dev3, dev4, dev5, dev6, dev7, dev8, dev9, dev10, dev11, dev12 FROM projectmaster where pindatabaseid='".$project_id."'");
+			$result = mysql_query("SELECT dev1, dev2, dev3, dev4, dev5, dev6, dev7, dev8, dev9, dev10, dev11, dev12, dev13, dev14, dev15, dev16, dev17, dev18, dev19, dev20, dev21, dev22, dev23, dev24, dev25 FROM projectmaster where pindatabaseid='".$project_id."'");
 			if(mysql_num_rows($result) == 1) {
 				echo $obj_utility->php_to_js(mysql_fetch_assoc($result));
 			}

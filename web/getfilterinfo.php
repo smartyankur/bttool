@@ -1,12 +1,23 @@
-<?php $pro_id = $_REQUEST['pro_id'];	  
+<?php $pro_id = $_REQUEST['pro_id'];
+	  $fil_type = isset($_REQUEST['fil']) ? $_REQUEST['fil'] : '';
 	  include("config.php");
 ?>
 <script src="js/jquery.js"></script>
 
 
 	
-	
-<select name="filter_name" id="filter_name" style="" onChange="toggleFilter(this);">
+<?php if($fil_type == 'dev' ) { ?>	
+		<select name="filter_name" id="filter_name" style="" onChange="toggleFilter(this);">
+			<option value="">Select Filter</option>
+			<option value="filter_bcat">Bug Category</option>
+			<option value="filter_severity">Severity</option>
+			<option value="filter_bugstatus">Bug Status</option>
+			<option value="filter_module">Module</option>
+			<option value="filter_qc">QC</option>
+			<option value="filter_all">All</option>
+		</select>
+	<?php } else { ?>
+		<select name="filter_name" id="filter_name" style="" onChange="toggleFilter(this);">
 			<option value="">Select Filter</option>
 			<option value="filter_bcat">Bug Category</option>
 			<option value="filter_severity">Severity</option>
@@ -16,6 +27,7 @@
 			<option value="filter_qc">QC</option>
 			<option value="filter_all">All</option>
 		</select>
+	<?php } ?>
 	
 		<span id="filter_values" style="display:inline-block;">
 			

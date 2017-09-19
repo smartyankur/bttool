@@ -27,10 +27,12 @@ while($row = mysql_fetch_assoc($retval)){
   $username=$row['username'];
 }
 
+$id = !empty($_GET['id']) ? $_GET['id'] : '';
+
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
   $reviewer = mysql_real_escape_string($_POST["reviewer"]);
   $project  = mysql_real_escape_string($_POST["project"]);
-  $project_id  = $_POST["pro_id"];
+  $project_id = $_POST["pro_id"];
   $phase    = mysql_real_escape_string($_POST["phase"]);
   $module = mysql_real_escape_string($_POST['module']);
   $screen = mysql_real_escape_string($_POST['screen']);
@@ -41,14 +43,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
   $a        = mysql_real_escape_string($_POST["bdr"]);
   $b        = mysql_real_escape_string($_POST["container"]);
   $cdate    = time();
-  
-  $query = "INSERT INTO blobt(reviewer, project_id, project, phase, reviewee, cat, subcat, desc1, grab, creationDate,comment, severity, module, screen) values('".$reviewer."', '".$project_id."', '".$project."', '".$phase."', '".$reviewee."', '".$bcat."', '".$subcat."', '".$a."', '".$b."', '".$cdate."','', '".$severity."', '".$module."', '".$screen."')";
-
+  $fr_id = isset($_POST['id']) ? $_POST['id'] : '';
+  if($fr_id) {
+		$query = "UPDATE blobt set reviewer='".$reviewer."', project_id='".$project_id."', project='".$project."', phase='".$phase."', cat='".$bcat."', subcat='".$subcat."', desc1='".$a."', grab='".$b."', severity='".$severity."', module='".$module."', screen='".$screen."' where id='".$fr_id."'";
+  } else {
+		$query = "INSERT INTO blobt(reviewer, project_id, project, phase, reviewee, cat, subcat, desc1, grab, creationDate, comment, severity, module, screen) values('".$reviewer."', '".$project_id."', '".$project."', '".$phase."', '".$reviewee."', '".$bcat."', '".$subcat."', '".$a."', '".$b."', '".$cdate."','', '".$severity."', '".$module."', '".$screen."')";
+  }
   if(mysql_query($query)){
-		$message="Record has been created for project".$project." and "."issue : ".$a.", please click on the Show All Fileinfo to read the entry.";
+		if($fr_id) {
+			$message="Record has been edited for project ".$project." and "."issue : ".$a.", please click on the Show All Fileinfo to read the entry.";
+		} else {
+			$message="Record has been created for project ".$project." and "."issue : ".$a.", please click on the Show All Fileinfo to read the entry.";
+		}
 		header ("Location: funrev.php?proj=".urlencode($project)."&phase=".urlencode($phase)."&reviewee=".urlencode($reviewee)."&msg=".urlencode($message));
-  }else{
-    die(mysql_error());
+  } else {
+		die(mysql_error());
   }	
 }
 ?>
@@ -100,6 +109,220 @@ $(document).ready(function(){
 	$('.loader').hide();
 });
 </script>
+
+</head>
+
+<body>
+<?php 
+	if($id) {
+		$query = "select * from blobt where id = ".$id;
+		$retval = mysql_query($query, $con);
+		$row = mysql_fetch_assoc($retval); 
+	}
+?>
+<form name="tstest" action="./funrev.php" method="post" enctype="multipart/form-data">
+<table>
+
+<tr>
+	<td>Project Name</td>
+	<td>
+    <?php
+    $proj = $row['project'] ? $row['project'] : $_REQUEST["proj"];
+	$phase = $row['phase'] ? $row['phase'] : $_REQUEST["phase"];
+	$reviewee = $row['reviewee'] ? $row['reviewee'] : $_REQUEST["reviewee"];
+	$description = $row['desc1'] ? $row['desc1'] : $_REQUEST["bdr"];
+    $module = $row['module'] ? $row['module'] : $_REQUEST["module"];
+	$screen = $row['screen'] ? $row['screen'] : $_REQUEST["screen"];
+	$cat = $row['cat'] ? $row['cat'] : $_REQUEST["bcat"];
+	$subcat = $row['subcat'] ? $row['subcat'] : $_REQUEST["subcat"];
+	$severity = $row['severity'] ? $row['severity'] : $_REQUEST["severity"];
+	$grab = $row['grab'] ? $row['grab'] : $_REQUEST['container'];
+	$message = $_REQUEST['msg'];
+	$query = "select DISTINCT projectname, pindatabaseid from projectmaster where projectmanager= '$username' or accountmanager= '$username' or buhead='$username' or practicehead='$username' or sepghead='$username' or sepglead='$username' or md='$username' or ceo = '$username' or fmfour='$username' or fmthree='$username' or fmtwo='$username' or fmone='$username' or lead='$username' or tester1='$username' or tester2='$username' or tester3='$username' or tester4='$username' or tester5='$username' or tester6='$username' or tester7='$username' or tester8='$username'or dev1='$username' or dev2='$username' or dev3='$username' or dev4='$username' or dev5='$username' or dev6='$username' or dev7='$username' or dev8='$username' or dev9='$username' or dev10='$username' or dev11='$username' or dev12='$username' order by projectname ASC";
+    
+	$retval = mysql_query( $query, $con );
+    $count = mysql_num_rows($retval);
+	//$m=$_REQUEST["project"];
+	
+	if($count==0)
+		{
+			die('Data Not Found');
+		}
+
+    echo "<select name=\"project\" id=\"project\" onchange=\"getinfo();\">"; 
+    echo "<option size =30 selected>Select</option>";
+    if(mysql_num_rows($retval)) 
+    { 
+		while($row = mysql_fetch_assoc($retval)) 
+		{
+		 if(strlen($row['projectname'])<>0)
+			{
+			 ?>
+			 <option <?php if($proj==$row['projectname'])echo " selected";?> ref="<?php echo $row['pindatabaseid'] ?>" ><?php echo $row['projectname'];?></option> 
+			 <?php 
+			}
+		} 
+ 
+    } 
+    else {
+		echo "<option>No Names Present</option>";  
+    } 
+    ?>
+    </td>
+	<input type="hidden" name="pro_id" id="pro_id_hidden" value="" />
+	<input type="hidden" name="id" value="<?php echo $id?>" />
+	
+</tr>
+
+<tr>
+  <td>Phase</td>
+  <td>
+    <select name="phase" size="1" id="phase">
+      <option value="Select" selected>Select</option>
+      <option value="alpha" <?php if($phase=="alpha")echo " selected";?>>Alpha</option>
+      <option value="beta" <?php if($phase=="beta")echo " selected";?>>Beta</option>
+      <option value="gold" <?php if($phase=="gold")echo " selected";?>>Gold</option>
+      <option value="POC" <?php if($phase=="POC")echo " selected";?>>POC</option>
+    </select> &nbsp; &nbsp;
+	<span id="phase_hint"></span>
+  </td>
+</tr>
+<tr>
+<td>Module Name</td>
+<td><input type=text size=42 name="module" id="module" value="<?php echo $module;?>"></td>
+</tr>
+<tr>
+<td>Screen Details</td>
+<td><input type=text size=42 name="screen" id="screen" value="<?php echo $screen;?>"></td>
+</tr>
+<tr>
+<td>Reviewee</td>
+<td>
+    <?php
+	$query = "select DISTINCT username from login where role REGEXP 'ID|Media|Tech' AND dept='Content' order by username";
+    $retval = mysql_query( $query, $con );
+    $count = mysql_num_rows($retval);
+	
+	if($count==0)
+		{
+			die('Users Not Found; Contact SEPG');
+		}
+
+    echo "<select name=\"reviewee\" id=\"reviewee\">"; 
+    echo "<option size =30 selected value=\"Select\">Select</option>";
+    
+	if(mysql_num_rows($retval)) 
+    { 
+    while($row = mysql_fetch_assoc($retval)) 
+    { 
+     
+	 if(strlen($row[username])<>0)
+		{
+		 ?>
+         <option<?php if($reviewee==$row[username])echo " selected";?>><?php echo $row[username];?></option> 
+         <?php 
+		}
+    } 
+    } 
+    else 
+	{
+     echo "<option>No Names Present</option>";  
+    } 
+    ?>
+    </td>
+</tr>
+
+<tr>
+<td>Bug Category</td>
+<td>
+  <select name="bcat" size="1" id="bcat" onchange="filloption(this.value)">
+    <option value="Select" selected>Select</option>
+    <option value="Instructional Design" <?php echo $cat == "Instructional Design" ? "selected": "" ?>>Instructional Design</option>
+    <option value="Media" <?php echo $cat == "Media" ? "selected": "" ?>>Media</option>
+    <option value="Functionality" <?php echo $cat == "Functionality" ? "selected": "" ?>>Functionality</option>
+  </select>
+</td>
+</tr>
+
+<tr>
+  <td>Bug Subcategory</td>
+  <td><div name="OpHint" id="OpHint"></div></td>
+</tr>
+
+<tr>
+<td>Severity</td>
+<td>
+	<select name="severity" size="1" id="severity">
+		<option value="select">Select</option>
+		<option value="High" <?php echo $severity == "High" ? "selected": "" ?>>High</option>
+		<option value="Medium" <?php echo $severity == "Medium" ? "selected": "" ?>>Medium</option>
+		<option value="Low" <?php echo $severity == "Low" ? "selected": "" ?>>Low</option>
+	</select>
+</td>
+</tr>
+
+<tr>
+  <td>Bug Description</td>
+  <td><textarea name="bdr" rows="4" cols="30" id="bdr"><?php echo $description ? stripslashes($description) : '';?></textarea></td>
+</tr>
+
+<textarea class="hide" name="container" rows="2" cols="20"></textarea>
+
+<tr>
+  <td>Screen Grab</td>
+  <td><div class="ex" contenteditable="true" id="grab" name="grab"><?php echo $grab ? $grab : "Paste Image Here if any.Clean All These Text if pasting image..." ?></p></td>
+</tr>
+
+</table>
+<br />
+<input type="button" class="button" value="Submit" onclick="test();">
+<input type="button" class="button" value="Log Out" onclick="location.href='logout.php';">
+<input type="button" name="showreport" class="button" value="Show All Functional Review Data" onclick="redirect();">
+<input type="button" class="button" value="QC Review" onclick="qcreviewemail()">
+<input type="button" class="button" value="Developer Review" onclick="developerreviewemail()">
+<input type="hidden" id="luser" name="reviewer" value="<?php echo $username; ?>">
+<br>
+<br>
+<table width="50%" cellspacing="0" cellpadding="0" border="0" class="table_text">
+  <tr>
+    <td>Bug Category</td>
+    <td>
+      <select name="searchBC" id="searchBC" size="1">
+        <option value="select" selected>Select bug category</option>
+        <option value="Instructional Design">Instructional Design</option>
+        <option value="Media">Media</option>
+        <option value="Functionality">Functionality</option>
+		<option value="all">All</option>
+      </select>
+    </td>
+    <td>Bug Status</td>
+    <td>
+      <select name="searchBS" id="searchBS" size="1">
+        <option value="select" selected>Select bug status</option>
+		<option value="fixed">Fixed</option>
+        <option value="ok as is">Ok As IS</option>
+        <option value="hold">Hold</option>
+        <option value="reopened">Reopen</option>
+        <option value="closed">Close</option>
+        <option value="open">Open</option>
+		<option value="all">All</option>
+      </select>
+    </td>
+    <td>&nbsp;</td>
+    <td><input type="button" class="button" value="Show All Fileinfo" onclick="showAll()"></td>        
+  </tr>  
+</table>
+</form>
+<div id="ResHint"></div>
+<div id="txtHint"><?php if($message<>""){echo $message;}?></div>
+	<div class="loaderParent">
+	</div>
+		<div class="loader">
+		    <span></span>
+		    <span></span>
+		    <span></span>
+		</div>
+</body>
 <script>
 function test(){
   var project = trim(document.getElementById('project').value);
@@ -277,7 +500,7 @@ function export123(){
 	
 }
 
-function filloption(str){
+function filloption(str, subcat=''){
   var cat=str;
   
   if(window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -291,8 +514,7 @@ function filloption(str){
       document.getElementById("OpHint").innerHTML=xmlhttp.responseText;
     }
   }
-  
-  xmlhttp.open("GET", "catdump.php?q="+cat, true);
+  xmlhttp.open("GET", "catdump.php?q="+cat+"&subcat="+subcat, true);
   xmlhttp.send();
 }
 
@@ -422,214 +644,14 @@ function getinfo(){
 		});
 	}
 }
-// $(document).ready(function(){
-	// $("#phase").change(function(){
-		// if( phase != $(this).val() && $(this).val() != 'Select') {
-			// $("#phase_hint").html('Phase Selected Differs from the phase given in the CHD');
-		// } else {
-			// $("#phase_hint").html('');
-		// }
-	// });
-// });
+$(document).ready(function(){
+	var cat = '<?php echo $cat ?>';
+	var subcat = '<?php echo $subcat ?>';
+	if(cat && subcat) {
+		filloption(cat, subcat);
+	}
+	
+});
 
 </script>
-</head>
-
-<body>
-<form name="tstest" action="./funrev.php" method="post" enctype="multipart/form-data">
-<table>
-
-<tr>
-	<td>Project Name</td>
-	<td>
-    <?php
-    $proj=$_REQUEST["proj"];
-	$phase=$_REQUEST["phase"];
-	$reviewee=$_REQUEST["reviewee"];
-	$message=$_REQUEST["msg"];
-     
-	$query = "select DISTINCT projectname, pindatabaseid from projectmaster where projectmanager= '$username' or accountmanager= '$username' or buhead='$username' or practicehead='$username' or sepghead='$username' or sepglead='$username' or md='$username' or ceo = '$username' or fmfour='$username' or fmthree='$username' or fmtwo='$username' or fmone='$username' or lead='$username' or tester1='$username' or tester2='$username' or tester3='$username' or tester4='$username' or tester5='$username' or tester6='$username' or tester7='$username' or tester8='$username'or dev1='$username' or dev2='$username' or dev3='$username' or dev4='$username' or dev5='$username' or dev6='$username' or dev7='$username' or dev8='$username' or dev9='$username' or dev10='$username' or dev11='$username' or dev12='$username' order by projectname ASC";
-    
-	$retval = mysql_query( $query, $con );
-    $count = mysql_num_rows($retval);
-	//$m=$_REQUEST["project"];
-	
-	if($count==0)
-		{
-			die('Data Not Found');
-		}
-
-    echo "<select name=\"project\" id=\"project\" onchange=\"getinfo();\">"; 
-    echo "<option size =30 selected>Select</option>";
-    if(mysql_num_rows($retval)) 
-    { 
-		while($row = mysql_fetch_assoc($retval)) 
-		{
-		 if(strlen($row['projectname'])<>0)
-			{
-			 ?>
-			 <option <?php if($proj==$row['projectname'])echo " selected";?> ref="<?php echo $row['pindatabaseid'] ?>" ><?php echo $row['projectname'];?></option> 
-			 <?php 
-			}
-		} 
- 
-    } 
-    else {
-		echo "<option>No Names Present</option>";  
-    } 
-    ?>
-    </td>
-	<input type="hidden" name="pro_id" id="pro_id_hidden" value="" />
-	
-</tr>
-
-<tr>
-  <td>Phase</td>
-  <td>
-    <select name="phase" size="1" id="phase">
-      <option value="Select" selected>Select</option>
-      <option value="alpha" <?php if($phase=="alpha")echo " selected";?>>Alpha</option>
-      <option value="beta" <?php if($phase=="beta")echo " selected";?>>Beta</option>
-      <option value="gold" <?php if($phase=="gold")echo " selected";?>>Gold</option>
-      <option value="POC" <?php if($phase=="POC")echo " selected";?>>POC</option>
-    </select> &nbsp; &nbsp;
-	<span id="phase_hint"></span>
-  </td>
-</tr>
-<tr>
-<td>Module Name</td>
-<td><input type=text size=42 name="module" id="module" value="<?php echo $module;?>"></td>
-</tr>
-<tr>
-<td>Screen Details</td>
-<td><input type=text size=42 name="screen" id="screen" value="<?php echo $screen;?>"></td>
-</tr>
-<tr>
-<td>Reviewee</td>
-<td>
-    <?php
-	$query = "select DISTINCT username from login where role REGEXP 'ID|Media|Tech' AND dept='Content' order by username";
-    $retval = mysql_query( $query, $con );
-    $count = mysql_num_rows($retval);
-	
-	if($count==0)
-		{
-			die('Users Not Found; Contact SEPG');
-		}
-
-    echo "<select name=\"reviewee\" id=\"reviewee\">"; 
-    echo "<option size =30 selected value=\"Select\">Select</option>";
-    
-	if(mysql_num_rows($retval)) 
-    { 
-    while($row = mysql_fetch_assoc($retval)) 
-    { 
-     
-	 if(strlen($row[username])<>0)
-		{
-		 ?>
-         <option<?php if($reviewee==$row[username])echo " selected";?>><?php echo $row[username];?></option> 
-         <?php 
-		}
-    } 
-    } 
-    else 
-	{
-     echo "<option>No Names Present</option>";  
-    } 
-    ?>
-    </td>
-</tr>
-
-<tr>
-<td>Bug Category</td>
-<td>
-  <select name="bcat" size="1" id="bcat" onchange="filloption(this.value)">
-    <option value="Select" selected>Select</option>
-    <option value="Instructional Design">Instructional Design</option>
-    <option value="Media">Media</option>
-    <option value="Functionality">Functionality</option>
-  </select>
-</td>
-</tr>
-
-<tr>
-  <td>Bug Subcategory</td>
-  <td><div name="OpHint" id="OpHint"></div></td>
-</tr>
-
-<tr>
-<td>Severity</td>
-<td>
-	<select name="severity" size="1" id="severity">
-		<option value="select" selected>Select</option>
-		<option value="High">High</option>
-		<option value="Medium">Medium</option>
-		<option value="Low">Low</option>
-	</select>
-</td>
-</tr>
-
-<tr>
-  <td>Bug Description</td>
-  <td><textarea name="bdr" rows="4" cols="30" id="bdr"><?php echo stripslashes($bdr);?></textarea></td>
-</tr>
-
-<textarea class="hide" name="container" rows="2" cols="20"></textarea>
-
-<tr>
-  <td>Screen Grab</td>
-  <td><div class="ex" contenteditable="true" id="grab" name="grab">Paste Image Here if any.Clean All These Text if pasting image...</p></td>
-</tr>
-
-</table>
-<br />
-<input type="button" class="button" value="Submit" onclick="test();">
-<input type="button" class="button" value="Log Out" onclick="location.href='logout.php';">
-<input type="button" name="showreport" class="button" value="Show All Functional Review Data" onclick="redirect();">
-<input type="button" class="button" value="QC Review" onclick="qcreviewemail()">
-<input type="button" class="button" value="Developer Review" onclick="developerreviewemail()">
-<input type="hidden" id="luser" name="reviewer" value="<?php echo $username; ?>">
-<br>
-<br>
-<table width="50%" cellspacing="0" cellpadding="0" border="0" class="table_text">
-  <tr>
-    <td>Bug Category</td>
-    <td>
-      <select name="searchBC" id="searchBC" size="1">
-        <option value="select" selected>Select bug category</option>
-        <option value="Instructional Design">Instructional Design</option>
-        <option value="Media">Media</option>
-        <option value="Functionality">Functionality</option>
-		<option value="all">All</option>
-      </select>
-    </td>
-    <td>Bug Status</td>
-    <td>
-      <select name="searchBS" id="searchBS" size="1">
-        <option value="select" selected>Select bug status</option>
-		<option value="fixed">Fixed</option>
-        <option value="ok as is">Ok As IS</option>
-        <option value="hold">Hold</option>
-        <option value="reopened">Reopen</option>
-        <option value="closed">Close</option>
-        <option value="open">Open</option>
-		<option value="all">All</option>
-      </select>
-    </td>
-    <td>&nbsp;</td>
-    <td><input type="button" class="button" value="Show All Fileinfo" onclick="showAll()"></td>        
-  </tr>  
-</table>
-</form>
-<div id="ResHint"></div>
-<div id="txtHint"><?php if($message<>""){echo $message;}?></div>
-	<div class="loaderParent">
-	</div>
-		<div class="loader">
-		    <span></span>
-		    <span></span>
-		    <span></span>
-		</div>
-</body>
 </html> 

@@ -9,7 +9,6 @@ if(isset($_GET['chd_id'])){
 }
 $upload_path = 'http://180.151.87.232/bttool2/qcfiles/';
 include("config.php");
-
 $mode=isset($_REQUEST['mode']) && !empty($_REQUEST['mode']) ? $_REQUEST['mode'] : '';
 $filter_name = isset($_REQUEST['filter_name']) ? $_REQUEST['filter_name'] : '';
 $filter_value = isset($_REQUEST[str_replace('filter_','',$filter_name)."1"]) ? $_REQUEST[str_replace('filter_','',$filter_name)."1"] : '';
@@ -33,18 +32,26 @@ if($mode=="openbug" && !empty($q)) {
 			$sql.= " and chd_id = '".$chd[0]."'";
 		}
 	}
+
 	$result = mysql_query($sql);
 	$count = mysql_num_rows($result);
 	if($count==0){
 	  die('Data Not Found');
 	}
 } else if($mode == "devbug" && !empty($q)) {
-	$issuetype = isset($_GET['issuetype']) ? $_GET['issuetype'] : null;
-	if($issuetype && $issuetype != 'any') {
-		$sql = "SELECT *, fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE qc.project_id = '".$pro_id."' AND bugstatus = '".$issuetype."' AND chd_id = '".$chd[0]."'";
-	}
-	else {
-		$sql = "SELECT *, fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE qc.project_id = '".$pro_id."' AND chd_id = '".$chd[0]."'";
+	if(!empty($filter_name) && in_array(str_replace('filter_','',$filter_name),array("bcat","severity","bugstatus","qc")) && !empty($filter_value) && $filter_value != 'select'){
+		$sql = "SELECT *, fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE qc.project_id = '".$pro_id."' AND asignee = '".$_GET['r']."' AND ".str_replace('filter_','',$filter_name)." = '".$filter_value."'"; 
+		if(isset($_GET['bscat']) && $_GET['bscat'] != '' && $_GET['bscat'] != 'select') {
+			$sql .= " AND bscat = '".$_GET['bscat']."'";
+		}
+		if(isset($chd) && !empty($chd)){
+			$sql.= " And chd_id = '".$chd[0]."'";
+		}
+	} else {
+		$sql = "SELECT *, fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE qc.project_id = '".$pro_id."' AND asignee = '".$_GET['r']."'";
+		if(isset($chd) && !empty($chd)){
+			$sql.= " and chd_id = '".$chd[0]."'";
+		}
 	}
 	$result = mysql_query($sql);
 	$count = mysql_num_rows($result);
