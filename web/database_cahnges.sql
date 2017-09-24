@@ -79,4 +79,5 @@ ALTER TABLE `tbl_functional_review` ADD `slidecount` INT(6) NOT NULL AFTER `page
 
 -------------------------------------------------------17/9/2017---------------------------------------------------------------------------------------------
 ALTER TABLE `blobt` ADD INDEX(`creationDate`);
+ALTER TABLE `tbl_sbreview` ADD `attachment` VARCHAR(500) NULL AFTER `review_submit_date`;
 

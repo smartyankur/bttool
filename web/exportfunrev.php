@@ -41,6 +41,7 @@ $str = "<table width='50%' border='1' cellspacing='0' cellpadding='0'>
   <th>SubCat</th>
   <th>Bug</th>
   <th>Reviewer</th>
+  <th>Severity</th>
   <th>Status</th>
   <th>Last Comment</th>
   <th>Creation Date</th>
@@ -60,6 +61,7 @@ while($row = mysql_fetch_array($result))
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['subcat'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['desc1'])."</div>"."</td>";
   $str.= "<td>"."<div align=left style="."width:100;height:160;overflow:auto>".htmlentities($row['reviewer'])."</div>"."</td>";
+  $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['severity'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['status'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['comment'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".$date."</div>"."</td>";

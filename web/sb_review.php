@@ -46,26 +46,30 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
   $comment        = mysql_real_escape_string($_POST["comment"]);
   $sbpath         = mysql_real_escape_string($_POST["sbpath"]);
   $sb_review_submit_date = date('d-m-Y H:i:s'); 
-
+  $max_filesize = 1048576; //Maximum filesize in BYTES (currently 1MB).
+  $upload_path = './support/';
+  $filename = $_FILES['attachment']['name'];
 ///////////////////////////////////////////////////////////////////////////////////
-
-
   $errorMessage   = "";    
-  $successMessage = "";    
-  
+  $successMessage = ""; 
+  if(filesize($_FILES["attachment"]['tmp_name']) > $max_filesize)
+      $errorMessage .= "The file '${filename.$x}' you attempted to upload is too large.<br>";
+  if(!is_writable($upload_path))
+      $errorMessage .= "You cannot upload to the specified directory. Please CHMOD it to 777.";
+       
+  $fstr = time()."_".$filename;
 
   
 
 ///////////////////////////////////////////////////////////////////////////////////
 	if( empty($errorMessage) ){
-		$insertFunctionalReview = "INSERT INTO tbl_sbreview(project_id, project_name, review_date, course_name, learning_hours, author, reviewer, sb_review_round, l1_issues, l2_issues, l3_issues, comment, svn_path_reviewe, review_submit_date) values('".$project_id."', '".$project."', '".$RDate."', '".$courseName."', '".$learningHours."', '".$author."', '".$reviewer."', '".$iterationRound."', '".$l1_issues."', '".$l2_issues."', '".$l3_issues."', '".$comment."', '".$sbpath."', '".$sb_review_submit_date."')";
+		move_uploaded_file($_FILES["attachment"]['tmp_name'], $upload_path . $fstr);
+		$insertFunctionalReview = "INSERT INTO tbl_sbreview(project_id, project_name, review_date, course_name, learning_hours, author, reviewer, sb_review_round, l1_issues, l2_issues, l3_issues, comment, svn_path_reviewe, attachment, review_submit_date) values('".$project_id."', '".$project."', '".$RDate."', '".$courseName."', '".$learningHours."', '".$author."', '".$reviewer."', '".$iterationRound."', '".$l1_issues."', '".$l2_issues."', '".$l3_issues."', '".$comment."', '".$sbpath."', '".$fstr."', '".$sb_review_submit_date."')";
 		try {
 		   $insert_id = mysql_query($insertFunctionalReview);
 		} catch(Exception $e){
 		   echo $e->getMessage(); die;
 		}
-		   
-		   
 		   
 		if($insert_id){
 			$successMessage = "Record has been created for project '".$project."'. Please click on the 'Show All Fileinfo' button to read the entries.";    
@@ -475,9 +479,10 @@ if(!empty($numrowsProject)){
   <TD>SVN path of the  reviewed SB <font color='red'>*</font></TD>
   <TD><textarea name="sbpath" id="sbpath" rows="4" cols="75"></textarea></TD>
 </TR>
-
-
-
+<TR>
+  <TD>Attachment</TD>
+  <TD><input type="file" name="attachment" id="attachment" size="35" /></TD>
+</TR>
 </TABLE>
 <br>
 <input type="submit" name="addInfo" class="button" value="Add">

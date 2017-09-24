@@ -101,7 +101,7 @@ $lower_limit = ($pagenum - 1) * $page_limit;
 
 <table width='100%' border='1' cellspacing='0' cellpadding='0'>
 
-<tr><th>ID</th><!--<th>Project</th>--><th>Phase</th><th>Module Name</th><th>Screen Details</th><th>Reviewee</th><th>Cat</th><th>SubCat</th><th>Bug</th><th>Image</th><th>Reviewer</th><th>Status</th><th>Last Comment</th><th>Select Status</th><th>Comment</th><th>Click-Change</th><th>Change Reviewee</th><th>Creation Date</th><th>Action</th></tr>
+<tr><th>ID</th><!--<th>Project</th>--><th>Phase</th><th>Module Name</th><th>Screen Details</th><th>Reviewee</th><th>Cat</th><th>SubCat</th><th>Bug</th><th>Image</th><th>Reviewer</th><th>Severity</th><th>Status</th><th>Last Comment</th><th>Select Status</th><th>Comment</th><th>Click-Change</th><th>Change Reviewee</th><th>Creation Date</th><th>Action</th></tr>
 <?php
 if($cnt > 0) {
 foreach($results as $row)
@@ -118,6 +118,7 @@ foreach($results as $row)
   echo "<td>"."<div align=center style="."width:200;height:auto;overflow:auto>".$row['desc1']."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:100;height:auto;overflow:auto><a href='showgrab.php?id=".$row['id']."' target='_blank'>Click Here</a></div>"."</td>";
   echo "<td>"."<div align=center style="."width:150;height:auto;overflow:auto>".$row['reviewer']."</div>"."</td>";
+  echo "<td>"."<div align=center style="."width:100;height:auto;overflow:auto>".$row['severity']."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:100;height:auto;overflow:auto>".$row['status']."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:100;height:auto;overflow:auto>".$row['comment']."</div>"."</td>";
   ?>
@@ -138,7 +139,7 @@ foreach($results as $row)
   echo "</tr>";
 } 
 } else {
-	echo "<tr><td colspan='15' align='center'> No record Found</td></tr>";
+	echo "<tr><td colspan='16' align='center'> No record Found</td></tr>";
 }
 
 ?> 

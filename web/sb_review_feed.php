@@ -72,6 +72,7 @@ echo "<table cellpadding='5' cellspacing='0' border='1'>
 	  <th>No. of L3 Issues</th>
 	  <th>Comment</th>
 	  <th>SVN Path of the Reviewed SB</th>
+	  <th>Attachment</th>
 	  <th>Review Submit Date</th>
 	</tr>
 	";
@@ -91,6 +92,7 @@ echo "<table cellpadding='5' cellspacing='0' border='1'>
 	  echo "<td>".$row['l3_issues']."</td>";
 	  echo "<td>".$row['comment']."</td>";
 	  echo "<td>".$row['svn_path_reviewe']."</td>";
+	  echo "<td>".($row['attachment'] ? "<a href='support/".$row['attachment']."' target='_blank'>Click here</a>" : '')."</td>";
 	  echo "<td>".$row['review_submit_date']."</td>";
 	}
   echo "</table>";
