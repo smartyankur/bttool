@@ -81,3 +81,18 @@ ALTER TABLE `tbl_functional_review` ADD `slidecount` INT(6) NOT NULL AFTER `page
 ALTER TABLE `blobt` ADD INDEX(`creationDate`);
 ALTER TABLE `tbl_sbreview` ADD `attachment` VARCHAR(500) NULL AFTER `review_submit_date`;
 
+-------------------------------------------------------25/9/2017---------------------------------------------------------------------------------------------
+ALTER TABLE `projectmaster` ADD `dev13` VARCHAR(255) NULL AFTER `dev12`;
+ALTER TABLE `projectmaster` ADD `dev14` VARCHAR(255) NULL AFTER `dev13`;
+ALTER TABLE `projectmaster` ADD `dev15` VARCHAR(255) NULL AFTER `dev14`;
+ALTER TABLE `projectmaster` ADD `dev16` VARCHAR(255) NULL AFTER `dev15`;
+ALTER TABLE `projectmaster` ADD `dev17` VARCHAR(255) NULL AFTER `dev16`;
+ALTER TABLE `projectmaster` ADD `dev18` VARCHAR(255) NULL AFTER `dev17`;
+ALTER TABLE `projectmaster` ADD `dev19` VARCHAR(255) NULL AFTER `dev18`;
+ALTER TABLE `projectmaster` ADD `dev20` VARCHAR(255) NULL AFTER `dev19`;
+ALTER TABLE `projectmaster` ADD `dev21` VARCHAR(255) NULL AFTER `dev20`;
+ALTER TABLE `projectmaster` ADD `dev22` VARCHAR(255) NULL AFTER `dev21`;
+ALTER TABLE `projectmaster` ADD `dev23` VARCHAR(255) NULL AFTER `dev22`;
+ALTER TABLE `projectmaster` ADD `dev24` VARCHAR(255) NULL AFTER `dev23`;
+ALTER TABLE `projectmaster` ADD `dev25` VARCHAR(255) NULL AFTER `dev24`;
+

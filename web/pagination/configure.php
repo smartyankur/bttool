@@ -15,8 +15,8 @@ ob_start();
 define('DB_DRIVER', 'mysql');
 define("DB_HOST", "localhost");
 define("DB_USER", "root");
-define("DB_PASSWORD", "password");
-define("DB_DATABASE", "bttool17jan17");
+define("DB_PASSWORD", "");
+define("DB_DATABASE", "radarTesting");
 
 
 // basic options for PDO 
