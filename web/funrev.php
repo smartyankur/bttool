@@ -650,8 +650,9 @@ $(document).ready(function(){
 	if(cat && subcat) {
 		filloption(cat, subcat);
 	}
-	
 });
-
+function changeRev(id){
+	window.open("submitreview.php?id="+id, "Rating", "width=500,height=500,0,status=0,");
+}
 </script>
 </html> 
