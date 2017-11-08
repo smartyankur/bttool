@@ -199,16 +199,22 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
   	$mailer->IsSMTP();
   	$mailer->IsHTML(true);
   
-  	$mailer->Host     = "98.129.185.2";
+  	$mailer->Host     = "smtp.office365.com";//"98.129.185.2";
 	$mailer->Port     = 587;
   	$mailer->Username = "sepg@gc-solutions.net";
-  	$mailer->Password = "Gcube!123";
+  	$mailer->Password = "pass#123";//"Gcube!123";
   
   	$mailer->SMTPAuth  = true;
+	$mailer->SMTPSecure = "tls";
   	$mailer->SMTPDebug = false;
   
-  	$mailer->From     = $email;
-  	$mailer->FromName = $username;
+  	//$mailer->From     = $email;
+  	//$mailer->FromName = $username;
+
+  	$mailer->From     = "sepg@gc-solutions.net";
+  	$mailer->FromName = "SEPG";
+
+	$mailer->AddCC($email,$username);
 
 	$to_emails = array_unique($to_emails);
     
@@ -218,7 +224,7 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
 	}
     
   	$mailer->Subject = "Course Handover Document - CHD No : " . $FReviewNo;
-  	$mailer->Body    = $str;
+  	$mailer->Body    = $str."<br />".$username;
   
    	$mailer->Send();
   	echo $mailer->ErrorInfo."<br/>";  
@@ -956,12 +962,12 @@ if(!empty($numrowsDEV)){
 <TR>
   <TD><label for="confimation">Confirmation On Reviews</label> <font color='red'>*</font></TD>
   <TD>
-    <label for="idreview"><input type="checkbox" name="confReviews[]" id="idreview" value="ID review-Internal" <?php if(in_array("ID review-Internal", $confReviews))echo " checked"; ?>>ID review-Internal</label>
-    <label for="gdreview"><input type="checkbox" name="confReviews[]" id="gdreview" value="GD Review Sign Off Internal" <?php if(in_array("GD Review Sign Off Internal", $confReviews))echo " checked"; ?>>GD Review Sign Off Internal</label>
-    <label for="progreview"><input type="checkbox" name="confReviews[]" id="progreview" value="Programing Review Sign Off Internal" <?php if(in_array("Programing Review Sign Off Internal", $confReviews))echo " checked"; ?>>Programing Review Sign Off Internal</label>
-    <label for="peerreview"><input type="checkbox" name="confReviews[]" id="peerreview" value="Peer review" <?php if(in_array("Programing Review Sign Off Internal", $confReviews))echo " checked"; ?>>Peer review</label>
-    <label for="functionalreview"><input type="checkbox" name="confReviews[]" id="functionalreview" value="Functional Review" <?php if(in_array("Functional Review", $confReviews))echo " checked"; ?>>Functional Review</label>
-    <label for="idsignoff"><input type="checkbox" name="confReviews[]" id="idsignoff" value="ID Sign Off" <?php if(in_array("ID Sign Off", $confReviews))echo " checked"; ?>>ID Sign Off</label>
+    <label for="idreview"><input type="checkbox" name="confReviews[]" id="idreview" value="ID Review Sign Off Internal" <?php if(in_array("ID Review Sign Off Internal", $confReviews))echo " checked"; ?>>ID Review Sign Off Internal</label>
+    <label for="gdreview"><input type="checkbox" name="confReviews[]" id="gdreview" value="Media Review Sign Off Internal" <?php if(in_array("Media Review Sign Off Internal", $confReviews))echo " checked"; ?>>Media Review Sign Off Internal</label>
+    <label for="progreview"><input type="checkbox" name="confReviews[]" id="progreview" value="Programming Review Sign Off Internal" <?php if(in_array("Programming Review Sign Off Internal", $confReviews))echo " checked"; ?>>Programming Review Sign Off Internal</label>
+    <label for="peerreview"><input type="checkbox" name="confReviews[]" id="peerreview" value="Audio Review Sign Off Internal" <?php if(in_array("Audio Review Sign Off Internal", $confReviews))echo " checked"; ?>>Audio Review Sign Off Internal</label>
+    <label for="functionalreview"><input type="checkbox" name="confReviews[]" id="functionalreview" value="Content Mapping Tool Used" <?php if(in_array("Content Mapping Tool Used", $confReviews))echo " checked"; ?>>Content Mapping Tool Used</label>
+    <label for="idsignoff"><input type="checkbox" name="confReviews[]" id="idsignoff" value="Functional Review" <?php if(in_array("Functional Review", $confReviews))echo " checked"; ?>>Functional Review</label>
   </TD>
 </TR>
 

@@ -3,6 +3,7 @@
  * @author Saurav Gupta
  */
 require_once("pagination/configure.php");
+$upload_path = './qcfiles/'; 
 $q=$_GET["q"];
 $project_id = $_GET['pro_id'];
 $chd = explode("-", $_GET['chd_id']);
@@ -27,6 +28,7 @@ if(!empty($filter_name) && in_array(str_replace('filter_','',$filter_name),array
 } else {
 	$sql = "SELECT * FROM qcuploadinfo WHERE project_id = '".$project_id."' and chd_id = '".$chd[0]."' and asignee = '".$asignee."'";
 }
+
 try {
     $stmt = $DB->prepare($sql);
     $stmt->execute();
@@ -83,15 +85,15 @@ $filter_value = isset($_REQUEST[str_replace('filter_','',$filter_name)."1"]) ? $
 
 if(!empty($q) && $cnt > 0) {
 	if(!empty($filter_name) && in_array(str_replace('filter_','',$filter_name),array("bcat","severity","bugstatus","qc","module")) && !empty($filter_value) && $filter_value != "select"){
-		$sql2 = "SELECT * FROM qcuploadinfo WHERE project_id = '".$project_id."' AND ".str_replace('filter_','',$filter_name)." = '".$filter_value."'";
+		$sql2 = "SELECT qc.*,tc.category FROM qcuploadinfo qc INNER JOIN tbl_category tc  ON tc.id = qc.bscat WHERE qc.project_id = '".$project_id."' AND qc.".str_replace('filter_','',$filter_name)." = '".$filter_value."'";
 		if($_GET['bscat'] != '' && $_GET['bscat'] != 'select') {
-			$sql2 .= " AND bscat = '".$_GET['bscat']."'";
+			$sql2 .= " AND qc.bscat = '".$_GET['bscat']."'";
 		}
-		$sql2 .= " and chd_id='".$chd[0]."' and asignee = '".$asignee."' limit ". ($lower_limit)." ,  ". ($page_limit). " "; 		
+		$sql2 .= " and qc.chd_id='".$chd[0]."' and qc.asignee = '".$asignee."' limit ". ($lower_limit)." ,  ". ($page_limit). " "; 		
 	} else {
-		$sql2 = "SELECT * FROM qcuploadinfo WHERE project_id = '".$project_id."' and chd_id = '".$chd[0]."' and asignee = '".$asignee."' limit ". ($lower_limit)." ,  ". ($page_limit). " ";
+		$sql2 = "SELECT qc.*,tc.category FROM qcuploadinfo qc INNER JOIN tbl_category tc ON tc.id = qc.bscat WHERE qc.project_id = '".$project_id."' and qc.chd_id = '".$chd[0]."' and qc.asignee = '".$asignee."' limit ". ($lower_limit)." ,  ". ($page_limit). " ";
 	}
-
+echo $sql2;
 	try {
 		$stmt = $DB->prepare($sql2);
 		$stmt->execute();
@@ -165,14 +167,14 @@ foreach($results as $row)
 	  echo "<td>".$row['bugstatus']."</td>";
 	  echo "<td>"."<b>".$row['category']."</b>"."</td>";
 	  echo "<td>".'<a target="_blank" href="'.$upload_path.$row['filepath'].'" title="Your File">'.$row['filepath'].'</a>'."</td>";
-	  echo "<td><textarea id=".$row['id']." rows="."4"." cols="."30"."></textarea>";
+	  echo "<td><textarea id=".$row['id']." rows="."4"." cols="."30".">".$row['devcomment']."</textarea>";
 	  echo " Change Status ";
 	  echo "<select id="."stat".$row['id'].">";
 	  ?>
-	  <option size=30 selected>Select</option>
-	  <option value="fixed">Fixed</option>
-	  <option value="hold">Hold</option>
-	  <option value="ok as is">Ok As Is</option>
+	  <option size=30 <?=$row['bugstatus']==''?'selected':''?>>Select</option>
+	  <option value="fixed" <?=$row['bugstatus']=='fixed'?'selected':''?>>Fixed</option>
+	  <option value="hold" <?=$row['bugstatus']=='hold'?'selected':''?>>Hold</option>
+	  <option value="ok as is" <?=$row['bugstatus']=='ok as is'?'selected':''?>>Ok As Is</option>
 	  </select>
 	  <input type="button" value="Submit Response" onclick="submitresponse(<?php echo $row['id']?>)">
 	  <?php

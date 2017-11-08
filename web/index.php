@@ -1,5 +1,5 @@
 <?PHP
-error_reporting(E_ALL);
+error_reporting(E_ERROR | E_PARSE);
 if(isset($_SERVER['HTTP_USER_AGENT']))
 {
   $agent = $_SERVER['HTTP_USER_AGENT'];
