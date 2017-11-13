@@ -45,7 +45,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
   $cdate    = time();
   $fr_id = isset($_POST['id']) ? $_POST['id'] : '';
   if($fr_id) {
-		$query = "UPDATE blobt set reviewer='".$reviewer."', project_id='".$project_id."', project='".$project."', phase='".$phase."', cat='".$bcat."', subcat='".$subcat."', desc1='".$a."', grab='".$b."', severity='".$severity."', module='".$module."', screen='".$screen."' where id='".$fr_id."'";
+		$query = "UPDATE blobt set reviewer='".$reviewer."', project_id='".$project_id."', project='".$project."', phase='".$phase."', cat='".$bcat."', subcat='".$subcat."', desc1='".$a."', grab='".$b."', severity='".$severity."', module='".$module."', screen='".$screen."', reviewee='".$reviewee."' where id='".$fr_id."'";
   } else {
 		$query = "INSERT INTO blobt(reviewer, project_id, project, phase, reviewee, cat, subcat, desc1, grab, creationDate, comment, severity, module, screen) values('".$reviewer."', '".$project_id."', '".$project."', '".$phase."', '".$reviewee."', '".$bcat."', '".$subcat."', '".$a."', '".$b."', '".$cdate."','', '".$severity."', '".$module."', '".$screen."')";
   }

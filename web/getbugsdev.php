@@ -89,11 +89,10 @@ if(!empty($q) && $cnt > 0) {
 		if($_GET['bscat'] != '' && $_GET['bscat'] != 'select') {
 			$sql2 .= " AND qc.bscat = '".$_GET['bscat']."'";
 		}
-		$sql2 .= " and qc.chd_id='".$chd[0]."' and qc.asignee = '".$asignee."' limit ". ($lower_limit)." ,  ". ($page_limit). " "; 		
+		$sql2 .= " and qc.chd_id='".$chd[0]."' limit ". ($lower_limit)." ,  ". ($page_limit). " "; 		
 	} else {
-		$sql2 = "SELECT qc.*,tc.category FROM qcuploadinfo qc INNER JOIN tbl_category tc ON tc.id = qc.bscat WHERE qc.project_id = '".$project_id."' and qc.chd_id = '".$chd[0]."' and qc.asignee = '".$asignee."' limit ". ($lower_limit)." ,  ". ($page_limit). " ";
+		$sql2 = "SELECT qc.*,tc.category FROM qcuploadinfo qc INNER JOIN tbl_category tc ON tc.id = qc.bscat WHERE qc.project_id = '".$project_id."' and qc.chd_id = '".$chd[0]."' limit ". ($lower_limit)." ,  ". ($page_limit). " ";
 	}
-echo $sql2;
 	try {
 		$stmt = $DB->prepare($sql2);
 		$stmt->execute();
