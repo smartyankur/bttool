@@ -40,15 +40,19 @@ $str = "<table width='50%' border='1' cellspacing='0' cellpadding='0'>
   <th>Cat</th>
   <th>SubCat</th>
   <th>Bug</th>
+  <th>Image</th>
   <th>Reviewer</th>
   <th>Severity</th>
   <th>Status</th>
+  <th>Reviewee Attachmemt</th>
   <th>Last Comment</th>
   <th>Creation Date</th>
  </tr>";
 
 while($row = mysql_fetch_array($result))
   {
+  $grab = !empty($row['grab']) ? '<a href="'.htmlentities("http://180.151.87.232/bttool2/showgrab.php?id='".$row['id']."'").'" target="new">'.htmlentities("http://180.151.87.232/bttool2/showgrab.php?id='".$row['id']."'").'</a>' : "N/A";
+  $revAttachment = !empty($row['rev_attachment']) ? '<a href="'.htmlentities("http://180.151.87.232/bttool2/support/").htmlentities($row['rev_attachment']).'" target="new">'.htmlentities("http://180.151.87.232/bttool2/support/").htmlentities($row['rev_attachment']).'</a>' : "N/A";
   $date = !empty($row['creationDate']) ? date("Y-m-d H:i:s", $row['creationDate']) : "N/A";
   $str.= "<tr>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['id'])."</div>"."</td>";
@@ -60,9 +64,11 @@ while($row = mysql_fetch_array($result))
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['cat'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['subcat'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['desc1'])."</div>"."</td>";
+  $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".$grab."</div>"."</td>";
   $str.= "<td>"."<div align=left style="."width:100;height:160;overflow:auto>".htmlentities($row['reviewer'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['severity'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['status'])."</div>"."</td>";
+  $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".$revAttachment."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['comment'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".$date."</div>"."</td>";
   $str.= "</tr>";

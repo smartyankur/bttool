@@ -128,7 +128,7 @@ foreach($results as $row)
   <TD><a href="javascript:void(0);" onclick="changeRev(<?php echo $row['id'] ?>)">Click Here</a></TD>
   <TD><input type="button" class="button" value="Change Reviewee" onclick="submitrev(<?php echo $row['id'] ?>)"></TD>
   <TD align="center" valign="top"><?php echo (!empty($row['creationDate'])) ? date("Y-m-d H:i:s", $row['creationDate']) : "N/A"; ?></TD>
-  <TD align="center"><a href="funrev.php?id=<?php echo $row['id']; ?>">Edit</a><TD>
+  <TD align="center"><a href="funrev.php?id=<?php echo $row['id']; ?>" target="_blank">Edit</a><TD>
   <?php
   echo "</tr>";
 } 
