@@ -1,7 +1,7 @@
 <?php	
-	$con = mysql_connect("localhost", "root", "");
+  $con = mysql_connect("localhost", "radar", "thelevonad");
 	if(!$con){
 		die('Could not connect: ' . mysql_error());
 	}
-	mysql_select_db("audit") or die(mysql_error());  
+	mysql_select_db("radar") or die(mysql_error());  
 ?> 
