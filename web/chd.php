@@ -201,8 +201,8 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
   
   	$mailer->Host     = "smtp.office365.com";//"98.129.185.2";
 	$mailer->Port     = 587;
-  	$mailer->Username = "sepg@gc-solutions.net";
-  	$mailer->Password = "pass#123";//"Gcube!123";
+  	$mailer->Username = "radar@gc-solutions.net";
+  	$mailer->Password = "Gcube#123";//pass#123";//"Gcube!123";
   
   	$mailer->SMTPAuth  = true;
 	$mailer->SMTPSecure = "tls";
@@ -211,8 +211,8 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
   	//$mailer->From     = $email;
   	//$mailer->FromName = $username;
 
-  	$mailer->From     = "sepg@gc-solutions.net";
-  	$mailer->FromName = "SEPG";
+  	$mailer->From     = "radar@gc-solutions.net";
+  	$mailer->FromName = "RADAR";
 
 	$mailer->AddCC($email,$username);
 

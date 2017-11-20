@@ -118,6 +118,7 @@ class DailyUpdateProjectReport {
 							if(!array_key_exists('fclosed', $final[$key1][$version]['L3'])) {
 								$final[$key1][$version]['L3']['fclosed'] = 0;
 							}
+							
 							if(strtolower($v['severity']) != "suggestion") {
 								if(strtolower($v['bugstatus']) == "closed" || strtolower($v['bugstatus']) == "fixed" || strtolower($v['bugstatus']) == "reopened"){
 									$final[$key1][$version]['total_bug_closed'] = $final[$key1][$version]['total_bug_closed'] + $v['bug_status_count'];
@@ -170,12 +171,12 @@ class DailyUpdateProjectReport {
 						
 					}
 					$final[$key1][$version]['total_media_bug_closed'] = $final[$key1][$version]['L1']['mclosed'] + $final[$key1][$version]['L2']['mclosed'] + $final[$key1][$version]['L3']['mclosed'];
-					$final[$key1][$version]['total_media_dd'] = $final[$key1][$version]['total_media_bug'] / $final[$key1][$version]['lh'];
+					$final[$key1][$version]['total_media_dd'] = !empty($final[$key1][$version]['lh']) ? $final[$key1][$version]['total_media_bug'] / $final[$key1][$version]['lh'] : 0;
 					$final[$key1][$version]['total_functional_bug_closed'] = $final[$key1][$version]['L1']['fclosed'] + $final[$key1][$version]['L2']['fclosed'] + $final[$key1][$version]['L3']['fclosed'];
-					$final[$key1][$version]['total_functional_dd'] = $final[$key1][$version]['total_functional_bug'] / $final[$key1][$version]['lh'];
+					$final[$key1][$version]['total_functional_dd'] = !empty($final[$key1][$version]['lh']) ? $final[$key1][$version]['total_functional_bug'] / $final[$key1][$version]['lh'] : 0;
 					$final[$key1][$version]['total_editorial_bug_closed'] = $final[$key1][$version]['L1']['eclosed'] + $final[$key1][$version]['L2']['eclosed'] + $final[$key1][$version]['L3']['eclosed'];
-					$final[$key1][$version]['total_editorial_dd'] = $final[$key1][$version]['total_editorial_bug'] / $final[$key1][$version]['lh'];
-					$final[$key1][$version]['bug_density'] = $final[$key1][$version]['total_bug_closed']/$final[$key1][$version]['lh'];
+					$final[$key1][$version]['total_editorial_dd'] = !empty($final[$key1][$version]['lh']) ? $final[$key1][$version]['total_editorial_bug'] / $final[$key1][$version]['lh'] : 0;
+					$final[$key1][$version]['bug_density'] = !empty($final[$key1][$version]['lh']) ? $final[$key1][$version]['total_bug_closed']/$final[$key1][$version]['lh'] : 0;
 					$final[$key1][$version]['number_of_qc_rejection'] =  isset($final[$key1][$version]['course_rejected']) ? $final[$key1][$version]['course_rejected'] : 0;
 				}	
 			}
@@ -196,7 +197,7 @@ if( is_array($res) && array_key_exists('errorMessage', $res)) {
 }
 	
 //$url = "http://61.12.24.68/Efficianttestv1/api/BTToolIntegration/syncbt";
-$url = "http://61.12.24.68/Efficiant/api/BTToolIntegration/syncbt";
+$url = "http://efficiant.gc-solutions.net/Efficiant/api/BTToolIntegration/syncbt";
 
 $ch = curl_init( $url );
 # Setup request to send json via POST.
