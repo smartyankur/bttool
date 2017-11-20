@@ -55,7 +55,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		} else {
 			$message="Record has been created for project ".$project." and "."issue : ".$a.", please click on the Show All Fileinfo to read the entry.";
 		}
-		header ("Location: funrev.php?proj=".urlencode($project)."&phase=".urlencode($phase)."&reviewee=".urlencode($reviewee)."&msg=".urlencode($message));
+		header ("Location: funrev.php?proj=".urlencode($project_id)."&phase=".urlencode($phase)."&reviewee=".urlencode($reviewee)."&msg=".urlencode($message));
   } else {
 		die(mysql_error());
   }	
@@ -127,7 +127,7 @@ $(document).ready(function(){
 	<td>Project Name</td>
 	<td>
     <?php
-    $proj = $row['project'] ? $row['project'] : $_REQUEST["proj"];
+    $proj = $row['project_id'] ? $row['project_id'] : $_REQUEST["proj"];
 	$phase = $row['phase'] ? $row['phase'] : $_REQUEST["phase"];
 	$reviewee = $row['reviewee'] ? $row['reviewee'] : $_REQUEST["reviewee"];
 	$description = $row['desc1'] ? $row['desc1'] : $_REQUEST["bdr"];
@@ -138,7 +138,7 @@ $(document).ready(function(){
 	$severity = $row['severity'] ? $row['severity'] : $_REQUEST["severity"];
 	$grab = $row['grab'] ? $row['grab'] : $_REQUEST['container'];
 	$message = $_REQUEST['msg'];
-	$query = "select DISTINCT projectname, pindatabaseid from projectmaster where projectmanager= '$username' or accountmanager= '$username' or buhead='$username' or practicehead='$username' or sepghead='$username' or sepglead='$username' or md='$username' or ceo = '$username' or fmfour='$username' or fmthree='$username' or fmtwo='$username' or fmone='$username' or lead='$username' or tester1='$username' or tester2='$username' or tester3='$username' or tester4='$username' or tester5='$username' or tester6='$username' or tester7='$username' or tester8='$username'or dev1='$username' or dev2='$username' or dev3='$username' or dev4='$username' or dev5='$username' or dev6='$username' or dev7='$username' or dev8='$username' or dev9='$username' or dev10='$username' or dev11='$username' or dev12='$username' order by projectname ASC";
+	$query = "select DISTINCT projectname, pindatabaseid from projectmaster where projectmanager= '$username' or accountmanager= '$username' or buhead='$username' or practicehead='$username' or sepghead='$username' or sepglead='$username' or md='$username' or ceo = '$username' or fmfour='$username' or fmthree='$username' or fmtwo='$username' or fmone='$username' or lead='$username' or tester1='$username' or tester2='$username' or tester3='$username' or tester4='$username' or tester5='$username' or tester6='$username' or tester7='$username' or tester8='$username'or dev1='$username' or dev2='$username' or dev3='$username' or dev4='$username' or dev5='$username' or dev6='$username' or dev7='$username' or dev8='$username' or dev9='$username' or dev10='$username' or dev11='$username' or dev12='$username' or dev13='$username' or dev14='$username' or dev15='$username' or dev16='$username' or dev17='$username' or dev18='$username' or dev19='$username' or dev20='$username' or dev21='$username' or dev22='$username' or dev23='$username' or dev24='$username' or dev25='$username' order by projectname ASC";
     
 	$retval = mysql_query( $query, $con );
     $count = mysql_num_rows($retval);
@@ -158,7 +158,7 @@ $(document).ready(function(){
 		 if(strlen($row['projectname'])<>0)
 			{
 			 ?>
-			 <option <?php if($proj==$row['projectname'])echo " selected";?> ref="<?php echo $row['pindatabaseid'] ?>" ><?php echo $row['projectname'];?></option> 
+			 <option <?php if($proj==$row['pindatabaseid'])echo " selected";?> ref="<?php echo $row['pindatabaseid'] ?>" ><?php echo $row['projectname'];?></option> 
 			 <?php 
 			}
 		} 

@@ -611,7 +611,7 @@ function getData(){
 <TD>Dev Fifteen</TD>
 <TD>
 <?php
-    echo "<select name=\"devfiveteen\" id=\"devfiveteen\">"; 
+    echo "<select name=\"devfifteen\" id=\"devfifteen\">"; 
     echo "<option size =30 selected>Select</option>";
     echo "<option size =30>NA</option>";
 	if(count($tmp) > 0) 
