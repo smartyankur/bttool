@@ -40,7 +40,7 @@ if($mode=="openbug" && !empty($q)) {
 	}
 } else if($mode == "devbug" && !empty($q)) {
 	if(!empty($filter_name) && in_array(str_replace('filter_','',$filter_name),array("bcat","severity","bugstatus","qc")) && !empty($filter_value) && $filter_value != 'select'){
-		$sql = "SELECT *, fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE qc.project_id = '".$pro_id."' AND asignee = '".$_GET['r']."' AND ".str_replace('filter_','',$filter_name)." = '".$filter_value."'"; 
+		$sql = "SELECT *, fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE qc.project_id = '".$pro_id."' AND ".str_replace('filter_','',$filter_name)." = '".$filter_value."'"; 
 		if(isset($_GET['bscat']) && $_GET['bscat'] != '' && $_GET['bscat'] != 'select') {
 			$sql .= " AND bscat = '".$_GET['bscat']."'";
 		}
@@ -48,7 +48,7 @@ if($mode=="openbug" && !empty($q)) {
 			$sql.= " And chd_id = '".$chd[0]."'";
 		}
 	} else {
-		$sql = "SELECT *, fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE qc.project_id = '".$pro_id."' AND asignee = '".$_GET['r']."'";
+		$sql = "SELECT *, fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE qc.project_id = '".$pro_id."'";
 		if(isset($chd) && !empty($chd)){
 			$sql.= " and chd_id = '".$chd[0]."'";
 		}

@@ -103,6 +103,7 @@ echo "<table cellpadding='5' cellspacing='0' border='1'>
   <td valign="top" align="left">
 	
 <label> Rows Limit: 
+<?php $_GET["show"] = isset($_GET["show"]) ? $_GET["show"] : ''; ?>
 <select name="show" onChange="changeDisplayRowCount(this.value);">
   <option value="10" <?php if ($_GET["show"] == 10 || $_GET["show"] == "" ) { echo ' selected="selected"'; }  ?> >10</option>
   <option value="20" <?php if ($_GET["show"] == 20) { echo ' selected="selected"'; }  ?> >20</option>
@@ -111,8 +112,7 @@ echo "<table cellpadding='5' cellspacing='0' border='1'>
   <option value="All" <?php if ($_GET["show"] == 'All') { echo ' selected="selected"'; }  ?> >All</option>
 </select>
 </label>
-
-	</td>
+</td>
   <td valign="top" align="center" >
  
 	<?php

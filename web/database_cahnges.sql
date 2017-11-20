@@ -96,3 +96,6 @@ ALTER TABLE `projectmaster` ADD `dev23` VARCHAR(255) NULL AFTER `dev22`;
 ALTER TABLE `projectmaster` ADD `dev24` VARCHAR(255) NULL AFTER `dev23`;
 ALTER TABLE `projectmaster` ADD `dev25` VARCHAR(255) NULL AFTER `dev24`;
 
+------------------------------------------------------------9/11/2017-----------------------------------------------------------------------------------
+ALTER TABLE `blobt` ADD `rev_attachment` VARCHAR(255) NULL AFTER `severity`;
+

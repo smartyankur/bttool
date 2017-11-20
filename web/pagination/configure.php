@@ -14,9 +14,9 @@ ob_start();
 
 define('DB_DRIVER', 'mysql');
 define("DB_HOST", "localhost");
-define("DB_USER", "radar");
-define("DB_PASSWORD", "thelevonad");
-define("DB_DATABASE", "radar");
+define("DB_USER", "root");
+define("DB_PASSWORD", "");
+define("DB_DATABASE", "audit");
 
 
 // basic options for PDO 

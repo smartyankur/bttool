@@ -21,14 +21,13 @@ $page_limit =  ($_GET["show"] != "All") ? intval($_GET["show"]) : 100000;
 
 // Get the total number of rows in the table
 if(!empty($filter_name) && in_array(str_replace('filter_','',$filter_name),array("bcat","severity","bugstatus","qc","module")) && !empty($filter_value) && $filter_value != "select"){
-	$sql = "SELECT * FROM qcuploadinfo WHERE project_id = '".$project_id."' and chd_id = '".$chd[0]."' and asignee = '".$asignee."' AND ".str_replace('filter_','',$filter_name)." = '".$filter_value."'";
+	$sql = "SELECT * FROM qcuploadinfo WHERE project_id = '".$project_id."' and chd_id = '".$chd[0]."' and ".str_replace('filter_','',$filter_name)." = '".$filter_value."'";
 	if($_GET['bscat'] != '' && $_GET['bscat'] != 'select') {
 		$sql .= " AND bscat = '".$_GET['bscat']."'";
 	}
 } else {
-	$sql = "SELECT * FROM qcuploadinfo WHERE project_id = '".$project_id."' and chd_id = '".$chd[0]."' and asignee = '".$asignee."'";
+	$sql = "SELECT * FROM qcuploadinfo WHERE project_id = '".$project_id."' and chd_id = '".$chd[0]."'";
 }
-
 try {
     $stmt = $DB->prepare($sql);
     $stmt->execute();
@@ -89,11 +88,10 @@ if(!empty($q) && $cnt > 0) {
 		if($_GET['bscat'] != '' && $_GET['bscat'] != 'select') {
 			$sql2 .= " AND qc.bscat = '".$_GET['bscat']."'";
 		}
-		$sql2 .= " and qc.chd_id='".$chd[0]."' and qc.asignee = '".$asignee."' limit ". ($lower_limit)." ,  ". ($page_limit). " "; 		
+		$sql2 .= " and qc.chd_id='".$chd[0]."' limit ". ($lower_limit)." ,  ". ($page_limit). " "; 		
 	} else {
-		$sql2 = "SELECT qc.*,tc.category FROM qcuploadinfo qc INNER JOIN tbl_category tc ON tc.id = qc.bscat WHERE qc.project_id = '".$project_id."' and qc.chd_id = '".$chd[0]."' and qc.asignee = '".$asignee."' limit ". ($lower_limit)." ,  ". ($page_limit). " ";
+		$sql2 = "SELECT qc.*,tc.category FROM qcuploadinfo qc INNER JOIN tbl_category tc ON tc.id = qc.bscat WHERE qc.project_id = '".$project_id."' and qc.chd_id = '".$chd[0]."' limit ". ($lower_limit)." ,  ". ($page_limit). " ";
 	}
-echo $sql2;
 	try {
 		$stmt = $DB->prepare($sql2);
 		$stmt->execute();

@@ -1,12 +1,9 @@
 <?php
 require_once("pagination/configure.php");
-$q         = $_GET["q"];
-$pro_id    = $_GET["pro_id"];
-$bugCat    = $_GET["bugCat"];
-$bugStatus = $_GET["bugStatus"];
-
+$pro_id = isset($_GET["id"]) ? $_GET["id"] : '';
+$fdate = isset($_GET["fdate"]) ? strtotime($_GET["fdate"]) : '';
+$tdate = isset($_GET["tdate"]) ? strtotime("+1 Day", strtotime($_GET["tdate"])) : '';
 include("config.php");
-
 if (!(isset($_GET['pagenum']))) { 
 	$pagenum = 1; 
 } else {
@@ -15,14 +12,14 @@ if (!(isset($_GET['pagenum']))) {
 
 $page_limit =  ($_GET["show"] != "All") ? intval($_GET["show"]) : 100000;
 
-$sql = "SELECT cat, status FROM blobt where project_id='$pro_id'";
+$sql = "SELECT id FROM blobt";
 
-if( !empty($bugCat) && $bugCat != "select" && $bugCat != "all"){
-  $sql .= " and cat='".$bugCat."'";
+if( !empty($pro_id)){
+  $sql .= " where project_id='$pro_id'";
 }
 
-if( !empty($bugStatus) && ($bugStatus != "select") && ($bugStatus != "all") ){
-  $sql .= " and status='".$bugStatus."'";
+if( !empty($fdate) && !empty($tdate) ){
+  $sql .= " where creationDate >= $fdate and creationDate <= $tdate";
 }
 
 try {
@@ -36,7 +33,7 @@ $cnt = count($tresults);
 
 if($cnt > 0) {
 
-$firstArray = array("open"=> 0, "closed"=> 0, "hold"=> 0, "reopened"=> 0, "ok as is"=> 0, "fixed" => 0, "global" => 0, "editorial"=>0, "Media"=>0, "Functionality"=>0, "audio"=>0, "suggesstion"=>0);
+/*$firstArray = array("open"=> 0, "closed"=> 0, "hold"=> 0, "reopened"=> 0, "ok as is"=> 0, "fixed" => 0, "global" => 0, "editorial"=>0, "Media"=>0, "Functionality"=>0, "audio"=>0, "suggesstion"=>0);
 
 foreach($tresults as $val){
 	if(array_key_exists($val['status'], $firstArray)) {
@@ -60,7 +57,7 @@ foreach($tresults as $val){
 	  echo ", <b> Total : </b>" . $cnt; 
       echo "</td>";    
     echo "</tr>";
-  echo "</table>";
+  echo "</table>";*/
 
 
 $last = ceil($cnt/$page_limit); 
@@ -74,13 +71,14 @@ if ($pagenum < 1) {
 $lower_limit = ($pagenum - 1) * $page_limit;
 
 
-  $sql1 = "SELECT * FROM blobt WHERE project_id = ".$pro_id;
-    if( !empty($bugCat) && $bugCat != "select" && $bugCat != "all"){
-		$sql1 .= " and cat='".$bugCat."'";
-    }
+	$sql1 = "SELECT * FROM blobt";
 
-	if( !empty($bugStatus) && ($bugStatus != "select") && ($bugStatus != "all") ){
-		$sql1 .= " and status='".$bugStatus."'";
+	if( !empty($pro_id)){
+	  $sql1 .= " where project_id='$pro_id'";
+	}
+
+	if( !empty($fdate) && !empty($tdate) ){
+	  $sql1 .= " where creationDate >= $fdate and creationDate <= $tdate";
 	}
 	$sql1 .=  " limit ". ($lower_limit)." ,  ". ($page_limit). "";
 	try {
@@ -101,39 +99,33 @@ $lower_limit = ($pagenum - 1) * $page_limit;
 
 <table width='100%' border='1' cellspacing='0' cellpadding='0'>
 
-<tr><th>ID</th><!--<th>Project</th>--><th>Phase</th><th>Module Name</th><th>Screen Details</th><th>Reviewee</th><th>Cat</th><th>SubCat</th><th>Bug</th><th>Image</th><th>Reviewer</th><th>Severity</th><th>Status</th><th>Last Comment</th><th>Reviewee Attachmemt</th><th>Submit Review</th><th>Change Reviewee</th><th>Creation Date</th><th>Action</th></tr>
+<tr><th>ID</th><th>Project</th><th>Phase</th><th>Module Name</th><th>Screen Details</th><th>Reviewee</th><th>Sevirity</th><th>Cat</th><th>SubCat</th><th>Bug</th><th>Image</th><th>Reviewer</th><th>Status</th><th>Last Comment</th><th>Creation Date</th></tr>
 <?php
 if($cnt > 0) {
 foreach($results as $row)
-{
-  $grab = !empty($row['grab']) ? "<a href='showgrab.php?id=".$row['id']."' target='_blank'>Click Here</a>" : "N/A";
-  $revAttachment = !empty($row['rev_attachment']) ? "<a href='./support/".$row['rev_attachment']."' target='_blank'>Click Here</a>" : "N/A";
+  {
   echo "<tr>";
   echo "<td>"."<div align=center style="."width:100;height:auto;overflow:auto>".$row['id']."</div>"."</td>";
-  //echo "<td>"."<div align=center style="."width:150;height:100;overflow:auto>".$row['project']."</div>"."</td>";
+  echo "<td>"."<div align=center style="."width:150;height:100;overflow:auto>".$row['project']."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:100;height:auto;overflow:auto>".$row['phase']."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:100;height:auto;overflow:auto>".$row['module']."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:100;height:auto;overflow:auto>".$row['screen']."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:100;height:auto;overflow:auto>".$row['reviewee']."</div>"."</td>";
+  echo "<td>"."<div align=center style="."width:100;height:auto;overflow:auto>".$row['severity']."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:100;height:auto;overflow:auto>".$row['cat']."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:100;height:auto;overflow:auto>".$row['subcat']."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:200;height:auto;overflow:auto>".$row['desc1']."</div>"."</td>";
-  echo "<td>"."<div align=center style="."width:100;height:auto;overflow:auto>".$grab."</div>"."</td>";
+  echo "<td>"."<div align=center style="."width:100;height:auto;overflow:auto><a href='showgrab.php?id=".$row['id']."' target='_blank'>Click Here</a></div>"."</td>";
   echo "<td>"."<div align=center style="."width:150;height:auto;overflow:auto>".$row['reviewer']."</div>"."</td>";
-  echo "<td>"."<div align=center style="."width:100;height:auto;overflow:auto>".$row['severity']."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:100;height:auto;overflow:auto>".$row['status']."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:100;height:auto;overflow:auto>".$row['comment']."</div>"."</td>";
-  echo "<td>"."<div align=center style="."width:100;height:auto;overflow:auto>".$revAttachment."</div>"."</td>";
   ?>
-  <TD><a href="javascript:void(0);" onclick="changeRev(<?php echo $row['id'] ?>)">Click Here</a></TD>
-  <TD><input type="button" class="button" value="Change Reviewee" onclick="submitrev(<?php echo $row['id'] ?>)"></TD>
   <TD align="center" valign="top"><?php echo (!empty($row['creationDate'])) ? date("Y-m-d H:i:s", $row['creationDate']) : "N/A"; ?></TD>
-  <TD align="center"><a href="funrev.php?id=<?php echo $row['id']; ?>" target="_blank">Edit</a><TD>
   <?php
   echo "</tr>";
 } 
 } else {
-	echo "<tr><td colspan='16' align='center'> No record Found</td></tr>";
+	echo "<tr><td colspan='15' align='center'> No record Found</td></tr>";
 }
 
 ?> 
