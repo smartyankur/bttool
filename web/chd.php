@@ -1,7 +1,7 @@
 <html>
 <head>
 <title>Add Course Handover Document</title>
-<?php	
+<?php 
 error_reporting(0);
 session_start();
 
@@ -10,7 +10,7 @@ include("class.phpmailer.php");
 if(!(isset($_SESSION['login']) && $_SESSION['login'] != '')){
   header("Location:index.php");
 }
-$user=$_SESSION['login'];    
+$user=$_SESSION['login'];  
 
 include("config.php");
 
@@ -28,7 +28,7 @@ while($row = mysql_fetch_assoc($retval)){
   echo "<h4>"."Hi ".$row['username']." ! Welcome to Course Handover Document."."</h4>";
   $username = $row['username'];
   $email    = $row['email'];  
-} ?>	
+} ?>  
 <input class="button" value="Show Twenty Recent CHDs" onclick="location.href='chdList.php';" type="button">&nbsp;&nbsp;
 <input class="button" value="Show CHD Guidelines" onclick="location.href='CHD_Guidelines_and_Release_Notes.xlsx';" type="button">
 <?php
@@ -47,6 +47,7 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
   $devsmed        = implode(",", $_POST["devsmed"]);  
   $devstech       = implode(",", $_POST["devstech"]);  
   $version        = $_POST["version"];
+  $localize        = $_POST["localize"];
   $pagecount      = $_POST["pagecount"];
   $slidecount     = $_POST["slidecount"];
   //$iterationRound = $_POST["iterationRound"];
@@ -67,8 +68,6 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
   $chd_submit_date = date('d-m-Y'); 
   
 ///////////////////////////////////////////////////////////////////////////////////
-
-
   $errorMessage   = "";    
   $successMessage = "";    
   $max_filesize = 1048576; //Maximum filesize in BYTES (currently 1MB).
@@ -78,7 +77,6 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
   $filename3 = $_FILES['supportfile3']['name']; //Get the name of the file (including file extension).
   $filename4 = $_FILES['supportfile4']['name']; //Get the name of the file (including file extension).
   $ADate = date('Y-m-d H:i:s', time());
-
   if($filename1<>"" || $filename2<>"" || $filename3<>"" || $filename4<>""){
     for($x=1; $x<=4; $x++){
       if( empty(${filename.$x}) ){
@@ -100,57 +98,58 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
           $successMessage .= 'Your file '.$filename.' has been uploaded successfully. You can view the uploaded file <a href="' . $upload_path . $fstr . '" title="Your File">here</a>';
         }
       }else{
-		$_POST['errorMessage'] = $errorMessage;
-		//print_r($post_data); die;
+    $_POST['errorMessage'] = $errorMessage;
+    //print_r($post_data); die;
         //header ("Location: chd.php?errorMessage=".urlencode($errorMessage));
         //exit;
       }
     }
-  }	
-
+  } 
 ///////////////////////////////////////////////////////////////////////////////////
   if( empty($errorMessage) ){
-	$FReviewNo = "";
-	if(empty($_POST['edit'])) {
-		$insertFunctionalReview = "INSERT INTO tbl_functional_review(project_id,project_name,project_manager,course_title,start_date,course_level,functional_manager_id,functional_manager_media,functional_manager_tech,developers_id,developers_media,developers_tech,version,pagecount,slidecount,learning_hours,testing_scope,partial_testing,conf_reviews,course_path,sb_path,editsheet,dt_path,test_plan_path,test_checklists,reviewer,comments,support_file1,support_file2,support_file3,support_file4, testenvironment,coursesize,chdreleasedate) values('".$project_id."','".$project."','".$pm."','".$courseTitle."','".$SDate."','".$courseLevel."','".$fmid."','".$fmmedia."','".$fmtech."','".$devsid."','".$devsmed."','".$devstech."', '".$version."','".$pagecount."','".$slidecount."','".$learningHours."','".$testingScope."','".$partialTesting."','".$confReviews."','".$path."','".$sbpath."','".$editsheet."','".$dtpath."','".$tppath."','".$chk."','".$reviewer."','".$comments."','".$fstr1."','".$fstr2."','".$fstr3."','".$fstr4."', '".$testenvironment."','".$coursesize."','".$chd_submit_date."')";
-		if(mysql_query($insertFunctionalReview)){
-			$FReviewNo = mysql_insert_id();
-			$successMessage = "Record has been created for project '".$project."'. Please click on the 'Show All Fileinfo' button to read the entries.";
-		} else {
-			$errorMessage = "Record has not been created for project '".$project . "'";
-		}
-	} else {
-		$updateFunctionalReview = "UPDATE tbl_functional_review set project_id='".$project_id."',project_name='".$project."',project_manager='".$pm."',course_title='".$courseTitle."',start_date='".$SDate."',course_level='".$courseLevel."',functional_manager_id='".$fmid."',functional_manager_media='".$fmmedia."',functional_manager_tech='".$fmtech."',developers_id='".$devsid."',developers_media='".$devsmed."',developers_tech='".$devstech."',version='".$version."',pagecount='".$pagecount."',slidecount='".$slidecount."',learning_hours='".$learningHours."',testing_scope='".$testingScope."',partial_testing='".$partialTesting."',conf_reviews='".$confReviews."',course_path='".$path."',sb_path='".$sbpath."',editsheet='".$editsheet."',dt_path='".$dtpath."',test_plan_path='".$tppath."',test_checklists='".$chk."',reviewer='".$reviewer."',comments='".$comments."',support_file1='".$fstr1."',support_file2='".$fstr2."',support_file3='".$fstr3."',support_file4='".$fstr4."', testenvironment='".$testenvironment."',coursesize='".$coursesize."',chdreleasedate='".$chd_submit_date."', status='' where id =".$_POST['edit'];
-		if(mysql_query($updateFunctionalReview)){
-			$FReviewNo = $_POST['edit'];
-			$successMessage = "Record has been updated for project '".$project."'. Please click on the 'Show All Fileinfo' button to read the entries.";
-		} else {
-			$errorMessage = "Record has not been updated for project '".$project . "'";
-		}
-		//echo '<pre>'; print_r($_POST); die;
-	}
-    if($FReviewNo) { 		
-		$str  = '<html><head><style type="text/css">body{background:url(\'qcr.jpg\') no-repeat;} .table_text{font-family:Calibri; font-size:12px; font-style:normal; line-height:normal; font-weight:normal; font-variant:normal; color:#000000; text-indent:10px; vertical-align:middle;}  
+  $FReviewNo = "";
+  if(empty($_POST['edit'])) {
+
+    $insertFunctionalReview = "INSERT INTO tbl_functional_review(project_id,project_name,project_manager,course_title,start_date,course_level,functional_manager_id,functional_manager_media,functional_manager_tech,developers_id,developers_media,developers_tech,localize,version,pagecount,slidecount,learning_hours,testing_scope,partial_testing,conf_reviews,course_path,sb_path,editsheet,dt_path,test_plan_path,test_checklists,reviewer,comments,support_file1,support_file2,support_file3,support_file4, testenvironment,coursesize,chdreleasedate) values('".$project_id."','".$project."','".$pm."','".$courseTitle."','".$SDate."','".$courseLevel."','".$fmid."','".$fmmedia."','".$fmtech."','".$devsid."','".$devsmed."','".$devstech."', '".$localize."', '".$version."','".$pagecount."','".$slidecount."','".$learningHours."','".$testingScope."','".$partialTesting."','".$confReviews."','".$path."','".$sbpath."','".$editsheet."','".$dtpath."','".$tppath."','".$chk."','".$reviewer."','".$comments."','".$fstr1."','".$fstr2."','".$fstr3."','".$fstr4."', '".$testenvironment."','".$coursesize."','".$chd_submit_date."')";
+    if(mysql_query($insertFunctionalReview)){
+      $FReviewNo = mysql_insert_id();
+      $successMessage = "Record has been created for project '".$project."'. Please click on the 'Show All Fileinfo' button to read the entries.";
+    } else {
+      $errorMessage = "Record has not been created for project '".$project . "'";
+    }
+  } else {
+    $updateFunctionalReview = "UPDATE tbl_functional_review set project_id='".$project_id."',project_name='".$project."',project_manager='".$pm."',course_title='".$courseTitle."',start_date='".$SDate."',course_level='".$courseLevel."',functional_manager_id='".$fmid."',functional_manager_media='".$fmmedia."',functional_manager_tech='".$fmtech."',developers_id='".$devsid."',developers_media='".$devsmed."',developers_tech='".$devstech."',localize='".$localize."',version='".$version."',pagecount='".$pagecount."',slidecount='".$slidecount."',learning_hours='".$learningHours."',testing_scope='".$testingScope."',partial_testing='".$partialTesting."',conf_reviews='".$confReviews."',course_path='".$path."',sb_path='".$sbpath."',editsheet='".$editsheet."',dt_path='".$dtpath."',test_plan_path='".$tppath."',test_checklists='".$chk."',reviewer='".$reviewer."',comments='".$comments."',support_file1='".$fstr1."',support_file2='".$fstr2."',support_file3='".$fstr3."',support_file4='".$fstr4."', testenvironment='".$testenvironment."',coursesize='".$coursesize."',chdreleasedate='".$chd_submit_date."', status='' where id =".$_POST['edit'];
+    if(mysql_query($updateFunctionalReview)){
+      $FReviewNo = $_POST['edit'];
+      $successMessage = "Record has been updated for project '".$project."'. Please click on the 'Show All Fileinfo' button to read the entries.";
+    } else {
+      $errorMessage = "Record has not been updated for project '".$project . "'";
+    }
+    //echo '<pre>'; print_r($_POST); die;
+  }
+    if($FReviewNo) {    
+    $str  = '<html><head><style type="text/css">body{background:url(\'qcr.jpg\') no-repeat;} .table_text{font-family:Calibri; font-size:12px; font-style:normal; line-height:normal; font-weight:normal; font-variant:normal; color:#000000; text-indent:10px; vertical-align:middle;}  
 </style></head>';
-  	$str .= '<body>';    
-  	$str .= '<h4>Dear QA Team,</h4>';
-  	$str .= '<h5>Please find below the CHD details :-</h5>';
-  	$str .= '<table border=1 class="table_text">';
-  	$str .= '<tr><th>S. No.</th><th>Project Name</th><th>Project Manager</th><th>Course Title</th><th>CHD Submission Date</th><th>Course Level</th><th>Functional Manager[ID]</th><th>Developers[ID]</th><th>Functional Manager[Med]</th><th>Developers[Med]</th><th>Functional Manager[Tech]</th><th>Developers[Tech]</th><th>Version</th><th>No of HTML/Flash Pages</th><th>No. of slides in PPT</th><th>Learning Hours</th><th>Course Memory Size in MB</th><th>Scope for testing</th><th>Partial Testing</th><th>Confirmation On Reviews</th><th>Course Path [SVN]</th><th>SB Path [SVN]</th><th>Edit Sheet</th><th>Development Tracker Path [SVN]</th><th>Test Plan Path [SVN]</th><th>Test Case/Checklists [SVN]</th><th>Reviewer</th><th>Comments</th><th>Test Environment</th><th>Attach supporting documents</th></tr>';
-  	$str .= '<tr>';
-  	$str .= "<td>".$FReviewNo."</td>";
+    $str .= '<body>';    
+    $str .= '<h4>Dear QA Team,</h4>';
+    $str .= '<h5>Please find below the CHD details :-</h5>';
+    $str .= '<table border=1 class="table_text">';
+    $str .= '<tr><th>S. No.</th><th>Project Name</th><th>Project Manager</th><th>Course Title</th><th>CHD Submission Date</th><th>Course Level</th><th>Functional Manager[ID]</th><th>Developers[ID]</th><th>Functional Manager[Med]</th><th>Developers[Med]</th><th>Functional Manager[Tech]</th><th>Developers[Tech]</th><th>Localization</th><th>Version</th><th>No of HTML/Flash Pages</th><th>No. of slides in PPT</th><th>Learning Hours</th><th>Course Memory Size in MB</th><th>Scope for testing</th><th>Partial Testing</th><th>Confirmation On Reviews</th><th>Course Path [SVN]</th><th>SB Path [SVN]</th><th>Edit Sheet</th><th>Development Tracker Path [SVN]</th><th>Test Plan Path [SVN]</th><th>Test Case/Checklists [SVN]</th><th>Reviewer</th><th>Comments</th><th>Test Environment</th><th>Attach supporting documents</th></tr>';
+    $str .= '<tr>';
+    $str .= "<td>".$FReviewNo."</td>";
     $str .= "<td>".$project."</td>";
     $str .= "<td>".$pm."</td>";  
     $str .= "<td>".$courseTitle."</td>";
     $str .= "<td>".date("d-m-Y", $SDate)."</td>";
     $str .= "<td>".$courseLevel."</td>";
     $str .= "<td>".$fmid."</td>";
-	$str .= "<td>".$devsid."</td>";
+  $str .= "<td>".$devsid."</td>";
     $str .= "<td>".$fmmedia."</td>";
-	$str .= "<td>".$devsmed."</td>";
+  $str .= "<td>".$devsmed."</td>";
     $str .= "<td>".$fmtech."</td>"; 
     $str .= "<td>".$devstech."</td>"; 
-	$str .= "<td>".$version."</td>";
+    $str .= "<td>".$localize."</td>";
+    $str .= "<td>".$version."</td>";
     $str .= "<td>".$pagecount."</td>";
     $str .= "<td>".$slidecount."</td>";
     $str .= "<td>".$learningHours."</td>";
@@ -168,72 +167,68 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
     $str .= "<td>".$comments."</td>";
     $str .= "<td>".$testenvironment."</td>";
     $str .= "<td>".$fstr1 ."</td>";
-  	$str .= '</tr>';
-  	$str .= '</table>';
-  	$str .= '<br /><br />Thanks and Regards';
-	$str .= '<br /><br /> ';
-	$str .= '</body></html>';
+    $str .= '</tr>';
+    $str .= '</table>';
+    $str .= '<br /><br />Thanks and Regards';
+  $str .= '<br /><br /> ';
+  $str .= '</body></html>';
         
-	$to_emails = array();
-	$to_emails[] = "content_qc@gc-solutions.net"; 
-	//$to_emails[] = "manojs@gc-solutions.net";
-	//$to_emails[] = "kanchanr@gc-solutions.net";	
-	$to_emails[] = getEmail($pm);
-	$to_emails[] = getEmail($fmid);
-	$to_emails[] = getEmail($fmmedia);
-	$to_emails[] = getEmail($fmtech);
-	if(isset($_POST["devsid"]) && is_array($_POST["devsid"]) && count($_POST["devsid"]) > 0){
-		foreach($_POST["devsid"] as $dev)
-		$to_emails[] = getEmail($dev);
-	}
-	if(isset($_POST["devsmed"]) && is_array($_POST["devsmed"]) && count($_POST["devsmed"]) > 0){
-		foreach($_POST["devsmed"] as $dev)
-		$to_emails[] = getEmail($dev);
-	}
-	if(isset($_POST["devstech"]) && is_array($_POST["devstech"]) && count($_POST["devstech"]) > 0){
-		foreach($_POST["devstech"] as $dev)
-		$to_emails[] = getEmail($dev);
-	}
-
-  	$mailer = new phpmailer();
-  	$mailer->IsSMTP();
-  	$mailer->IsHTML(true);
+  $to_emails = array();
+  $to_emails[] = "content_qc@gc-solutions.net"; 
+  //$to_emails[] = "manojs@gc-solutions.net";
+  //$to_emails[] = "kanchanr@gc-solutions.net"; 
+  $to_emails[] = getEmail($pm);
+  $to_emails[] = getEmail($fmid);
+  $to_emails[] = getEmail($fmmedia);
+  $to_emails[] = getEmail($fmtech);
+  if(isset($_POST["devsid"]) && is_array($_POST["devsid"]) && count($_POST["devsid"]) > 0){
+    foreach($_POST["devsid"] as $dev)
+    $to_emails[] = getEmail($dev);
+  }
+  if(isset($_POST["devsmed"]) && is_array($_POST["devsmed"]) && count($_POST["devsmed"]) > 0){
+    foreach($_POST["devsmed"] as $dev)
+    $to_emails[] = getEmail($dev);
+  }
+  if(isset($_POST["devstech"]) && is_array($_POST["devstech"]) && count($_POST["devstech"]) > 0){
+    foreach($_POST["devstech"] as $dev)
+    $to_emails[] = getEmail($dev);
+  }
+    $mailer = new phpmailer();
+    $mailer->IsSMTP();
+    $mailer->IsHTML(true);
   
-  	$mailer->Host     = "smtp.office365.com";//"98.129.185.2";
-	$mailer->Port     = 587;
-  	$mailer->Username = "radar@gc-solutions.net";
-  	$mailer->Password = "Gcube#123";//pass#123";//"Gcube!123";
+    $mailer->Host     = "smtp.office365.com";//"98.129.185.2";
+  $mailer->Port     = 587;
+    $mailer->Username = "radar@gc-solutions.net";
+    $mailer->Password = "Gcube#123";//pass#123";//"Gcube!123";
   
-  	$mailer->SMTPAuth  = true;
-	$mailer->SMTPSecure = "tls";
-  	$mailer->SMTPDebug = false;
+    $mailer->SMTPAuth  = true;
+  $mailer->SMTPSecure = "tls";
+    $mailer->SMTPDebug = false;
   
-  	//$mailer->From     = $email;
-  	//$mailer->FromName = $username;
-
-  	$mailer->From     = "radar@gc-solutions.net";
-  	$mailer->FromName = "RADAR";
-
-	$mailer->AddCC($email,$username);
-
-	$to_emails = array_unique($to_emails);
+    //$mailer->From     = $email;
+    //$mailer->FromName = $username;
+    $mailer->From     = "radar@gc-solutions.net";
+    $mailer->FromName = "RADAR";
+  $mailer->AddCC($email,$username);
+  $to_emails = array_unique($to_emails);
     
-	foreach($to_emails as $email_id){
-		if($email_id != null)
-			$mailer->AddAddress($email_id);
-	}
+  foreach($to_emails as $email_id){
+    if($email_id != null)
+      $mailer->AddAddress($email_id);
+  }
     
-  	$mailer->Subject = "Course Handover Document - CHD No : " . $FReviewNo;
-  	$mailer->Body    = $str."<br />".$username;
+    $mailer->Subject = "Course Handover Document - CHD No : " . $FReviewNo;
+    $mailer->Body    = $str."<br />".$username;
   
-   	$mailer->Send();
-  	echo $mailer->ErrorInfo."<br/>";  
-	header("Location: chd.php?project=".urlencode($project)."&successMessage=".urlencode($successMessage));
+    $mailer->Send();
+    echo $mailer->ErrorInfo."<br/>";  
+  header("Location: chd.php?project=".urlencode($project)."&successMessage=".urlencode($successMessage));
   }else{
     
-	$_POST['errorMessage'] = $errorMessage;
+  $_POST['errorMessage'] = $errorMessage;
     //header("Location: chd.php?project=".urlencode($project)."&errorMessage=".urlencode($errorMessage));
-  }	
+  } 
   }
 }
 ?>
@@ -244,16 +239,13 @@ div.ex{
   width:400px;
   background-color:white
 }
-
 textarea.hide{
   visibility:none;
   display:none;
 }
-
 body{
   background:url('qcr.jpg') no-repeat;
 }
-
 .button{
   background-color: #F7941C;
   border-bottom:#F7941C;
@@ -266,17 +258,16 @@ body{
   border-radius:10px;
   border:1px outset #b37d00;
 }
-
 .table_text {
-	font-family: Calibri;
-	font-size: 12px;
-	font-style: normal;
-	line-height: normal;
-	font-weight: normal;
-	font-variant: normal;
-	color: #000000;
-	text-indent: 10px;
-	vertical-align: middle;
+  font-family: Calibri;
+  font-size: 12px;
+  font-style: normal;
+  line-height: normal;
+  font-weight: normal;
+  font-variant: normal;
+  color: #000000;
+  text-indent: 10px;
+  vertical-align: middle;
 }
 </style>
 <script type="text/javascript" src="js/jquery.js"></script>
@@ -314,11 +305,16 @@ function test(){
   
   var fmtech = trim(document.getElementById('fmtech').value);
   if(fmtech=="Select"){alert("Please select functional manager tech!"); return false;};    
-  
+     var radios = document.getElementsByName("localize");
+  var formValid = false;
+  var i = 0;
+  while(!formValid && i < radios.length) {
+    if (radios[i].checked) formValid = true;
+    i++;        
+  }
+  if(!formValid){alert("Please check one of the options for localization!"); return false;};
   //var devs = trim(document.getElementById('devs').value);
   //if(devs==""){alert("Please select the developers!"); return false;};
-
-
   var radios = document.getElementsByName("version");
   var formValid = false;
   var i = 0;
@@ -328,7 +324,10 @@ function test(){
   }
   if(!formValid){alert("Please check some option for version!"); return false;};
   
+
   
+
+
   var pagecount = trim(document.getElementById('pagecount').value);
   if(pagecount==""){alert("Please enter the number of HTML/flash pages!"); return false;}
   else if(isNaN(pagecount)){alert("Please enter the number of HTML/flash pages!"); return false;};
@@ -338,7 +337,6 @@ function test(){
   else if(isNaN(slidecount)){alert("Please enter the number of slide in PPT!"); return false;};
   //var iterationRound = trim(document.getElementById('iterationRound').value);
   //if(iterationRound==""){alert("Please select the Iteration Round #!"); return false;};
-
   var learningHours = trim(document.getElementById('learningHours').value);
   if(learningHours==""){alert("Please enter the learning hours!"); return false;}
   else if(isNaN(learningHours)){alert("Please enter the number of learning hours!"); return false;};
@@ -347,7 +345,6 @@ function test(){
   if(coursesize=="0"){alert("Please enter the course size in MBs!"); return false;}
   if(isNaN(coursesize)){alert("Please enter the number for course size in MBs!"); return false;}
  // check for course size here
-
 //   var radios = document.getElementsByName("learningHours");
 //   var formValid = false;
 //   var i = 0;
@@ -392,17 +389,14 @@ function test(){
     var editsheet = trim(document.getElementById('editsheet').value);
     if(editsheet==""){alert("Please enter the edit sheet value!"); return false;};
   }  
-
   var dtpath = trim(document.getElementById('dtpath').value);
   if(dtpath==""){alert("Please enter the development tracker path!"); return false;};
-
   var tppath = trim(document.getElementById('tppath').value);
   if(tppath==""){alert("Please enter the test plan path!"); return false;};
   
   var chk = trim(document.getElementById('chk').value);
   if(chk==""){alert("Please enter the test case/checklists!"); return false;};
 }
-
 function showAll(){
   var project = trim(document.getElementById('project').value);
   var pro_id = document.forms["tstest"]["project"].options[document.forms['tstest']['project'].selectedIndex].getAttribute('ref');
@@ -413,12 +407,10 @@ function showAll(){
     window.location.href="managefunctionalreview.php?project=" + project+"&pro_id="+pro_id;  
   }
 }
-
 function filloption(str)
 {
 var cat=str;
 //alert(dept);
-
 if (window.XMLHttpRequest)
   {// code for IE7+, Firefox, Chrome, Opera, Safari
   xmlhttp=new XMLHttpRequest();
@@ -437,56 +429,46 @@ xmlhttp.onreadystatechange=function()
 xmlhttp.open("GET","catdump.php?q="+cat,true);
 xmlhttp.send();
 }
-
 function submitresponse(str)
 {
 re = /^[A-Za-z ]+$/;
 //alert (str);
 comm='txt'+str;
 //alert(comm);
-
 var ptr = document.getElementById(str).value;
 //alert (ptr);
-
 var ctr = trim(document.getElementById(comm).value);
 //alert(ctr);
-
 if (ptr=="select")
 {
  alert ("The status must be selected");
  //document.getElementById(str).focus();
  return false;
 }
-
 if (ctr=="")
 {
  alert ("Reason must be specified");
  //document.getElementById(str).focus();
  return false;
 }
-
 if(!ctr.match(re))
   {
   alert("Comment should be Alphabet Only");
   return false;
   }
-
 if (str=="")
   {
   document.getElementById("ResHint").innerHTML="";
   return;
   }
-
 if (window.XMLHttpRequest)
   {// code for IE7+, Firefox, Chrome, Opera, Safari
   xmlhttp=new XMLHttpRequest();
   }
-
 else
   {// code for IE6, IE5
   xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
   }
-
 xmlhttp.onreadystatechange=function()
   {
   if (xmlhttp.readyState==4 && xmlhttp.status==200)
@@ -494,46 +476,37 @@ xmlhttp.onreadystatechange=function()
     document.getElementById("ResHint").innerHTML=xmlhttp.responseText;
     }
   }
-
 ctr=encodeURIComponent(ctr);
 xmlhttp.open("GET","updatefunstat.php?q="+str+ "&r=" + ptr+ "&s=" + ctr,true);
 xmlhttp.send();
-
 }
-
-
 function submitrev(str)
 {
 //alert (str);
 mywindow=window.open ("editreviewee.php?id="+str,"Ratting","scrollbars=1,width=550,height=180,0,status=0,");
 if (window.focus) {mywindow.focus()}
 }
-
 function trim(s)
 {
-	return rtrim(ltrim(s));
+  return rtrim(ltrim(s));
 }
-
 function ltrim(s)
 {
-	var l=0;
-	while(l < s.length && s[l] == ' ')
-	{	l++; }
-	return s.substring(l, s.length);
+  var l=0;
+  while(l < s.length && s[l] == ' ')
+  { l++; }
+  return s.substring(l, s.length);
 }
-
 function rtrim(s)
 {
-	var r=s.length -1;
-	while(r > 0 && s[r] == ' ')
-	{	r-=1;	}
-	return s.substring(0, r+1);
+  var r=s.length -1;
+  while(r > 0 && s[r] == ' ')
+  { r-=1; }
+  return s.substring(0, r+1);
 }
 $(document).ready(function(){
-	
+  
 });
-
-
 </script>
 </head>
 
@@ -542,7 +515,6 @@ $(document).ready(function(){
 <?php 
 $message = "";  
 $color   = "";
-
 if( isset($_REQUEST["successMessage"]) && !empty($_REQUEST["successMessage"]) ){
   $message = $_REQUEST["successMessage"];  
   $color   = "green";    
@@ -550,7 +522,6 @@ if( isset($_REQUEST["successMessage"]) && !empty($_REQUEST["successMessage"]) ){
   $message = $_POST["errorMessage"];  
   $color   = "red";  
 }
-
 if( !empty($message) ){
 ?> 
 <table cellpading="0" cellspacing="0" class="table_text">
@@ -567,41 +538,42 @@ if( !empty($message) ){
 ?>
 <?php
 if(isset($_GET['chdid']) && !empty($_GET['chdid'])) {
-	$query = "select * from tbl_functional_review where id = ".$_GET['chdid'];
-	$retval = mysql_query($query, $con);
-	$row = mysql_fetch_assoc($retval); 
-	if($row['status'] != "rejected") {
-		exit;
-	}
-	$_REQUEST['project'] = $row['project_name'];
-	$_REQUEST['pm'] = $row['project_manager'];
-	$_REQUEST['courseTitle'] = $row['course_title'];
-	$_REQUEST['SDate'] = $row['start_date'];
-	$_REQUEST['courseLevel'] = $row['course_level'];
-	$_REQUEST['fmid'] = $row['functional_manager_id'];
-	$_REQUEST['fmmedia'] = $row['functional_manager_media'];
-	$_REQUEST['fmtech'] = $row['functional_manager_tech'];
-	$_REQUEST['devsid'] = explode(",", $row['developers_id']);
-	$_REQUEST['devstech'] = explode(",", $row['developers_tech']);
-	$_REQUEST['devsmed'] = explode(",", $row['developers_media']);
-	$_REQUEST["version"] = $row['version'];
-	$_REQUEST["pagecount"] = $row['pagecount'];
-	$_REQUEST["slidecount"] = $row['slidecount'];
-	$_REQUEST["iterationRound"] = $row['iterationRound'];
-	$_REQUEST["learningHours"] = $row['learning_hours'];
-	$_REQUEST["coursesize"] = $row['coursesize'];
-	$_REQUEST["testingScope"] = $row['testing_scope'];
-	$_REQUEST["partialTesting"] = explode(",", $row['partial_testing']);
-	$_REQUEST["confReviews"] = explode(",", $row['conf_reviews']);
-	$_REQUEST["path"] = $row['course_path'];
-	$_REQUEST["sbpath"] = $row['sb_path'];
-	$_REQUEST["editsheet"] = $row['editsheet'];
-	$_REQUEST["dtpath"] = $row['dt_path'];
-	$_REQUEST["tppath"] = $row['test_plan_path'];
-	$_REQUEST["chk"] = $row['test_checklists'];
-	$_REQUEST["comments"] = $row['comments'];
-	$_REQUEST["testenvironment"] = explode(",", $row['testenvironment']);
-	$_REQUEST["function"] = $row['function'];
+  $query = "select * from tbl_functional_review where id = ".$_GET['chdid'];
+  $retval = mysql_query($query, $con);
+  $row = mysql_fetch_assoc($retval); 
+  if($row['status'] != "rejected") {
+    exit;
+  }
+  $_REQUEST['project'] = $row['project_name'];
+  $_REQUEST['pm'] = $row['project_manager'];
+  $_REQUEST['courseTitle'] = $row['course_title'];
+  $_REQUEST['SDate'] = $row['start_date'];
+  $_REQUEST['courseLevel'] = $row['course_level'];
+  $_REQUEST['fmid'] = $row['functional_manager_id'];
+  $_REQUEST['fmmedia'] = $row['functional_manager_media'];
+  $_REQUEST['fmtech'] = $row['functional_manager_tech'];
+  $_REQUEST['devsid'] = explode(",", $row['developers_id']);
+  $_REQUEST['devstech'] = explode(",", $row['developers_tech']);
+  $_REQUEST['devsmed'] = explode(",", $row['developers_media']);
+  $_REQUEST["localize"] = $row['localize'];
+  $_REQUEST["version"] = $row['version'];
+  $_REQUEST["pagecount"] = $row['pagecount'];
+  $_REQUEST["slidecount"] = $row['slidecount'];
+  $_REQUEST["iterationRound"] = $row['iterationRound'];
+  $_REQUEST["learningHours"] = $row['learning_hours'];
+  $_REQUEST["coursesize"] = $row['coursesize'];
+  $_REQUEST["testingScope"] = $row['testing_scope'];
+  $_REQUEST["partialTesting"] = explode(",", $row['partial_testing']);
+  $_REQUEST["confReviews"] = explode(",", $row['conf_reviews']);
+  $_REQUEST["path"] = $row['course_path'];
+  $_REQUEST["sbpath"] = $row['sb_path'];
+  $_REQUEST["editsheet"] = $row['editsheet'];
+  $_REQUEST["dtpath"] = $row['dt_path'];
+  $_REQUEST["tppath"] = $row['test_plan_path'];
+  $_REQUEST["chk"] = $row['test_checklists'];
+  $_REQUEST["comments"] = $row['comments'];
+  $_REQUEST["testenvironment"] = explode(",", $row['testenvironment']);
+  $_REQUEST["function"] = $row['function'];
 }
   $project        = $_REQUEST["project"];
   $pm             = $_REQUEST["pm"];
@@ -614,6 +586,7 @@ if(isset($_GET['chdid']) && !empty($_GET['chdid'])) {
   $devsid         = $_REQUEST["devsid"];
   $devstech       = $_REQUEST["devstech"];
   $devsmed         = $_REQUEST["devsmed"];
+  $localize        = $_REQUEST["localize"];
   $version        = $_REQUEST["version"];
   $pagecount      = $_REQUEST["pagecount"];
   $slidecount     = $_REQUEST["slidecount"];
@@ -640,8 +613,8 @@ if(isset($_GET['chdid']) && !empty($_GET['chdid'])) {
   <TD><br /><br /></TD>
 </TR>
 <TR>
-	<TD>Project Name <font color='red'>*</font></TD>
-	<td>
+  <TD>Project Name <font color='red'>*</font></TD>
+  <td>
     <select name="project" id="project"> 
       <option size="30" selected>Select</option>  
 <?php
@@ -649,7 +622,6 @@ if(isset($_GET['chdid']) && !empty($_GET['chdid'])) {
     
   $queryProject   = mysql_query($selectProject);
   $numrowsProject = mysql_num_rows($queryProject);
-
 if(!empty($numrowsProject)){ 
   while($fetchProject = mysql_fetch_array($queryProject)){
     if(strlen($fetchProject['projectname'])<>0){
@@ -663,7 +635,7 @@ if(!empty($numrowsProject)){
 } 
 ?>
     </select>
-	<input type="hidden" name="pro_id" id="pro_id_hidden" value="" />
+  <input type="hidden" name="pro_id" id="pro_id_hidden" value="" />
   </td>
 </TR>
 
@@ -725,10 +697,10 @@ if(!empty($numrowsProject)){
       $queryFMID   = mysql_query($selectFMID);
       $numrowsFMID = mysql_num_rows($queryFMID);
       //$tmp =array();
-	  if(!empty($numrowsFMID)){ 
+    if(!empty($numrowsFMID)){ 
         while($fetchFMID = mysql_fetch_array($queryFMID)){
           //$tmp[] = $fetchFMID['username'];
-		  if(strlen($fetchFMID['username'])<>0){
+      if(strlen($fetchFMID['username'])<>0){
 ?>
             <option <?php if($fmid==$fetchFMID['username'])echo " selected"; ?>><?php echo $fetchFMID['username']; ?></option> 
 <?php 
@@ -778,8 +750,8 @@ if(!empty($numrowsDEV)){
       $numrowsFMMedia = mysql_num_rows($queryFMMedia);
       if(!empty($numrowsFMMedia)){ 
         while($fetchFMMedia = mysql_fetch_array($queryFMMedia)){
-	     
-		  if(strlen($fetchFMMedia['username'])<>0){
+       
+      if(strlen($fetchFMMedia['username'])<>0){
 ?>
             <option<?php if($fmmedia==$fetchFMMedia['username'])echo " selected"; ?>><?php echo $fetchFMMedia['username']; ?></option> 
 <?php 
@@ -829,7 +801,7 @@ if(!empty($numrowsDEV)){
       $numrowsFMTech = mysql_num_rows($queryFMTech);
       if(!empty($numrowsFMTech)){ 
         while($fetchFMTech = mysql_fetch_array($queryFMTech)){
-		if(strlen($fetchFMTech['username'])<>0){
+    if(strlen($fetchFMTech['username'])<>0){
 ?>
             <option<?php if($fmtech==$fetchFMTech['username'])echo " selected"; ?>><?php echo $fetchFMTech['username']; ?></option> 
 <?php 
@@ -866,7 +838,15 @@ if(!empty($numrowsDEV)){
   </select>
   </TD>
 </TR>
+<tr>
 
+  <TD><label for="type">Localization</label> <font color='red'>*</font></TD>
+   <TD>
+    <label for="localizeYes"><input class="radio_style " id="localizeYes" name="localize" type="radio" value="Localized" <?php echo $localize == "Localized" ? "checked" : "" ?>>Localized</label>
+    <label for="localizeNo"><input class="radio_style " id="localizeNo" name="localize" type="radio" value="Non-Localized" <?php echo $localize == "Non-Localized" ? "checked" : "" ?>>Non-Localized</label>
+   
+  </TD>
+</tr>
 <TR>
   <TD><label for="type">Version</label> <font color='red'>*</font></TD>
   <TD>
@@ -890,16 +870,16 @@ if(!empty($numrowsDEV)){
 <!--<TR>
   <TD>Iteration round # <font color='red'>*</font></TD>
   <TD>
-	<select name="iterationRound" id="iterationRound">
-		<option value="">Select</option>
-		<option value="R1">R1</option>
-		<option value="R2">R2</option>
-		<option value="R3">R3</option>
-		<option value="R4">R4</option>
-		<option value="R5">R5</option>
-		<option value="R6">R6</option>
-		<option value="R7">R7</option>
-	</select>
+  <select name="iterationRound" id="iterationRound">
+    <option value="">Select</option>
+    <option value="R1">R1</option>
+    <option value="R2">R2</option>
+    <option value="R3">R3</option>
+    <option value="R4">R4</option>
+    <option value="R5">R5</option>
+    <option value="R6">R6</option>
+    <option value="R7">R7</option>
+  </select>
   </TD>
 </TR>-->
 
@@ -947,15 +927,15 @@ if(!empty($numrowsDEV)){
     <label for="clienteditalpha"><input type="checkbox" name="partialTesting[]" id="clienteditalpha" class="disable" value="Clientedit alpha" <?php if(in_array("Clientedit alpha", $partialTesting))echo " checked"; ?>>Clientedit alpha</label>
     <label for="clienteditbeta"><input type="checkbox" name="partialTesting[]" id="clienteditbeta" class="disable" value="Clientedit beta" <?php if(in_array("Clientedit beta", $partialTesting))echo " checked"; ?>>Clientedit beta</label>
     <label for="clienteditgold"><input type="checkbox" name="partialTesting[]" id="clienteditgold" class="disable" value="Clientedit gold" <?php if(in_array("Clientedit gold", $partialTesting))echo " checked"; ?>>Clientedit gold</label>
-	<br/>
-	<label for="scormtesting" style="margin-left:10px;"><input type="checkbox" name="partialTesting[]" id="scormtesting" class="" value="Scorm 1.2" <?php if(in_array("Scorm 1.2", $partialTesting))echo " checked"; ?>>Scorm 1.2</label>
-	<label for="scorm2004"><input type="checkbox" name="partialTesting[]" id="scorm2004" class="" value="Scorm 2004" <?php if(in_array("Scorm 2004", $partialTesting))echo " checked"; ?>>Scorm 2004</label>
-	
-	<label for="AICC" ><input type="checkbox" name="partialTesting[]" id="AICC" class="" value="AICC" <?php if(in_array("AICC", $partialTesting))echo " checked"; ?>>AICC</label>
+  <br/>
+  <label for="scormtesting" style="margin-left:10px;"><input type="checkbox" name="partialTesting[]" id="scormtesting" class="" value="Scorm 1.2" <?php if(in_array("Scorm 1.2", $partialTesting))echo " checked"; ?>>Scorm 1.2</label>
+  <label for="scorm2004"><input type="checkbox" name="partialTesting[]" id="scorm2004" class="" value="Scorm 2004" <?php if(in_array("Scorm 2004", $partialTesting))echo " checked"; ?>>Scorm 2004</label>
+  
+  <label for="AICC" ><input type="checkbox" name="partialTesting[]" id="AICC" class="" value="AICC" <?php if(in_array("AICC", $partialTesting))echo " checked"; ?>>AICC</label>
     <label for="audiomapping"><input type="checkbox" name="partialTesting[]" id="audiomapping" class="check" value="Audio mapping" <?php if(in_array("Audio mapping", $partialTesting))echo " checked"; ?>>Audio mapping</label>
     <label for="audiosynching"><input type="checkbox" name="partialTesting[]" id="audiosynching" class="check" value="Audio synching" <?php if(in_array("Audio synching", $partialTesting))echo " checked"; ?>>Audio synching</label>
     
-	<label for="ILT"><input type="checkbox" name="partialTesting[]" id="ILT" value="ILT" <?php if(in_array("ILT", $partialTesting))echo " checked"; ?>>ILT</label>
+  <label for="ILT"><input type="checkbox" name="partialTesting[]" id="ILT" value="ILT" <?php if(in_array("ILT", $partialTesting))echo " checked"; ?>>ILT</label>
   </TD>
 </TR>
 
@@ -1054,7 +1034,7 @@ $testenvironment))echo " checked"; ?>>Samsung Grand 2</label>
 
 
 <TR>
-	<TD valign="top">Attach supporting documents</TD>
+  <TD valign="top">Attach supporting documents</TD>
   <TD>
     <table cellpading="0" cellspacing="0">
       <tr>
@@ -1089,22 +1069,22 @@ $testenvironment))echo " checked"; ?>>Samsung Grand 2</label>
 </html> 
 <script>
 $(document).ready(function(){
-	$(".version").click(function(){
-		if($(this).is(":checked")){
-			var version = $(this).val();
-			if(version != "beta" && version != "gold") {
-				$(".disable").attr("disabled", true);
-				$(".disable").attr("checked", false);
-			} else  {
-				$(".disable").attr("disabled", false);
-			}
-		}
-	});
+  $(".version").click(function(){
+    if($(this).is(":checked")){
+      var version = $(this).val();
+      if(version != "beta" && version != "gold") {
+        $(".disable").attr("disabled", true);
+        $(".disable").attr("checked", false);
+      } else  {
+        $(".disable").attr("disabled", false);
+      }
+    }
+  });
     var ver = '<?php echo $_REQUEST['version']?>';
-	if(ver != "beta" && ver != "gold" && ver != "") {
-		$(".disable").attr("checked", false);
-		$(".disable").attr("disabled", true);
-	}
+  if(ver != "beta" && ver != "gold" && ver != "") {
+    $(".disable").attr("checked", false);
+    $(".disable").attr("disabled", true);
+  }
 });
 function checkAllPT(tsval){
   if(tsval=='e2e'){
@@ -1116,14 +1096,12 @@ function checkAllPT(tsval){
 </script>
 
 <?php
-
 function getEmail($username){
-	$result = mysql_query("select email from login where username = '".$username."' limit 0,1");
-	if(mysql_num_rows($result) == 1) {
-		$value = mysql_fetch_object($result);
-		return $value->email;
-	}
-	return null;
+  $result = mysql_query("select email from login where username = '".$username."' limit 0,1");
+  if(mysql_num_rows($result) == 1) {
+    $value = mysql_fetch_object($result);
+    return $value->email;
+  }
+  return null;
 }
-
 ?>

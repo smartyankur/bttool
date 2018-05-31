@@ -107,6 +107,7 @@ body{
   <th>Developers[Media]</th>
   <th>Functional Manager[Tech]</th>
   <th>Developers[Tech]</th>
+   <th>Localization</th>
   <th>Version</th>
   <th>No of HTML/Flash Pages</th>
   <th>No of Slides in PPT</th>
@@ -124,6 +125,7 @@ body{
   <th>Comments</th>  
   <th>Test Environment</th>  
   <th>Attach supporting documents</th>
+ 
 </tr>
 <?php
 $i = 1;
@@ -146,6 +148,7 @@ $rownumbers = 29;
 		echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['developers_media']."</div>"."</td>";
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['functional_manager_tech']."</div>"."</td>"; 
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['developers_tech']."</div>"."</td>";
+         echo "<td>".$fetchFuncRvw['localize']."</td>";
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['version']."</div>"."</td>";
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['pagecount']."</div>"."</td>";
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['slidecount']."</div>"."</td>";
@@ -168,6 +171,7 @@ $rownumbers = 29;
         ".((!empty($fetchFuncRvw['support_file3']))?'<a href="support/'.$fetchFuncRvw['support_file3'].'">'.$fetchFuncRvw['support_file3'].'</a><br />':'')."
         ".((!empty($fetchFuncRvw['support_file4']))?'<a href="support/'.$fetchFuncRvw['support_file4'].'">'.$fetchFuncRvw['support_file4'].'</a><br />':'')."
         </div></td>";
+        
       echo "</tr>";
       $i++;  
     }

@@ -12,13 +12,12 @@ error_reporting( E_ALL & ~E_DEPRECATED & ~E_NOTICE );
 // turn on output buffering 
 ob_start();
 
-  $con = mysql_connect("localhost", "radar", "thelevonad");
-
 define('DB_DRIVER', 'mysql');
 define("DB_HOST", "localhost");
-define("DB_USER", "radar");
-define("DB_PASSWORD", "thelevonad");
-define("DB_DATABASE", "radar");
+
+define("DB_USER", "root");
+define("DB_PASSWORD", "");
+define("DB_DATABASE", "radartesting");
 
 
 // basic options for PDO 
