@@ -123,7 +123,10 @@ if(!empty($q) && $cnt > 0) {
   <!-- th>Course Status</th -->
   <!-- th>Select New Course Status</th -->
   <!-- th>Submit Course Status</th -->
-  <th>Function</th>
+  <th>Asignee (Developer)</th>
+  <th>Function (Developer)</th>
+  <th>Asignee (Reviewer)</th>
+  <th>Function (Reviewer)</th>
   <th>Bug Cat</th>
   <th>Bug Sub Cat</th>
   <th>Severity</th>
@@ -135,7 +138,8 @@ if(!empty($q) && $cnt > 0) {
   <th>Upload Date</th>
   <!-- th>Last time when bug status was assigned</th -->
   <!-- th>Last time who assigned bug status</th -->
-  <th>Asignee</th>
+  
+  
   <th>QC</th>
   <th>Round</th>
   <!-- th>Uploaded File</th -->
@@ -182,7 +186,10 @@ foreach($results as $row)
   </select></TD>
   <TD><input type="button" value="Change Status" onclick="submitresponse(<?php echo $row['id'] ?>)"></TD -->
   <?php
+  echo "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['asignee'])."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:100;height:40;overflow:auto>".htmlentities($row['function'])."</div>"."</td>";
+  echo "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['asignee_reviewer'])."</div>"."</td>";
+  echo "<td>"."<div align=center style="."width:100;height:40;overflow:auto>".htmlentities($row['function_reviewer'])."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:100;height:40;overflow:auto>".htmlentities($cat_res['category'])."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:200;height:40;overflow:auto>".htmlentities($subcat_res['category'])."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:80;height:40;overflow:auto>".htmlentities($row['severity'])."</div>"."</td>"; 
@@ -204,7 +211,8 @@ foreach($results as $row)
   echo "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['uploaddate'])."</div>"."</td>";
   // echo "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['whenchangedstatus'])."</div>"."</td>";
   // echo "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['whochangedstatus'])."</div>"."</td>";
-  echo "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['asignee'])."</div>"."</td>";
+  
+  
   echo "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['qc'])."</div>"."</td>";
   echo "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['round'])."</div>"."</td>";
   // echo "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['filename'])."</div>"."</td>";

@@ -78,6 +78,8 @@
 		$p=mysql_real_escape_string($_POST["screen"]);
 		$q=mysql_real_escape_string($_POST["severity"]);
 		$chd=explode("-",$_POST["course"]);
+		$as_re=mysql_real_escape_string($_POST["asignee_reviewer"]);
+		$fn_re=mysql_real_escape_string($_POST["function_reviewer"]);
 		//$loggeduser=mysql_real_escape_string($_POST["user"]);
 		$filename = $_FILES['userfile']['name']; // Get the name of the file (including file extension).
 		if($filename<>"")
@@ -107,41 +109,41 @@
 				{
 					$successMessage='Your file '.$filename.' upload was successful for project :'.$a.' and phase :'.$f.',You can view the file <a href="' . $upload_path . $str . '" title="Your File" target="_blank">here</a>'; // It worked.
 					echo "</br>";
-					$query="INSERT INTO qcuploadinfo(project_id,chd_id,project,phase,module,topic,receivedate,browser,coursestatus,function, bcat,bscat,bdr,asignee,qc,screen,filepath,filename,uploaddate,severity,whenchangedstatus,whochangedstatus) values('".$pro_id."','".$chd[0]."','".$a."','".$f."','".$g."','".$h."','".$x."','".$j."','".$k."','".$fun."','".$l."','".$l1."','".$m."','".$n."','".$o."','".$p."','".$str."','".$filename."','".$mydate."','".$q."','".$mydate."','".$username."')";
+					$query="INSERT INTO qcuploadinfo(project_id,chd_id,project,phase,module,topic,receivedate,browser,coursestatus,function, bcat,bscat,bdr,asignee,qc,screen,filepath,filename,uploaddate,severity,whenchangedstatus,whochangedstatus,asignee_reviewer,function_reviewer) values('".$pro_id."','".$chd[0]."','".$a."','".$f."','".$g."','".$h."','".$x."','".$j."','".$k."','".$fun."','".$l."','".$l1."','".$m."','".$n."','".$o."','".$p."','".$str."','".$filename."','".$mydate."','".$q."','".$mydate."','".$username."','".$as_re."','".$fn_re."')";
 				
 					
 					if (mysql_query($query))
 					{
 						//echo "Record created with id :".$row['id']." and description :".$w;
-						header ("Location: openbug2.php?message=".urlencode($successMessage)."&proj=".urlencode($a)."&fmdetails=".urlencode($b)."&phase=".urlencode($f)."&module=".urlencode($g)."&topic=".urlencode($h)."&receivedate=".urlencode($i)."&browser=".urlencode($j)."&coursestatus=".urlencode($k)."&function=".urlencode($fun)."&bcat=".urlencode($l)."&bscat".urlencode($l1)."&bdr=".urlencode($m)."&asignee=".urlencode($n)."&qc=".urlencode($o)."&screen=".urlencode($p)."&severity=".urlencode($q)."&course=".urlencode($_POST["course"]));
+						header ("Location: openbug2.php?message=".urlencode($successMessage)."&proj=".urlencode($a)."&fmdetails=".urlencode($b)."&phase=".urlencode($f)."&module=".urlencode($g)."&topic=".urlencode($h)."&receivedate=".urlencode($i)."&browser=".urlencode($j)."&coursestatus=".urlencode($k)."&function=".urlencode($fun)."&bcat=".urlencode($l)."&bscat".urlencode($l1)."&bdr=".urlencode($m)."&asignee=".urlencode($n)."&qc=".urlencode($o)."&screen=".urlencode($p)."&severity=".urlencode($q)."&course=".urlencode($_POST["course"])."&asignee_reviewer=".urlencode($_POST["asignee_reviewer"])."&function_reviewer=".urlencode($_POST["function_reviewer"]));
 					}
 					else
 					{
 						$errorMessage = "Uploadinfo table couldn't be updated.";
-						header ("Location: openbug2.php?errorMessage=".urlencode($errorMessage)."&proj=".urlencode($a)."&fmdetails=".urlencode($b)."&phase=".urlencode($f)."&module=".urlencode($g)."&topic=".urlencode($h)."&receivedate=".urlencode($i)."&browser=".urlencode($j)."&coursestatus=".urlencode($k)."&function=".$fun."&bcat=".urlencode($l)."&bscat=".urlencode($l1)."&bdr=".urlencode($m)."&asignee=".urlencode($n)."&qc=".urlencode($o)."&screen=".urlencode($p)."&severity=".urlencode($q)."&course=".urlencode($_POST["course"]));
+						header ("Location: openbug2.php?errorMessage=".urlencode($errorMessage)."&proj=".urlencode($a)."&fmdetails=".urlencode($b)."&phase=".urlencode($f)."&module=".urlencode($g)."&topic=".urlencode($h)."&receivedate=".urlencode($i)."&browser=".urlencode($j)."&coursestatus=".urlencode($k)."&function=".$fun."&bcat=".urlencode($l)."&bscat=".urlencode($l1)."&bdr=".urlencode($m)."&asignee=".urlencode($n)."&qc=".urlencode($o)."&screen=".urlencode($p)."&severity=".urlencode($q)."&course=".urlencode($_POST["course"])."&asignee_reviewer=".urlencode($_POST["asignee_reviewer"])."&function_reviewer=".urlencode($_POST["function_reviewer"]));
 
 					}
 				} else {
 					$errorMessage = "Uploadinfo table couldn't be updated.";
-					header ("Location: openbug2.php?errorMessage=".urlencode($errorMessage)."&proj=".urlencode($a)."&fmdetails=".urlencode($b)."&phase=".urlencode($f)."&module=".urlencode($g)."&topic=".urlencode($h)."&receivedate=".urlencode($i)."&browser=".urlencode($j)."&coursestatus=".urlencode($k)."&function=".$fun."&bcat=".urlencode($l)."&bscat=".urlencode($l1)."&bdr=".urlencode($m)."&asignee=".urlencode($n)."&qc=".urlencode($o)."&screen=".urlencode($p)."&severity=".urlencode($q)."&course=".urlencode($_POST["course"]));
+					header ("Location: openbug2.php?errorMessage=".urlencode($errorMessage)."&proj=".urlencode($a)."&fmdetails=".urlencode($b)."&phase=".urlencode($f)."&module=".urlencode($g)."&topic=".urlencode($h)."&receivedate=".urlencode($i)."&browser=".urlencode($j)."&coursestatus=".urlencode($k)."&function=".$fun."&bcat=".urlencode($l)."&bscat=".urlencode($l1)."&bdr=".urlencode($m)."&asignee=".urlencode($n)."&qc=".urlencode($o)."&screen=".urlencode($p)."&severity=".urlencode($q)."&course=".urlencode($_POST["course"])."&asignee_reviewer=".urlencode($_POST["asignee_reviewer"])."&function_reviewer=".urlencode($_POST["function_reviewer"]));
 				}
 			} else {
-				header ("Location: openbug2.php?errorMessage=".urlencode($errorMessage)."&proj=".urlencode($a)."&fmdetails=".urlencode($b)."&phase=".urlencode($f)."&module=".urlencode($g)."&topic=".urlencode($h)."&receivedate=".urlencode($i)."&browser=".urlencode($j)."&coursestatus=".urlencode($k)."&function=".$fun."&bcat=".urlencode($l)."&bscat=".urlencode($l1)."&bdr=".urlencode($m)."&asignee=".urlencode($n)."&qc=".urlencode($o)."&screen=".urlencode($p)."&severity=".urlencode($q)."&course=".urlencode($_POST["course"]));
+				header ("Location: openbug2.php?errorMessage=".urlencode($errorMessage)."&proj=".urlencode($a)."&fmdetails=".urlencode($b)."&phase=".urlencode($f)."&module=".urlencode($g)."&topic=".urlencode($h)."&receivedate=".urlencode($i)."&browser=".urlencode($j)."&coursestatus=".urlencode($k)."&function=".$fun."&bcat=".urlencode($l)."&bscat=".urlencode($l1)."&bdr=".urlencode($m)."&asignee=".urlencode($n)."&qc=".urlencode($o)."&screen=".urlencode($p)."&severity=".urlencode($q)."&course=".urlencode($_POST["course"])."&asignee_reviewer=".urlencode($_POST["asignee_reviewer"])."&function_reviewer=".urlencode($_POST["function_reviewer"]));
 			}			
 		} else if(empty($errorMessage)){
 			//$date = date('m/d/Y h:i:s a', time());
 			$mydate = date('Y-m-d h:i:s', time());     
-			$query="INSERT INTO qcuploadinfo(project_id,chd_id, project,phase,module,topic,receivedate,browser,coursestatus,function,bcat,bscat,bdr,asignee,qc,screen,uploaddate,severity,whenchangedstatus,whochangedstatus) values('".$pro_id."','".$chd[0]."','".$a."','".$f."','".$g."','".$h."','".$x."','".$j."','".$k."','".$fun."','".$l."','".$l1."','".$m."','".$n."','".$o."','".$p."','".$mydate."','".$q."','".$mydate."','".$username."')";
+			$query="INSERT INTO qcuploadinfo(project_id,chd_id, project,phase,module,topic,receivedate,browser,coursestatus,function,bcat,bscat,bdr,asignee,qc,screen,uploaddate,severity,whenchangedstatus,whochangedstatus,asignee_reviewer,function_reviewer) values('".$pro_id."','".$chd[0]."','".$a."','".$f."','".$g."','".$h."','".$x."','".$j."','".$k."','".$fun."','".$l."','".$l1."','".$m."','".$n."','".$o."','".$p."','".$mydate."','".$q."','".$mydate."','".$username."','".$as_re."','".$fn_re."')";
 				
 			if (mysql_query($query))
 			{
 				//echo "Record created with id :".$row['id']." and description :".$w;
 				$successMessage="The bug has been logged without file. You can use filters and click on Show Bug button to see the details";
 				//header ("Location: openbug2.php?message=".urlencode($msg)."&proj=".urlencode($a)."&pm=".urlencode($b));
-				header ("Location: openbug2.php?message=".urlencode($successMessage)."&proj=".urlencode($a)."&fmdetails=".urlencode($b)."&phase=".urlencode($f)."&module=".urlencode($g)."&topic=".urlencode($h)."&receivedate=".urlencode($i)."&browser=".urlencode($j)."&coursestatus=".urlencode($k)."&function=".$fun."&bcat=".urlencode($l)."&bscat=".urlencode($l1)."&bdr=".urlencode($m)."&asignee=".urlencode($n)."&qc=".urlencode($o)."&screen=".urlencode($p)."&severity=".urlencode($q)."&course=".urlencode($_POST["course"]));
+				header ("Location: openbug2.php?message=".urlencode($successMessage)."&proj=".urlencode($a)."&fmdetails=".urlencode($b)."&phase=".urlencode($f)."&module=".urlencode($g)."&topic=".urlencode($h)."&receivedate=".urlencode($i)."&browser=".urlencode($j)."&coursestatus=".urlencode($k)."&function=".$fun."&bcat=".urlencode($l)."&bscat=".urlencode($l1)."&bdr=".urlencode($m)."&asignee=".urlencode($n)."&qc=".urlencode($o)."&screen=".urlencode($p)."&severity=".urlencode($q)."&course=".urlencode($_POST["course"])."&asignee_reviewer=".urlencode($_POST["asignee_reviewer"])."&function_reviewer=".urlencode($_POST["function_reviewer"]));
 			} else {
 				$errorMessage = "Uploadinfo table couldn't be updated.";
-				header ("Location: openbug2.php?errorMessage=".urlencode($errorMessage)."&proj=".urlencode($a)."&fmdetails=".urlencode($b)."&phase=".urlencode($f)."&module=".urlencode($g)."&topic=".urlencode($h)."&receivedate=".urlencode($i)."&browser=".urlencode($j)."&coursestatus=".urlencode($k)."&function=".$fun."&bcat=".urlencode($l)."&bscat=".urlencode($l1)."&bdr=".urlencode($m)."&asignee=".urlencode($n)."&qc=".urlencode($o)."&screen=".urlencode($p)."&severity=".urlencode($q)."&course=".urlencode($_POST["course"]));
+				header ("Location: openbug2.php?errorMessage=".urlencode($errorMessage)."&proj=".urlencode($a)."&fmdetails=".urlencode($b)."&phase=".urlencode($f)."&module=".urlencode($g)."&topic=".urlencode($h)."&receivedate=".urlencode($i)."&browser=".urlencode($j)."&coursestatus=".urlencode($k)."&function=".$fun."&bcat=".urlencode($l)."&bscat=".urlencode($l1)."&bdr=".urlencode($m)."&asignee=".urlencode($n)."&qc=".urlencode($o)."&screen=".urlencode($p)."&severity=".urlencode($q)."&course=".urlencode($_POST["course"])."&asignee_reviewer=".urlencode($_POST["asignee_reviewer"])."&function_reviewer=".urlencode($_POST["function_reviewer"]));
 			}
 		} 
 	}
@@ -180,8 +182,11 @@ $(document).ready(function(){
 var active_filter ='';
 var filter_value = '';
 function editbug(mtr) {
- mywindow=window.open ("edit.php?id="+mtr,"Ratting","scrollbars=1,width=550,height=170,0,status=0,");
- if (window.focus) {mywindow.focus()}
+	var project = trim(document.getElementById('project').value);
+ 	var pro_id = document.forms["tstest"]["project"].options[document.forms['tstest']['project'].selectedIndex].getAttribute('ref');
+	 if(project=="Select") {alert("Please select the project"); return false;}
+	 mywindow=window.open ("edit.php?id="+mtr+"&pro_id="+pro_id,"Ratting","scrollbars=1,width=550,height=170,0,status=0,");
+	 if (window.focus) {mywindow.focus()}
 }
 
 function displayRecords(numRecords, pageNum) {
@@ -592,6 +597,7 @@ function populateInfo(){
   if(project != '' && project != undefined) {
 	  $('#qc').removeOption(/./);
 	  $('#asignee').removeOption(/./);
+	  $('#asignee_reviewer').removeOption(/./);
 	  $("#course").removeOption(/./);
 	  $('#qc').ajaxAddOption(
 	    'getProjectInfo.php?q='+project+'&pro_id='+pro_id+'&mode=testers',
@@ -608,6 +614,15 @@ function populateInfo(){
 		false,
 		function(){
 			$(this).selectOptions('<?=$_REQUEST["asignee"]?>');
+		}
+	  );
+
+	   $('#asignee_reviewer').ajaxAddOption(
+	    'getProjectInfo.php?q='+project+'&pro_id='+pro_id+'&mode=developers',
+	    {},
+		false,
+		function(){
+			$(this).selectOptions('<?=$_REQUEST["asignee_reviewer"]?>');
 		}
 	  );
 	  
@@ -881,6 +896,8 @@ if( !empty($message) ){
 	$severity=$_REQUEST["severity"];
 	$function = $_REQUEST["function"];
 	$course = $_REQUEST["course"];
+	$asignee_reviewer = $_REQUEST["asignee_reviewer"];
+	$function_reviewer = $_REQUEST["function_reviewer"];
 	//$sdate = $_REQUEST["SDate"];
 	
 	
@@ -1001,9 +1018,9 @@ $count = mysql_num_rows($result);
 
 
 
-
+<!-- Start Assignee (Developer)-->
 <TR>
-<TD>Assignee</TD>
+<TD>Assignee (Developer)</TD>
 <TD>
     <?php
 	$query = "select DISTINCT username from login order by username";
@@ -1038,6 +1055,9 @@ $count = mysql_num_rows($result);
     ?>
     </TD>
 </TR>
+<!-- End Assignee (Developer)-->
+
+
 
 <TR>
 <!--<TD>Project Received On</TD>-->
@@ -1045,6 +1065,78 @@ $count = mysql_num_rows($result);
 <!--<a href="javascript:NewCal('SDate','ddmmmyyyy')"><img src="cal.gif" width="16" height="16" border="0" alt="Pick a date"></a>--></TD>
 </TR>
 
+
+<!--<TR>
+<TD>Course Status</TD>
+<TD><select name="coursestatus" size="1" id="coursestatus">
+<option value="select">Select</option>
+<option value="accepted" <?php if($coursestatus=="accepted")echo " selected";?>>Accepted</option>
+<option value="rejected" <?php if($coursestatus=="rejected")echo " selected";?>>Rejected</option>
+</select></TD>
+</TR>-->
+
+<TR>
+<TD>Function (Developer)</TD>
+<TD>
+	<select name="function" size="1" id="function">
+		<option value="">Select</option>
+		<option <?php if($function == "Media") echo "selected" ?> value="Media">Media</option>
+		<option <?php if($function == "Functionality") echo "selected" ?> value="Functionality">Functionality</option>
+		<option <?php if($function == "Editorial") echo "selected" ?> value="Editorial">Editorial</option>
+	</select>
+</TD>
+</TR>
+
+<!-- Start Assignee (Reviewer)-->
+<TR>
+<TD>Assignee (Reviewer)</TD>
+<TD>
+    <?php
+
+    $query = "select DISTINCT username from login order by username";
+    $retval = mysql_query( $query, $con );
+    $count = mysql_num_rows($retval);
+	if($count==0)
+		{
+			die('Users Not Found; Contact SEPG.');
+		}
+
+    echo "<select name=\"asignee_reviewer\" id=\"asignee_reviewer\">"; 
+    echo "<option size =30 selected value=\"select\">Select</option>";
+    
+	if(mysql_num_rows($retval)) 
+    { 
+    while($row = mysql_fetch_assoc($retval)) 
+    { 
+     //echo "<option>$row[username]</option>";
+	 if(strlen($row[username])<>0)
+		{
+		 ?>
+         <option<?php if($asignee_reviewer==$row[username])echo " selected";?>><?php echo $row[username];?></option> 
+         <?php 
+		}
+    } 
+    } 
+    else 
+	{
+     echo "<option>No Names Present</option>";  
+    } 
+    ?>
+    </TD>
+</TR>
+<!-- End Assignee (Developer)-->
+
+<TR>
+<TD>Function (Reviewer)</TD>
+<TD>
+	<select name="function_reviewer" size="1" id="function_reviewer">
+		<option value="">Select</option>
+		<option <?php if($function_reviewer == "Media") echo "selected" ?> value="Media">Media</option>
+		<option <?php if($function_reviewer == "Functionality") echo "selected" ?> value="Functionality">Functionality</option>
+		<option <?php if($function_reviewer == "Editorial") echo "selected" ?> value="Editorial">Editorial</option>
+	</select>
+</TD>
+</TR>
 <TR>
 <TD>Bowser Used</TD>
 <?php
@@ -1058,27 +1150,7 @@ $count = mysql_num_rows($result);
 <?php } ?>	
 </select></TD>
 </TR>
-
-<!--<TR>
-<TD>Course Status</TD>
-<TD><select name="coursestatus" size="1" id="coursestatus">
-<option value="select">Select</option>
-<option value="accepted" <?php if($coursestatus=="accepted")echo " selected";?>>Accepted</option>
-<option value="rejected" <?php if($coursestatus=="rejected")echo " selected";?>>Rejected</option>
-</select></TD>
-</TR>-->
-
 <TR>
-<TD>Function</TD>
-<TD>
-	<select name="function" size="1" id="function">
-		<option value="">Select</option>
-		<option <?php if($function == "Media") echo "selected" ?> value="Media">Media</option>
-		<option <?php if($function == "Functionality") echo "selected" ?> value="Functionality">Functionality</option>
-		<option <?php if($function == "Editorial") echo "selected" ?> value="Editorial">Editorial</option>
-	</select>
-</TD>
-</TR>
 <TD>Bug Category</TD>
 <TD>
 	<?php $query = "select id, category from tbl_category where parent_id = 0"; 

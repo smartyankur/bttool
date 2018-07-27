@@ -1,14 +1,20 @@
+
 <?php
 error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
 include("config.php");
+function console_log($data){
+  echo '<script>';
+  echo 'console.log(' . json_encode($data) . ')';
+  echo '</script>';
 
+}
 if(isset($_GET["id"])) {
 	$pro_id = $_GET["id"];
 }
 else if(isset($_GET["fdate"])) {
 	$fdate = strtotime($_GET["fdate"], "-1 Days");
 }
-$sql = "SELECT id, project_name, project_manager, course_title, course_level, version, pagecount, functional_manager_id, functional_manager_media, functional_manager_tech, developers_id, developers_media, developers_tech, testing_scope, partial_testing FROM tbl_functional_review"; 
+$sql = "SELECT id, project_name, project_manager, course_title, course_level, version, pagecount, functional_manager_id, functional_manager_media, functional_manager_tech, developers_id, developers_media, developers_tech, testing_scope,localize, partial_testing, reviewerID,reviewerTech,reviewerMedia FROM tbl_functional_review"; 
 if(isset($_GET["id"])) {
 	$sql .= " WHERE project_id = ".$pro_id;
 } else if(isset($_GET["fdate"])) {
@@ -17,6 +23,7 @@ if(isset($_GET["id"])) {
 try {
 	$retval = mysql_query($sql, $con);
 	$results = mysql_num_rows($retval);
+
 } catch (Exception $ex) {
 	echo($ex->getMessage());
 }
@@ -36,11 +43,15 @@ if($results == 0){
 		} catch (Exception $ex) {
 			echo($ex->getMessage());
 		}
+
 		while($v = mysql_fetch_assoc($stmt)) {
+			//print_r($v);
 			$row['bug_info'][] = $v;
 			
 		}
+	//	print_r($row);
 		$tmp[] = $row;
+		console_log($row);
 		//$screen_count[$row['version']] = $row['pagecount'];
 	}
 	//echo '<pre>'; print_r($tmp);
@@ -77,6 +88,7 @@ $final = array();
 foreach($tmp as $key => $val) {
 	$version = $val['version'];
 	$final[$key]['id'] = $val['id'];
+	$final[$key]['localize'] = $val['localize'];
 	$final[$key]['project_name'] = $val['project_name'];
 	$final[$key]['project_manager'] = $val['project_manager'];
 	$final[$key]['course_title'] = $val['course_title'];
@@ -85,6 +97,7 @@ foreach($tmp as $key => $val) {
 	$final[$key]['functional_manager_media'] = $val['functional_manager_media'];
 	$final[$key]['functional_manager_tech'] = $val['functional_manager_tech'];
 	$final[$key]['developers'] = $val['developers_id'].",".$val['developers_media'].",".$val['developers_tech'];
+	$final[$key]['reviewers'] = $val['reviewerID'].",".$val['reviewerMedia'].",".$val['reviewerTech'];
 	$final[$key]['version'] = $val['version'];
 	$final[$key]['testing_scope'] = $val['testing_scope'];
 	$final[$key]['partial_testing'] = $val['partial_testing'];
@@ -225,6 +238,7 @@ echo "<table cellpadding='5' cellspacing='0' border='1'>
 	  <th>Functional Manager[Med]</th>
 	  <th>Functional Manager[Tech]</th>
 	  <th>Developers</th>
+	  <th>Reviewers</th>
 	  <th>Version</th>
 	  <th>No. Of HTML/Flash Pages</th>
 	  <th>LH</th>
@@ -280,6 +294,8 @@ echo "<table cellpadding='5' cellspacing='0' border='1'>
 	  <th>Bookmarking Error</th>
 	  <th>Scoring Error</th>
 	  <th>Completion Marking Error</th>
+	  <th>Localization</th>
+
 	</tr>
 	";
 	$cumulative_total_bug = 0;
@@ -306,6 +322,7 @@ echo "<table cellpadding='5' cellspacing='0' border='1'>
 	  echo "<td>".$val['functional_manager_media']."</td>";
 	  echo "<td>".$val['functional_manager_tech']."</td>";
       echo "<td>".$val['developers']."</td>";
+      echo "<td>".$val['reviewers']."</td>";
 	  echo "<td>".strtoupper($val['version'])."</td>";
 	  echo "<td>".$val['pagecount']."</td>";
 	  echo "<td>".$val['lh']."</td>";
@@ -361,6 +378,7 @@ echo "<table cellpadding='5' cellspacing='0' border='1'>
 	  echo "<td>".(int)$val['bebug_count']."</td>";
 	  echo "<td>".(int)$val['scebug_count']."</td>";
 	  echo "<td>".(int)$val['cmebug_count']."</td>";
+	  echo "<td>".$val['localize']."</td>";
 	  echo "</tr>";
 	  
 	}

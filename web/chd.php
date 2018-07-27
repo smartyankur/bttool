@@ -43,9 +43,12 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
   $fmid           = $_POST["fmid"];
   $fmmedia        = $_POST["fmmedia"];
   $fmtech         = $_POST["fmtech"];
-  $devsid         = implode(",", $_POST["devsid"]);  
-  $devsmed        = implode(",", $_POST["devsmed"]);  
+  $devsid         = implode(",", $_POST["devsid"]);
+  $reviewerid     = implode(",", $_POST["reviewerID"]);
+  $devsmed        = implode(",", $_POST["devsmed"]);
+  $reviewermedia  = implode(",", $_POST["reviewerMedia"]);  
   $devstech       = implode(",", $_POST["devstech"]);  
+  $reviewertech   = implode(",", $_POST["reviewerTech"]);
   $version        = $_POST["version"];
   $localize        = $_POST["localize"];
   $pagecount      = $_POST["pagecount"];
@@ -106,130 +109,147 @@ if( isset($_POST['addInfo']) && ($_POST['addInfo'] == 'Add')){
     }
   } 
 ///////////////////////////////////////////////////////////////////////////////////
-  if( empty($errorMessage) ){
-  $FReviewNo = "";
-  if(empty($_POST['edit'])) {
+      if( empty($errorMessage) ){
+      $FReviewNo = "";
+      if(empty($_POST['edit'])) {
 
-    $insertFunctionalReview = "INSERT INTO tbl_functional_review(project_id,project_name,project_manager,course_title,start_date,course_level,functional_manager_id,functional_manager_media,functional_manager_tech,developers_id,developers_media,developers_tech,localize,version,pagecount,slidecount,learning_hours,testing_scope,partial_testing,conf_reviews,course_path,sb_path,editsheet,dt_path,test_plan_path,test_checklists,reviewer,comments,support_file1,support_file2,support_file3,support_file4, testenvironment,coursesize,chdreleasedate) values('".$project_id."','".$project."','".$pm."','".$courseTitle."','".$SDate."','".$courseLevel."','".$fmid."','".$fmmedia."','".$fmtech."','".$devsid."','".$devsmed."','".$devstech."', '".$localize."', '".$version."','".$pagecount."','".$slidecount."','".$learningHours."','".$testingScope."','".$partialTesting."','".$confReviews."','".$path."','".$sbpath."','".$editsheet."','".$dtpath."','".$tppath."','".$chk."','".$reviewer."','".$comments."','".$fstr1."','".$fstr2."','".$fstr3."','".$fstr4."', '".$testenvironment."','".$coursesize."','".$chd_submit_date."')";
-    if(mysql_query($insertFunctionalReview)){
-      $FReviewNo = mysql_insert_id();
-      $successMessage = "Record has been created for project '".$project."'. Please click on the 'Show All Fileinfo' button to read the entries.";
-    } else {
-      $errorMessage = "Record has not been created for project '".$project . "'";
-    }
-  } else {
-    $updateFunctionalReview = "UPDATE tbl_functional_review set project_id='".$project_id."',project_name='".$project."',project_manager='".$pm."',course_title='".$courseTitle."',start_date='".$SDate."',course_level='".$courseLevel."',functional_manager_id='".$fmid."',functional_manager_media='".$fmmedia."',functional_manager_tech='".$fmtech."',developers_id='".$devsid."',developers_media='".$devsmed."',developers_tech='".$devstech."',localize='".$localize."',version='".$version."',pagecount='".$pagecount."',slidecount='".$slidecount."',learning_hours='".$learningHours."',testing_scope='".$testingScope."',partial_testing='".$partialTesting."',conf_reviews='".$confReviews."',course_path='".$path."',sb_path='".$sbpath."',editsheet='".$editsheet."',dt_path='".$dtpath."',test_plan_path='".$tppath."',test_checklists='".$chk."',reviewer='".$reviewer."',comments='".$comments."',support_file1='".$fstr1."',support_file2='".$fstr2."',support_file3='".$fstr3."',support_file4='".$fstr4."', testenvironment='".$testenvironment."',coursesize='".$coursesize."',chdreleasedate='".$chd_submit_date."', status='' where id =".$_POST['edit'];
-    if(mysql_query($updateFunctionalReview)){
-      $FReviewNo = $_POST['edit'];
-      $successMessage = "Record has been updated for project '".$project."'. Please click on the 'Show All Fileinfo' button to read the entries.";
-    } else {
-      $errorMessage = "Record has not been updated for project '".$project . "'";
-    }
-    //echo '<pre>'; print_r($_POST); die;
-  }
-    if($FReviewNo) {    
-    $str  = '<html><head><style type="text/css">body{background:url(\'qcr.jpg\') no-repeat;} .table_text{font-family:Calibri; font-size:12px; font-style:normal; line-height:normal; font-weight:normal; font-variant:normal; color:#000000; text-indent:10px; vertical-align:middle;}  
-</style></head>';
-    $str .= '<body>';    
-    $str .= '<h4>Dear QA Team,</h4>';
-    $str .= '<h5>Please find below the CHD details :-</h5>';
-    $str .= '<table border=1 class="table_text">';
-    $str .= '<tr><th>S. No.</th><th>Project Name</th><th>Project Manager</th><th>Course Title</th><th>CHD Submission Date</th><th>Course Level</th><th>Functional Manager[ID]</th><th>Developers[ID]</th><th>Functional Manager[Med]</th><th>Developers[Med]</th><th>Functional Manager[Tech]</th><th>Developers[Tech]</th><th>Localization</th><th>Version</th><th>No of HTML/Flash Pages</th><th>No. of slides in PPT</th><th>Learning Hours</th><th>Course Memory Size in MB</th><th>Scope for testing</th><th>Partial Testing</th><th>Confirmation On Reviews</th><th>Course Path [SVN]</th><th>SB Path [SVN]</th><th>Edit Sheet</th><th>Development Tracker Path [SVN]</th><th>Test Plan Path [SVN]</th><th>Test Case/Checklists [SVN]</th><th>Reviewer</th><th>Comments</th><th>Test Environment</th><th>Attach supporting documents</th></tr>';
-    $str .= '<tr>';
-    $str .= "<td>".$FReviewNo."</td>";
-    $str .= "<td>".$project."</td>";
-    $str .= "<td>".$pm."</td>";  
-    $str .= "<td>".$courseTitle."</td>";
-    $str .= "<td>".date("d-m-Y", $SDate)."</td>";
-    $str .= "<td>".$courseLevel."</td>";
-    $str .= "<td>".$fmid."</td>";
-  $str .= "<td>".$devsid."</td>";
-    $str .= "<td>".$fmmedia."</td>";
-  $str .= "<td>".$devsmed."</td>";
-    $str .= "<td>".$fmtech."</td>"; 
-    $str .= "<td>".$devstech."</td>"; 
-    $str .= "<td>".$localize."</td>";
-    $str .= "<td>".$version."</td>";
-    $str .= "<td>".$pagecount."</td>";
-    $str .= "<td>".$slidecount."</td>";
-    $str .= "<td>".$learningHours."</td>";
-    $str .= "<td>".$coursesize."</td>";
-    $str .= "<td>".$testingScope."</td>";
-    $str .= "<td>".$partialTesting."</td>";
-    $str .= "<td>".$confReviews."</td>";
-    $str .= "<td>".$path."</td>";
-    $str .= "<td>".$sbpath."</td>";
-    $str .= "<td>".$editsheet."</td>";
-    $str .= "<td>".$dtpath."</td>";
-    $str .= "<td>".$tppath."</td>";
-    $str .= "<td>".$chk."</td>";
-    $str .= "<td>".$reviewer."</td>";
-    $str .= "<td>".$comments."</td>";
-    $str .= "<td>".$testenvironment."</td>";
-    $str .= "<td>".$fstr1 ."</td>";
-    $str .= '</tr>';
-    $str .= '</table>';
-    $str .= '<br /><br />Thanks and Regards';
-  $str .= '<br /><br /> ';
-  $str .= '</body></html>';
+        $insertFunctionalReview = "INSERT INTO tbl_functional_review(project_id,project_name,project_manager,course_title,start_date,course_level,functional_manager_id,functional_manager_media,functional_manager_tech,developers_id,developers_media,developers_tech,localize,version,pagecount,slidecount,learning_hours,testing_scope,partial_testing,conf_reviews,course_path,sb_path,editsheet,dt_path,test_plan_path,test_checklists,reviewer,comments,support_file1,support_file2,support_file3,support_file4, testenvironment,coursesize,chdreleasedate, reviewerID, reviewerTech, reviewerMedia) values('".$project_id."','".$project."','".$pm."','".$courseTitle."','".$SDate."','".$courseLevel."','".$fmid."','".$fmmedia."','".$fmtech."','".$devsid."','".$devsmed."','".$devstech."', '".$localize."', '".$version."','".$pagecount."','".$slidecount."','".$learningHours."','".$testingScope."','".$partialTesting."','".$confReviews."','".$path."','".$sbpath."','".$editsheet."','".$dtpath."','".$tppath."','".$chk."','".$reviewer."','".$comments."','".$fstr1."','".$fstr2."','".$fstr3."','".$fstr4."', '".$testenvironment."','".$coursesize."','".$chd_submit_date."','".$reviewerid."','".$reviewertech."','".$reviewermedia."')";
+
+        if(mysql_query($insertFunctionalReview)){
+          $FReviewNo = mysql_insert_id();
+          $successMessage = "Record has been created for project '".$project."'. Please click on the 'Show All Fileinfo' button to read the entries.";
+        } else {
+          $errorMessage = "Record has not been created for project '".$project . "'";
+        }
+      } else {
         
-  $to_emails = array();
-  $to_emails[] = "content_qc@gc-solutions.net"; 
-  //$to_emails[] = "manojs@gc-solutions.net";
-  //$to_emails[] = "kanchanr@gc-solutions.net"; 
-  $to_emails[] = getEmail($pm);
-  $to_emails[] = getEmail($fmid);
-  $to_emails[] = getEmail($fmmedia);
-  $to_emails[] = getEmail($fmtech);
-  if(isset($_POST["devsid"]) && is_array($_POST["devsid"]) && count($_POST["devsid"]) > 0){
-    foreach($_POST["devsid"] as $dev)
-    $to_emails[] = getEmail($dev);
-  }
-  if(isset($_POST["devsmed"]) && is_array($_POST["devsmed"]) && count($_POST["devsmed"]) > 0){
-    foreach($_POST["devsmed"] as $dev)
-    $to_emails[] = getEmail($dev);
-  }
-  if(isset($_POST["devstech"]) && is_array($_POST["devstech"]) && count($_POST["devstech"]) > 0){
-    foreach($_POST["devstech"] as $dev)
-    $to_emails[] = getEmail($dev);
-  }
-    $mailer = new phpmailer();
-    $mailer->IsSMTP();
-    $mailer->IsHTML(true);
-  
-    $mailer->Host     = "smtp.office365.com";//"98.129.185.2";
-  $mailer->Port     = 587;
-    $mailer->Username = "radar@gc-solutions.net";
-    $mailer->Password = "Gcube#123";//pass#123";//"Gcube!123";
-  
-    $mailer->SMTPAuth  = true;
-  $mailer->SMTPSecure = "tls";
-    $mailer->SMTPDebug = false;
-  
-    //$mailer->From     = $email;
-    //$mailer->FromName = $username;
-    $mailer->From     = "radar@gc-solutions.net";
-    $mailer->FromName = "RADAR";
-  $mailer->AddCC($email,$username);
-  $to_emails = array_unique($to_emails);
-    
-  foreach($to_emails as $email_id){
-    if($email_id != null)
-      $mailer->AddAddress($email_id);
-  }
-    
-    $mailer->Subject = "Course Handover Document - CHD No : " . $FReviewNo;
-    $mailer->Body    = $str."<br />".$username;
-  
-    $mailer->Send();
-    echo $mailer->ErrorInfo."<br/>";  
-  header("Location: chd.php?project=".urlencode($project)."&successMessage=".urlencode($successMessage));
-  }else{
-    
-  $_POST['errorMessage'] = $errorMessage;
-    //header("Location: chd.php?project=".urlencode($project)."&errorMessage=".urlencode($errorMessage));
-  } 
-  }
+        $updateFunctionalReview = "UPDATE tbl_functional_review set project_id='".$project_id."',project_name='".$project."',project_manager='".$pm."',course_title='".$courseTitle."',start_date='".$SDate."',course_level='".$courseLevel."',functional_manager_id='".$fmid."',functional_manager_media='".$fmmedia."',functional_manager_tech='".$fmtech."',developers_id='".$devsid."',developers_media='".$devsmed."',developers_tech='".$devstech."',localize='".$localize."',version='".$version."',pagecount='".$pagecount."',slidecount='".$slidecount."',learning_hours='".$learningHours."',testing_scope='".$testingScope."',partial_testing='".$partialTesting."',conf_reviews='".$confReviews."',course_path='".$path."',sb_path='".$sbpath."',editsheet='".$editsheet."',dt_path='".$dtpath."',test_plan_path='".$tppath."',test_checklists='".$chk."',reviewer='".$reviewer."',comments='".$comments."',support_file1='".$fstr1."',support_file2='".$fstr2."',support_file3='".$fstr3."',support_file4='".$fstr4."', testenvironment='".$testenvironment."',coursesize='".$coursesize."',reviewerID='".$reviewerid."',reviewerTech='".$reviewertech."',reviewerMedia='".$reviewermedia."',chdreleasedate='".$chd_submit_date."', status='' where id =".$_POST['edit'];
+        if(mysql_query($updateFunctionalReview)){
+          $FReviewNo = $_POST['edit'];
+          $successMessage = "Record has been updated for project '".$project."'. Please click on the 'Show All Fileinfo' button to read the entries.";
+        } else {
+          $errorMessage = "Record has not been updated for project '".$project . "'";
+        }
+        //echo '<pre>'; print_r($_POST); die;
+      }
+        if($FReviewNo) {    
+        $str  = '<html><head><style type="text/css">body{background:url(\'qcr.jpg\') no-repeat;} .table_text{font-family:Calibri; font-size:12px; font-style:normal; line-height:normal; font-weight:normal; font-variant:normal; color:#000000; text-indent:10px; vertical-align:middle;}  
+    </style></head>';
+        $str .= '<body>';    
+        $str .= '<h4>Dear QA Team,</h4>';
+        $str .= '<h5>Please find below the CHD details :-</h5>';
+        $str .= '<table border=1 class="table_text">';
+        $str .= '<tr><th>S. No.</th><th>Project Name</th><th>Project Manager</th><th>Course Title</th><th>CHD Submission Date</th><th>Course Level</th><th>Functional Manager[ID]</th><th>Developers[ID]</th><th>Reviewer[ID]</th><th>Functional Manager[Med]</th><th>Developers[Med]</th><th>Reviewer[Med]</th><th>Functional Manager[Tech]</th><th>Developers[Tech]</th><th>Reviewer[Tech]</th><th>Localization</th><th>Version</th><th>No of HTML/Flash Pages</th><th>No. of slides in PPT</th><th>Learning Hours</th><th>Course Memory Size in MB</th><th>Scope for testing</th><th>Partial Testing</th><th>Confirmation On Reviews</th><th>Course Path [SVN]</th><th>SB Path [SVN]</th><th>Edit Sheet</th><th>Development Tracker Path [SVN]</th><th>Test Plan Path [SVN]</th><th>Test Case/Checklists [SVN]</th><th>Comments</th><th>Test Environment</th><th>Attach supporting documents</th></tr>';
+        $str .= '<tr>';
+        $str .= "<td>".$FReviewNo."</td>";
+        $str .= "<td>".$project."</td>";
+        $str .= "<td>".$pm."</td>";  
+        $str .= "<td>".$courseTitle."</td>";
+        $str .= "<td>".date("d-m-Y", $SDate)."</td>";
+        $str .= "<td>".$courseLevel."</td>";
+        $str .= "<td>".$fmid."</td>";
+        $str .= "<td>".$devsid."</td>";
+        $str .= "<td>".$reviewerid."</td>";
+        $str .= "<td>".$fmmedia."</td>";
+        $str .= "<td>".$devsmed."</td>";
+        $str .= "<td>".$reviewermedia."</td>";
+        $str .= "<td>".$fmtech."</td>"; 
+        $str .= "<td>".$devstech."</td>";
+        $str .= "<td>".$reviewertech."</td>";
+        $str .= "<td>".$localize."</td>";
+        $str .= "<td>".$version."</td>";
+        $str .= "<td>".$pagecount."</td>";
+        $str .= "<td>".$slidecount."</td>";
+        $str .= "<td>".$learningHours."</td>";
+        $str .= "<td>".$coursesize."</td>";
+        $str .= "<td>".$testingScope."</td>";
+        $str .= "<td>".$partialTesting."</td>";
+        $str .= "<td>".$confReviews."</td>";
+        $str .= "<td>".$path."</td>";
+        $str .= "<td>".$sbpath."</td>";
+        $str .= "<td>".$editsheet."</td>";
+        $str .= "<td>".$dtpath."</td>";
+        $str .= "<td>".$tppath."</td>";
+        $str .= "<td>".$chk."</td>";
+        $str .= "<td>".$reviewer."</td>";
+        $str .= "<td>".$comments."</td>";
+        $str .= "<td>".$testenvironment."</td>";
+        $str .= "<td>".$fstr1 ."</td>";
+        $str .= '</tr>';
+        $str .= '</table>';
+        $str .= '<br /><br />Thanks and Regards';
+      $str .= '<br /><br /> ';
+      $str .= '</body></html>';
+            
+      $to_emails = array();
+      $to_emails[] = "content_qc@gc-solutions.net"; 
+      //$to_emails[] = "manojs@gc-solutions.net";
+      //$to_emails[] = "kanchanr@gc-solutions.net"; 
+      $to_emails[] = getEmail($pm);
+      $to_emails[] = getEmail($fmid);
+      $to_emails[] = getEmail($fmmedia);
+      $to_emails[] = getEmail($fmtech);
+      if(isset($_POST["devsid"]) && is_array($_POST["devsid"]) && count($_POST["devsid"]) > 0){
+        foreach($_POST["devsid"] as $dev)
+        $to_emails[] = getEmail($dev);
+      }
+      if(isset($_POST["reviewerID"]) && is_array($_POST["reviewerID"]) && count($_POST["reviewerID"]) > 0){
+        foreach($_POST["reviewerID"] as $dev)
+        $to_emails[] = getEmail($reviewer);
+      }
+      if(isset($_POST["devsmed"]) && is_array($_POST["devsmed"]) && count($_POST["devsmed"]) > 0){
+        foreach($_POST["devsmed"] as $dev)
+        $to_emails[] = getEmail($dev);
+      }
+      if(isset($_POST["reviewerMedia"]) && is_array($_POST["reviewerMedia"]) && count($_POST["reviewerMedia"]) > 0){
+        foreach($_POST["reviewerMedia"] as $dev)
+        $to_emails[] = getEmail($dev);
+      }
+      if(isset($_POST["devsmed"]) && is_array($_POST["devsmed"]) && count($_POST["devsmed"]) > 0){
+        foreach($_POST["devsmed"] as $dev)
+        $to_emails[] = getEmail($dev);
+      }
+      if(isset($_POST["reviewerTech"]) && is_array($_POST["reviewerTech"]) && count($_POST["reviewerTech"]) > 0){
+        foreach($_POST["reviewerTech"] as $dev)
+        $to_emails[] = getEmail($dev);
+      }
+        $mailer = new phpmailer();
+        $mailer->IsSMTP();
+        $mailer->IsHTML(true);
+      
+        $mailer->Host     = "smtp.office365.com";//"98.129.185.2";
+      $mailer->Port     = 587;
+        $mailer->Username = "radar@gc-solutions.net";
+        $mailer->Password = "Gcube#123";//pass#123";//"Gcube!123";
+      
+        $mailer->SMTPAuth  = true;
+      $mailer->SMTPSecure = "tls";
+        $mailer->SMTPDebug = false;
+      
+        //$mailer->From     = $email;
+        //$mailer->FromName = $username;
+        $mailer->From     = "radar@gc-solutions.net";
+        $mailer->FromName = "RADAR";
+      $mailer->AddCC($email,$username);
+      $to_emails = array_unique($to_emails);
+        
+      foreach($to_emails as $email_id){
+        if($email_id != null)
+          $mailer->AddAddress($email_id);
+      }
+        
+        $mailer->Subject = "Course Handover Document - CHD No : " . $FReviewNo;
+        $mailer->Body    = $str."<br />".$username;
+      
+        $mailer->Send();
+        echo $mailer->ErrorInfo."<br/>";  
+      header("Location: chd.php?project=".urlencode($project)."&successMessage=".urlencode($successMessage));
+      }else{
+        
+      $_POST['errorMessage'] = $errorMessage;
+        //header("Location: chd.php?project=".urlencode($project)."&errorMessage=".urlencode($errorMessage));
+      } 
+      }
 }
 ?>
 
@@ -553,8 +573,11 @@ if(isset($_GET['chdid']) && !empty($_GET['chdid'])) {
   $_REQUEST['fmmedia'] = $row['functional_manager_media'];
   $_REQUEST['fmtech'] = $row['functional_manager_tech'];
   $_REQUEST['devsid'] = explode(",", $row['developers_id']);
+  $_REQUEST['reviewerid'] = explode(",", $row['reviewerID']);
   $_REQUEST['devstech'] = explode(",", $row['developers_tech']);
+  $_REQUEST['reviewertech'] = explode(",", $row['reviewerTech']);
   $_REQUEST['devsmed'] = explode(",", $row['developers_media']);
+  $_REQUEST['reviewermedia'] = explode(",", $row['reviewerMedia']);
   $_REQUEST["localize"] = $row['localize'];
   $_REQUEST["version"] = $row['version'];
   $_REQUEST["pagecount"] = $row['pagecount'];
@@ -605,6 +628,9 @@ if(isset($_GET['chdid']) && !empty($_GET['chdid'])) {
   $comments       = $_REQUEST["comments"];  
   $testenvironment = $_REQUEST["testenvironment"];  
   $function       = $_REQUEST["function"];  
+  $reviewerid     = $_REQUEST['reviewerid'];
+  $reviewertech     = $_REQUEST['reviewertech'];
+  $reviewermedia  = $_REQUEST['reviewermedia'];
 ?>  
 <form name="tstest" id="tstest" method="post" action="" onsubmit="return test()" enctype="multipart/form-data">
 <TABLE cellpading="0" cellspacing="0" class="table_text">
@@ -692,24 +718,24 @@ if(!empty($numrowsProject)){
       <option size="30" selected>Select</option>
       <option <?php if($fmid=='N/A')echo " selected"; ?>>N/A</option>
       <option <?php if($fmid=='External/Client')echo " selected"; ?>>External/Client</option>
-<?php
-      $selectFMID  = "select DISTINCT username from login where role='ID FM' order by username ASC";
-      $queryFMID   = mysql_query($selectFMID);
-      $numrowsFMID = mysql_num_rows($queryFMID);
-      //$tmp =array();
-    if(!empty($numrowsFMID)){ 
-        while($fetchFMID = mysql_fetch_array($queryFMID)){
-          //$tmp[] = $fetchFMID['username'];
-      if(strlen($fetchFMID['username'])<>0){
-?>
-            <option <?php if($fmid==$fetchFMID['username'])echo " selected"; ?>><?php echo $fetchFMID['username']; ?></option> 
-<?php 
-          }
-        } 
-      }else{
-        echo "<option>No functional manager id</option>";  
-      } 
-?>
+        <?php
+              $selectFMID  = "select DISTINCT username from login where role='ID FM' order by username ASC";
+              $queryFMID   = mysql_query($selectFMID);
+              $numrowsFMID = mysql_num_rows($queryFMID);
+              //$tmp =array();
+            if(!empty($numrowsFMID)){ 
+                while($fetchFMID = mysql_fetch_array($queryFMID)){
+                  //$tmp[] = $fetchFMID['username'];
+              if(strlen($fetchFMID['username'])<>0){
+        ?>
+                    <option <?php if($fmid==$fetchFMID['username'])echo " selected"; ?>><?php echo $fetchFMID['username']; ?></option> 
+        <?php 
+                  }
+                } 
+              }else{
+                echo "<option>No functional manager id</option>";  
+              } 
+        ?>
   </TD>
 </TR>
 
@@ -719,23 +745,52 @@ if(!empty($numrowsProject)){
   <!--<textarea name="devs" id="devs" rows="4" cols="30"><?php //echo stripslashes($devs); ?></textarea>-->
   <select id="devsid" name="devsid[]" size="10" style="width:200px;" multiple>
     <option value="">Select</option>
-<?php
-$selectDEV  = "SELECT DISTINCT username FROM login WHERE dept='Content' AND role like '%ID%'ORDER BY username ASC";
-$queryDEV   = mysql_query($selectDEV);
-$numrowsDEV = mysql_num_rows($queryDEV);
-if(!empty($numrowsDEV)){ 
-  while($fetchDEV = mysql_fetch_array($queryDEV)){
-    if(strlen($fetchDEV['username'])<>0){
-?>
-    <option value='<?php echo $fetchDEV['username']; ?>' <?php if(in_array($fetchDEV['username'], $devsid))echo " selected"; ?>><?php echo $fetchDEV['username']; ?></option> 
-<?php 
-    }
-  } 
-} 
-?>
+        <?php
+        $selectDEV  = "SELECT DISTINCT username FROM login WHERE dept='Content' AND role like '%ID%'ORDER BY username ASC";
+        $queryDEV   = mysql_query($selectDEV);
+        $numrowsDEV = mysql_num_rows($queryDEV);
+        if(!empty($numrowsDEV)){ 
+          while($fetchDEV = mysql_fetch_array($queryDEV)){
+            if(strlen($fetchDEV['username'])<>0){
+        ?>
+            <option value='<?php echo $fetchDEV['username']; ?>' <?php if(in_array($fetchDEV['username'], $devsid))echo " selected"; ?>><?php echo $fetchDEV['username']; ?></option> 
+        <?php 
+            }
+          } 
+        } 
+        ?>
   </select>
   </TD>
 </TR>
+
+
+
+<TR>
+  <TD>Reviewer Names[ID]</TD>
+  <TD>
+  <!--<textarea name="devs" id="devs" rows="4" cols="30"><?php //echo stripslashes($devs); ?></textarea>-->
+
+  <select id="reviewerid" name="reviewerID[]" size="10" style="width:200px;" multiple>
+    <option value="">Select</option>
+        <?php
+        $selectDEV  = "SELECT DISTINCT username FROM login WHERE dept='Content' AND role like '%ID%'ORDER BY username ASC";
+        $queryDEV   = mysql_query($selectDEV);
+        $numrowsDEV = mysql_num_rows($queryDEV);
+        if(!empty($numrowsDEV)){ 
+          while($fetchDEV = mysql_fetch_array($queryDEV)){
+            if(strlen($fetchDEV['username'])<>0){
+        ?>
+
+            <option value='<?php echo $fetchDEV['username']; ?>' <?php if(in_array($fetchDEV['username'], $reviewerid))echo " selected"; ?>><?php echo $fetchDEV['username']; ?></option> 
+        <?php 
+            }
+          } 
+        } 
+        ?>
+  </select>
+  </TD>
+</TR>
+
 
 <TR>
   <TD>Functional Manager[Med] <font color='red'>*</font></TD>
@@ -744,23 +799,23 @@ if(!empty($numrowsDEV)){
       <option size="30" selected>Select</option>
       <option <?php if($fmid=='N/A')echo " selected"; ?>>N/A</option>
       <option <?php if($fmid=='External/Client')echo " selected"; ?>>External/Client</option>
-<?php
-      $selectFMMedia  = "select DISTINCT username from login where role='Media FM' order by username ASC";
-      $queryFMMedia   = mysql_query($selectFMMedia);
-      $numrowsFMMedia = mysql_num_rows($queryFMMedia);
-      if(!empty($numrowsFMMedia)){ 
-        while($fetchFMMedia = mysql_fetch_array($queryFMMedia)){
-       
-      if(strlen($fetchFMMedia['username'])<>0){
-?>
-            <option<?php if($fmmedia==$fetchFMMedia['username'])echo " selected"; ?>><?php echo $fetchFMMedia['username']; ?></option> 
-<?php 
-          }
-        } 
-      } else{
-        echo "<option>No functional manager media</option>";  
-      } 
-?>
+          <?php
+                $selectFMMedia  = "select DISTINCT username from login where role='Media FM' order by username ASC";
+                $queryFMMedia   = mysql_query($selectFMMedia);
+                $numrowsFMMedia = mysql_num_rows($queryFMMedia);
+                if(!empty($numrowsFMMedia)){ 
+                  while($fetchFMMedia = mysql_fetch_array($queryFMMedia)){
+                 
+                if(strlen($fetchFMMedia['username'])<>0){
+          ?>
+                      <option<?php if($fmmedia==$fetchFMMedia['username'])echo " selected"; ?>><?php echo $fetchFMMedia['username']; ?></option> 
+          <?php 
+                    }
+                  } 
+                } else{
+                  echo "<option>No functional manager media</option>";  
+                } 
+          ?>
   </TD>
 </TR>
 
@@ -770,23 +825,49 @@ if(!empty($numrowsDEV)){
   <!--<textarea name="devs" id="devs" rows="4" cols="30"><?php //echo stripslashes($devs); ?></textarea>-->
   <select id="devsmed" name="devsmed[]" size="10" style="width:200px;" multiple>
     <option value="">Select</option>
-<?php
-$selectDEV  = "SELECT DISTINCT username FROM login WHERE dept='Content' AND role like '%Media%'ORDER BY username ASC";
-$queryDEV   = mysql_query($selectDEV);
-$numrowsDEV = mysql_num_rows($queryDEV);
-if(!empty($numrowsDEV)){ 
-  while($fetchDEV = mysql_fetch_array($queryDEV)){
-    if(strlen($fetchDEV['username'])<>0){
-?>
-    <option value='<?php echo $fetchDEV['username']; ?>' <?php if(in_array($fetchDEV['username'], $devsmed))echo " selected"; ?>><?php echo $fetchDEV['username']; ?></option> 
-<?php 
-    }
-  } 
-} 
-?>
+          <?php
+          $selectDEV  = "SELECT DISTINCT username FROM login WHERE dept='Content' AND role like '%Media%'ORDER BY username ASC";
+          $queryDEV   = mysql_query($selectDEV);
+          $numrowsDEV = mysql_num_rows($queryDEV);
+          if(!empty($numrowsDEV)){ 
+            while($fetchDEV = mysql_fetch_array($queryDEV)){
+              if(strlen($fetchDEV['username'])<>0){
+          ?>
+              <option value='<?php echo $fetchDEV['username']; ?>' <?php if(in_array($fetchDEV['username'], $devsmed))echo " selected"; ?>><?php echo $fetchDEV['username']; ?></option> 
+          <?php 
+              }
+            } 
+          } 
+          ?>
   </select>
   </TD>
 </TR>
+
+
+<TR>
+  <TD>Reviewer Names[Med]</TD>
+  <TD>
+  <!--<textarea name="devs" id="devs" rows="4" cols="30"><?php //echo stripslashes($devs); ?></textarea>-->
+  <select id="reviewermedia" name="reviewerMedia[]" size="10" style="width:200px;" multiple>
+    <option value="">Select</option>
+          <?php
+          $selectDEV  = "SELECT DISTINCT username FROM login WHERE dept='Content' AND role like '%Media%'ORDER BY username ASC";
+          $queryDEV   = mysql_query($selectDEV);
+          $numrowsDEV = mysql_num_rows($queryDEV);
+          if(!empty($numrowsDEV)){ 
+            while($fetchDEV = mysql_fetch_array($queryDEV)){
+              if(strlen($fetchDEV['username'])<>0){
+          ?>
+              <option value='<?php echo $fetchDEV['username']; ?>' <?php if(in_array($fetchDEV['username'], $reviewermedia))echo " selected"; ?>><?php echo $fetchDEV['username']; ?></option> 
+          <?php 
+              }
+            } 
+          } 
+          ?>
+  </select>
+  </TD>
+</TR>
+
 
 <TR>
   <TD>Functional Manager[Tech] <font color='red'>*</font></TD>
@@ -795,22 +876,22 @@ if(!empty($numrowsDEV)){
       <option size="30" selected>Select</option>
       <option <?php if($fmid=='N/A')echo " selected"; ?>>N/A</option>
       <option <?php if($fmid=='External/Client')echo " selected"; ?>>External/Client</option>
-<?php
-      $selectFMTech  = "select DISTINCT username from login where role='Tech FM' order by username ASC";
-      $queryFMTech   = mysql_query($selectFMTech);
-      $numrowsFMTech = mysql_num_rows($queryFMTech);
-      if(!empty($numrowsFMTech)){ 
-        while($fetchFMTech = mysql_fetch_array($queryFMTech)){
-    if(strlen($fetchFMTech['username'])<>0){
-?>
-            <option<?php if($fmtech==$fetchFMTech['username'])echo " selected"; ?>><?php echo $fetchFMTech['username']; ?></option> 
-<?php 
-          }
-        } 
-      }else{
-        echo "<option>No functional manager tech</option>";  
-      } 
-?>
+          <?php
+                $selectFMTech  = "select DISTINCT username from login where role='Tech FM' order by username ASC";
+                $queryFMTech   = mysql_query($selectFMTech);
+                $numrowsFMTech = mysql_num_rows($queryFMTech);
+                if(!empty($numrowsFMTech)){ 
+                  while($fetchFMTech = mysql_fetch_array($queryFMTech)){
+              if(strlen($fetchFMTech['username'])<>0){
+          ?>
+                      <option<?php if($fmtech==$fetchFMTech['username'])echo " selected"; ?>><?php echo $fetchFMTech['username']; ?></option> 
+          <?php 
+                    }
+                  } 
+                }else{
+                  echo "<option>No functional manager tech</option>";  
+                } 
+          ?>
   </TD>
 </TR>
 
@@ -821,23 +902,54 @@ if(!empty($numrowsDEV)){
   <!--<textarea name="devs" id="devs" rows="4" cols="30"><?php //echo stripslashes($devs); ?></textarea>-->
   <select id="devstech" name="devstech[]" size="10" style="width:200px;" multiple>
     <option value="">Select</option>
-<?php
-$selectDEV  = "SELECT DISTINCT username FROM login WHERE dept='Content' AND role like '%Tech%'ORDER BY username ASC";
-$queryDEV   = mysql_query($selectDEV);
-$numrowsDEV = mysql_num_rows($queryDEV);
-if(!empty($numrowsDEV)){ 
-  while($fetchDEV = mysql_fetch_array($queryDEV)){
-    if(strlen($fetchDEV['username'])<>0){
-?>
-    <option value='<?php echo $fetchDEV['username']; ?>' <?php if(in_array($fetchDEV['username'], $devstech))echo " selected"; ?>><?php echo $fetchDEV['username']; ?></option> 
-<?php 
-    }
-  } 
-} 
-?>
+          <?php
+          $selectDEV  = "SELECT DISTINCT username FROM login WHERE dept='Content' AND role like '%Tech%'ORDER BY username ASC";
+          $queryDEV   = mysql_query($selectDEV);
+          $numrowsDEV = mysql_num_rows($queryDEV);
+          if(!empty($numrowsDEV)){ 
+            while($fetchDEV = mysql_fetch_array($queryDEV)){
+              if(strlen($fetchDEV['username'])<>0){
+          ?>
+              <option value='<?php echo $fetchDEV['username']; ?>' <?php if(in_array($fetchDEV['username'], $devstech))echo " selected"; ?>><?php echo $fetchDEV['username']; ?></option> 
+          <?php 
+              }
+            } 
+          } 
+          ?>
   </select>
   </TD>
 </TR>
+
+
+
+<TR>
+  <TD>Reviewer Names[Tech]</TD>
+  <TD>
+  <!--<textarea name="devs" id="devs" rows="4" cols="30"><?php //echo stripslashes($devs); ?></textarea>-->
+  <select id="reviewertech" name="reviewerTech[]" size="10" style="width:200px;" multiple>
+    <option value="">Select</option>
+          <?php
+          $selectReviewerTech  = "SELECT DISTINCT username FROM login WHERE dept='Content' AND role like '%Tech%'ORDER BY username ASC";
+          $queryReviewerTech   = mysql_query($selectReviewerTech);
+          $numrowsReviewerTech = mysql_num_rows($queryReviewerTech);
+          if(!empty($numrowsReviewerTech)){ 
+            while($fetchDEV = mysql_fetch_array($queryReviewerTech)){
+              if(strlen($fetchDEV['username'])<>0){
+          ?>
+
+              <option value='<?php echo $fetchDEV['username']; ?>' <?php if(in_array($fetchDEV['username'], $reviewertech))echo " selected"; ?>><?php echo $fetchDEV['username']; ?></option> 
+          <?php 
+              }
+            } 
+          } 
+          ?>
+  </select>
+  </TD>
+</TR>
+
+
+
+
 <tr>
 
   <TD><label for="type">Localization</label> <font color='red'>*</font></TD>

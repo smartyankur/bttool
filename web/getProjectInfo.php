@@ -12,7 +12,12 @@ include("config.php");
 
 if($mode == "developers") {
 	$obj_utility = new Utility();
-	$sql="SELECT dev1, dev2, dev3, dev4, dev5, dev6, dev7, dev8, dev9, dev10, dev11, dev12 from projectmaster WHERE pindatabaseid = '".$pro_id."'";
+	$cols = [];
+    foreach (range(1,25) as $key => $value) {
+      array_push($cols, "dev".$value);
+    }
+    $join_cols = join(",",$cols);
+    $sql="SELECT ".$join_cols." from projectmaster WHERE pindatabaseid = '".$pro_id."'";
 	
 	$result = mysql_query($sql);
 	$count = mysql_num_rows($result);
@@ -23,8 +28,9 @@ if($mode == "developers") {
 	  die('Data Not Found');
 	} else {
 		$row = mysql_fetch_assoc($result);
+		$row = array_unique($row);
 		foreach($row as $developer){
-			if(!empty($developer) && $developer != "NA") {
+			if(!empty($developer) && $developer != "NA"  && $developer != "Select") {
 				$ary[$developer] = $developer;
 			}
 		}

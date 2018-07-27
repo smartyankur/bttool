@@ -122,7 +122,10 @@ if(!empty($q) && $cnt > 0) {
 	<th>Environment</th>
 	<th>Description</th>
 	<th>QC</th>
-	<th>Asignee</th>
+	<th>Asignee (Developer)</th>
+	<th>Function (Developer)</th>
+	<th>Asignee (Reviewer)</th>
+	<th>Function (Reviewer)</th>
 	<th>QC Comment</th>
 	<th>Round</th>
 	<th>Dev Comment</th>
@@ -159,6 +162,9 @@ foreach($results as $row)
 	  echo "<td>".htmlspecialchars ($row['bdr'])."</td>";
 	  echo "<td>".$row['qc']."</td>";
 	  echo "<td>".$row['asignee']."</td>";
+	  echo "<td>".$row['function']."</td>";
+	  echo "<td>".$row['asignee_reviewer']."</td>";
+	  echo "<td>".$row['function_reviewer']."</td>";
 	  echo "<td>".$row['qccomment']."</td>";
 	  echo "<td>"."<b>".$row['round']."</b>"."</td>";
 	  echo "<td>".$row['devcomment']."</td>";

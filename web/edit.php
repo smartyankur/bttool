@@ -31,6 +31,7 @@
 <body background="bg.gif">
 <script src="js/jquery.js"></script>
 <script type="text/javascript">
+
 $(document).ready(function(){
 	$('#bcat').change(function(){
 		var cat = $(this).val();
@@ -262,12 +263,14 @@ if($count==0)
 	$qc=$row['qc'];
 	$severity=$row['severity'];
 	$asignee=$row['asignee'];
+  $asignee_reviewer=$row['asignee_reviewer'];
 	//$receivedate=$row['receivedate'];
 	//$w=strtotime($receivedate);
     //$receivedate= date( 'd-M-Y', $w );
 	$browser=$row['browser'];
 	//$coursestatus=$row['coursestatus'];
 	$function=$row['function'];
+  $function_reviewer=$row['function_reviewer'];
 	$bcat=$row['bcat'];
 	$bscat=$row['bscat'];
 	$bug=$row['bdr'];
@@ -342,14 +345,42 @@ echo "Bug ID  ".$id;
 </TR>
 
 <TR>
-<TD>Assignee</TD>
+<TD>Assignee (Developer)</TD>
 <TD>
     <?php
-	$query = "select DISTINCT username from login order by username";
+	/*$query = "select DISTINCT username from login order by username";
     $retval = mysql_query( $query, $con );
-    $count = mysql_num_rows($retval);
+    $count = mysql_num_rows($retval);*/
+    $pro_id = $_REQUEST["pro_id"];
+    $cols = [];
+    foreach (range(1,25) as $key => $value) {
+      array_push($cols, "dev".$value);
+    }
+    $join_cols = join(",",$cols);
+    $sql="SELECT ".$join_cols." from projectmaster WHERE pindatabaseid = '".$pro_id."'";
+  
+  $result = mysql_query($sql);
+  $count = mysql_num_rows($result);
+
+  if($count==0)
+  {
+    die('Users Not Found; Contact SEPG');
+  } else {
+    $row = mysql_fetch_assoc($result);
+    echo "<select name=\"asignee\" id=\"asignee\">"; 
+    echo "<option size =30 selected value=\"select\">Select</option>";
+    $row = array_unique($row);
+    foreach($row as $developer){
+      if(!empty($developer) && $developer != "NA" && $developer != "Select") {
+        // $ary[$developer] = ;
+         ?>
+         <option<?php if($asignee==$developer)echo " selected";?>><?php echo $developer;?></option> 
+         <?php 
+      }
+    }
+  }
 	
-	if($count==0)
+	/*if($count==0)
 		{
 			die('Users Not Found; Contact SEPG');
 		}
@@ -373,10 +404,12 @@ echo "Bug ID  ".$id;
     else 
 	{
      echo "<option>No Names Present</option>";  
-    } 
+    } */
     ?>
     </TD>
 </TR>
+
+
 
 <!--<TR>
 <TD>Project Received On</TD>
@@ -384,19 +417,7 @@ echo "Bug ID  ".$id;
 <a href="javascript:NewCal('SDate','ddmmmyyyy')"><img src="cal.gif" width="16" height="16" border="0" alt="Pick a date"></a></TD>
 </TR>-->
 
-<TR>
-<TD>Bowser Used</TD>
-<?php
-	$query = "select browser from tbl_browsers order by browser";
-    $retval = mysql_query( $query, $con );
-?>
-<TD><select name="browser" size="1" id="browser">
-<option value="select">Select</option>
-<?php while($row = mysql_fetch_assoc($retval)) { ?>
-	<option value="<?php echo $row['browser']?>" <?php if($browser == $row['browser']) echo "selected"; ?>><?php echo $row['browser']?></option>
-<?php } ?>	
-</select></TD>
-</TR>
+
 
 <!--<TR>
 <TD>Course Status</TD>
@@ -408,7 +429,7 @@ echo "Bug ID  ".$id;
 </TR>-->
 
 <TR>
-<TD>Function</TD>
+<TD>Function (Developer)</TD>
 <TD>
 	<select name="function" size="1" id="function">
 		<option value="">Select</option>
@@ -418,6 +439,72 @@ echo "Bug ID  ".$id;
 	</select>
 </TD>
 </TR>
+
+<TR>
+<TD>Assignee (Reviewer)</TD>
+<TD>
+    <?php
+    /*$query = "select DISTINCT username from login order by username";
+    $retval = mysql_query( $query, $con );
+    $count = mysql_num_rows($retval);*/
+    $pro_id = $_REQUEST["pro_id"];
+    $cols = [];
+    foreach (range(1,25) as $key => $value) {
+      array_push($cols, "dev".$value);
+    }
+    $join_cols = join(",",$cols);
+    $sql="SELECT ".$join_cols." from projectmaster WHERE pindatabaseid = '".$pro_id."'";
+  
+  $result = mysql_query($sql);
+  $count = mysql_num_rows($result);
+
+  if($count==0)
+  {
+    die('Users Not Found; Contact SEPG');
+  } else {
+    $row = mysql_fetch_assoc($result);
+    echo "<select name=\"asignee_reviewer\" id=\"asignee_reviewer\">"; 
+    echo "<option size =30 selected value=\"select\">Select</option>";
+    $row = array_unique($row);
+    foreach($row as $developer){
+      if(!empty($developer) && $developer != "NA" && $developer != "Select") {
+        // $ary[$developer] = ;
+         ?>
+         <option<?php if($asignee_reviewer==$developer)echo " selected";?>><?php echo $developer;?></option> 
+         <?php 
+      }
+    }
+  }
+  
+    ?>
+    </TD>
+</TR>
+<TR>
+<TD>Function (Reviewer)</TD>
+<TD>
+  <select name="function_reviewer" size="1" id="function_reviewer">
+    <option value="">Select</option>
+    <option <?php if($function_reviewer == "Media") echo "selected" ?> value="Media">Media</option>
+    <option <?php if($function_reviewer == "Functionality") echo "selected" ?> value="Functionality">Functionality</option>
+    <option <?php if($function_reviewer == "Editorial") echo "selected" ?> value="Editorial">Editorial</option>
+  </select>
+</TD>
+</TR>
+
+<TR>
+<TD>Bowser Used</TD>
+<?php
+  $query = "select browser from tbl_browsers order by browser";
+    $retval = mysql_query( $query, $con );
+?>
+<TD><select name="browser" size="1" id="browser">
+<option value="select">Select</option>
+<?php while($row = mysql_fetch_assoc($retval)) { ?>
+  <option value="<?php echo $row['browser']?>" <?php if($browser == $row['browser']) echo "selected"; ?>><?php echo $row['browser']?></option>
+<?php } ?>  
+</select></TD>
+</TR>
+<TR>
 <TD>Bug Category</TD>
 <TD>
 	<?php $query = "select id, category from tbl_category where parent_id = 0"; 

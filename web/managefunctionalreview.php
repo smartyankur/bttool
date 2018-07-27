@@ -192,10 +192,13 @@ function outSourced(id) {
   <th>Outsourced</th>
   <th>Functional Manager[ID]</th>
   <th>Developers[ID]</th>
+  <th>Reviewer[ID]</th>
   <th>Functional Manager[Med]</th>
   <th>Developers[Media]</th>
+  <th>Reviewer[Media]</th>
   <th>Functional Manager[Tech]</th>
   <th>Developers[Tech]</th>
+  <th>Reviewer[Tech]</th>
    <th>Localization</th>
   <th>Version</th>
   <th>No of HTML/Flash Pages</th>
@@ -250,10 +253,13 @@ if( isset($_REQUEST['project']) && !empty($_REQUEST['project']) && ($_REQUEST['p
 	<?php 
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['functional_manager_id']."</div>"."</td>";
 		echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['developers_id']."</div>"."</td>";
+    echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['reviewerID']."</div>"."</td>";
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['functional_manager_media']."</div>"."</td>";
 		echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['developers_media']."</div>"."</td>";
+    echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['reviewerMedia']."</div>"."</td>";
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['functional_manager_tech']."</div>"."</td>"; 
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['developers_tech']."</div>"."</td>";
+        echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['reviewerTech']."</div>"."</td>";
         echo "<td>".$fetchFuncRvw['localize']."</td>";
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['version']."</div>"."</td>";
         echo "<td>"."<div align=center style="."width:100;height:100;overflow:auto>".$fetchFuncRvw['pagecount']."</div>"."</td>";

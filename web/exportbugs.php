@@ -19,7 +19,7 @@ $end_date = isset($_REQUEST['end_date']) ? $_REQUEST['end_date'] : "";
 if($mode=="openbug" && !empty($q)) {
 	
 	if(!empty($filter_name) && in_array(str_replace('filter_','',$filter_name),array("bcat","severity","bugstatus","asignee","qc")) && !empty($filter_value) && $filter_value != 'select'){
-		$sql = "SELECT *, fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE qc.project_id = '".$pro_id."' AND ".str_replace('filter_','',$filter_name)." = '".$filter_value."'"; 
+		$sql = "SELECT qc.*, fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE qc.project_id = '".$pro_id."' AND ".str_replace('filter_','',$filter_name)." = '".$filter_value."'"; 
 		if(isset($_GET['bscat']) && $_GET['bscat'] != '' && $_GET['bscat'] != 'select') {
 			$sql .= " AND bscat = '".$_GET['bscat']."'";
 		}
@@ -27,7 +27,7 @@ if($mode=="openbug" && !empty($q)) {
 			$sql.= " And chd_id = '".$chd[0]."'";
 		}
 	} else {
-		$sql = "SELECT *, fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE qc.project_id = '".$pro_id."'";
+		$sql = "SELECT qc.*, fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE qc.project_id = '".$pro_id."'";
 		if(isset($chd) && !empty($chd)){
 			$sql.= " and chd_id = '".$chd[0]."'";
 		}
@@ -40,7 +40,7 @@ if($mode=="openbug" && !empty($q)) {
 	}
 } else if($mode == "devbug" && !empty($q)) {
 	if(!empty($filter_name) && in_array(str_replace('filter_','',$filter_name),array("bcat","severity","bugstatus","qc")) && !empty($filter_value) && $filter_value != 'select'){
-		$sql = "SELECT *, fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE qc.project_id = '".$pro_id."' AND ".str_replace('filter_','',$filter_name)." = '".$filter_value."'"; 
+		$sql = "SELECT qc.*, fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE qc.project_id = '".$pro_id."' AND ".str_replace('filter_','',$filter_name)." = '".$filter_value."'"; 
 		if(isset($_GET['bscat']) && $_GET['bscat'] != '' && $_GET['bscat'] != 'select') {
 			$sql .= " AND bscat = '".$_GET['bscat']."'";
 		}
@@ -48,7 +48,7 @@ if($mode=="openbug" && !empty($q)) {
 			$sql.= " And chd_id = '".$chd[0]."'";
 		}
 	} else {
-		$sql = "SELECT *, fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE qc.project_id = '".$pro_id."'";
+		$sql = "SELECT qc.*, fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE qc.project_id = '".$pro_id."'";
 		if(isset($chd) && !empty($chd)){
 			$sql.= " and chd_id = '".$chd[0]."'";
 		}
@@ -72,9 +72,9 @@ if($mode=="openbug" && !empty($q)) {
 			$end_date = $end_date_ary[2]."-".$end_date_ary[1]."-".$end_date_ary[0];
 
 			if(!empty($q)) {
-				$sql="SELECT *, fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE qc.project='".$q."' AND uploaddate BETWEEN '".$start_date."' AND '".$end_date."'";
+				$sql="SELECT qc.*,  fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE qc.project='".$q."' AND uploaddate BETWEEN '".$start_date."' AND '".$end_date."'";
 			} else {
-				$sql="SELECT *, fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE uploaddate BETWEEN '".$start_date."' AND '".$end_date."'";
+				$sql="SELECT qc.*, fn.course_title FROM qcuploadinfo qc join tbl_functional_review fn on fn.id = qc.chd_id WHERE uploaddate BETWEEN '".$start_date."' AND '".$end_date."'";
 				$q = "AllProjects";//for download file naming
 			}
 
@@ -105,7 +105,10 @@ $str = "<table width='50%' border='1' cellspacing='0' cellpadding='0'>
   <th>Module</th>
   <th>Topic</th>
   <th>Screen</th>
-  <th>Function</th>
+  <th>Asignee (Developer)</th>
+	<th>Function (Developer)</th>
+	<th>Asignee (Reviewer)</th>
+	<th>Function (Reviewer)</th>
   <th>Bug Cat</th>
   <th>Bug Sub Cat</th>
   <th>Severity</th>
@@ -115,7 +118,7 @@ $str = "<table width='50%' border='1' cellspacing='0' cellpadding='0'>
   <!--<th>Submit Bug Status</th>-->
   <th>View</th>
   <th>Upload Date</th>
-  <th>Asignee</th>
+  
   <th>QC</th>
   <th>Round</th>
   <!--<th>Edit Bug detail</th>-->
@@ -129,7 +132,8 @@ $str = "<table width='50%' border='1' cellspacing='0' cellpadding='0'>
 
 while($row = mysql_fetch_array($result))
   {
-   
+  	/*echo $row["qccomment"];
+   echo join("--", array_keys($row));*/
 	if($row['bcat'] != '' && is_numeric($row['bcat'])) {
 	   $cat_query = "select category from tbl_category where id = '".$row['bcat']."'";
 	   $res = mysql_query($cat_query);
@@ -154,7 +158,10 @@ while($row = mysql_fetch_array($result))
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['module'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['topic'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['screen'])."</div>"."</td>";
+  $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['asignee'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['function'])."</div>"."</td>";
+   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['asignee_reviewer'])."</div>"."</td>";
+  $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['function_reviewer'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($category['category'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($subcategory['category'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['severity'])."</div>"."</td>"; 
@@ -173,7 +180,7 @@ while($row = mysql_fetch_array($result))
 
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".'<a href="'.htmlentities($upload_path).htmlentities($row['filepath']).'" title="Your File" target="new">'.(empty($row['filepath']) ? '' : $upload_path).$row['filepath'].'</a>'."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['uploaddate'])."</div>"."</td>";
-  $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['asignee'])."</div>"."</td>";
+  
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['qc'])."</div>"."</td>";
   $str.= "<td>"."<div align=center style="."width:100;height:53;overflow:auto>".htmlentities($row['round'])."</div>"."</td>";
 
@@ -189,6 +196,7 @@ while($row = mysql_fetch_array($result))
   }
 
 $str.="</table>";
+/*echo $str;*/
 
 $obj_utility = new Utility();
 $obj_utility->force_download($str, 'xls', str_replace(" ","_",$q)."_bugs");
