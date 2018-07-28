@@ -1071,7 +1071,7 @@ if(!empty($numrowsProject)){
 <label for="Win7 IE9"><input type="checkbox" name="testenvironment[]" id="Win7 IE9" value="Win7 IE9" <?php if(in_array("Win7 IE9", $testenvironment))echo " checked"; ?>>Win7 IE9</label>
 <label for="Win7 IE8"><input type="checkbox" name="testenvironment[]" id="Win7 IE8" value="Win7 IE8" <?php if(in_array("Win7 IE8", $testenvironment))echo " checked"; ?>>Win7 IE8</label>
     <label for="Win7/8 Firefox Latest"><input type="checkbox" name="testenvironment[]" id="Win7/8 Firefox Latest" value="Win7/8 Firefox Latest" <?php if(in_array("Win7/8 Firefox Latest", $testenvironment))echo "  checked"; ?>>Win7/8 Firefox Latest</label>
-    <label for="Win7/8 Chrome Latest"><input type="checkbox" name="testenvironment[]" id="Win7/8 Chrome Latest" value="Win7/8 Chrome Latest" <?php if(in_array("WWin7/8 Chrome Latest", $testenvironment))echo " checked";  ?>>Win7/8 Chrome Latest</label>
+    <label for="Win7/8 Chrome Latest"><input type="checkbox" name="testenvironment[]" id="Win7/8 Chrome Latest" value="Win7/8 Chrome Latest" <?php if(in_array("Win7/8 Chrome Latest", $testenvironment))echo " checked";  ?>>Win7/8 Chrome Latest</label>
 <label for="iPad 3"><input type="checkbox" name="testenvironment[]" id="iPad 3" value="iPad 3" <?php if(in_array("iPad 3", $testenvironment))echo " checked"; ?>>iPad 3</label>
 <label for="iPad 4"><input type="checkbox" name="testenvironment[]" id="iPad 4" value="iPad 4" <?php if(in_array("iPad 4", $testenvironment))echo " checked"; ?>>iPad 4</label>
 <label for="iPad Mini"><input type="checkbox" name="testenvironment[]" id="iPad Mini" value="iPad Mini" <?php if(in_array("iPad Mini", $testenvironment))echo " checked"; ?>>iPad Mini</label>
